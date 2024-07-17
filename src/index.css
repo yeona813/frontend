@@ -1,7 +1,6 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-/*위에 3개 지우지 마시오!*/
 
 body {
   margin: 0;
