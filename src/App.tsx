@@ -1,7 +1,8 @@
 import React from 'react';
+import Register from 'components/register/Register';
 
 function App() {
-  return <h1 className="text-2xl font-bold underline">Hello world!</h1>;
+  return <Register />;
 }
 
 export default App;

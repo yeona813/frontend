@@ -2,6 +2,8 @@ module.exports = {
   parser: '@typescript-eslint/parser',
   plugins: ['@typescript-eslint', 'prettier'],
   extends: [
+    'react-app' /**/,
+    'prettier' /**/,
     'airbnb',
     'plugin:react/recommended',
     'plugin:jsx-a11y/recommended',
@@ -11,6 +13,8 @@ module.exports = {
     'plugin:prettier/recommended',
   ],
   rules: {
+    'react/self-closing-comp': 'off',
+    'react/function-component-definition': 'off' /* */,
     'linebreak-style': 0,
     'import/prefer-default-export': 0,
     'import/extensions': 0,
@@ -26,6 +30,12 @@ module.exports = {
     ],
     'jsx-a11y/no-noninteractive-element-interactions': 0,
     '@typescript-eslint/explicit-module-boundary-types': 0,
+    'prettier/prettier': [
+      'error',
+      {
+        endOfLine: 'auto',
+      } /**/,
+    ],
   },
   settings: {
     'import/resolver': {
