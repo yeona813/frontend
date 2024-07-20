@@ -2,8 +2,8 @@ module.exports = {
   parser: '@typescript-eslint/parser',
   plugins: ['@typescript-eslint', 'prettier'],
   extends: [
-    'react-app' /**/,
-    'prettier' /**/,
+    'react-app',
+    'prettier',
     'airbnb',
     'plugin:react/recommended',
     'plugin:jsx-a11y/recommended',
@@ -34,7 +34,7 @@ module.exports = {
       'error',
       {
         endOfLine: 'auto',
-      } /**/,
+      },
     ],
   },
   settings: {

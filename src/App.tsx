@@ -1,8 +1,12 @@
 import React from 'react';
-import Register from 'components/register/Register';
+import Router from 'Router';
 
 function App() {
-  return <Register />;
+  return (
+    <div className="w-[376px] h-screen mx-auto bg-white">
+      <Router />
+    </div>
+  );
 }
 
 export default App;
