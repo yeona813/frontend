@@ -1,6 +1,7 @@
 export type info = {
   email: string;
   password: string;
+  checkPassword: string;
   nickname: string;
   name: string;
   age: number;

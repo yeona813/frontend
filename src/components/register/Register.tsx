@@ -6,6 +6,7 @@ const Register: React.FC = () => {
   const [register, setRegister] = useState<info>({
     email: '',
     password: '',
+    checkPassword: '',
     nickname: '',
     name: '',
     age: 0,
