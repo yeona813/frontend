@@ -9,3 +9,9 @@ export type info = {
   birth: string;
   phone: string;
 };
+
+export type err = {
+  emailErr: boolean;
+  passwordErr: boolean;
+  checkPasswordErr: boolean;
+};
