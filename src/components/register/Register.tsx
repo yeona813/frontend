@@ -8,11 +8,6 @@ const Register: React.FC = () => {
     password: '',
     checkPassword: '',
     nickname: '',
-    name: '',
-    age: 0,
-    sex: '',
-    birth: '',
-    phone: '',
   });
 
   const [error, setError] = useState<err>({
@@ -62,6 +57,7 @@ const Register: React.FC = () => {
       }
     } else setRegister({ ...register, [e.target.name]: e.target.value });
   };
+
   return (
     <RegisterForm
       register={register}

@@ -1,7 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { info, err } from 'types/register';
 import 'react-datepicker/dist/react-datepicker.min.css';
-import DatePicker from 'react-datepicker';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -31,14 +30,11 @@ const RegisterForm: React.FC<OwnProps> = ({
 }) => {
   const [showPassword1, setShowPassword1] = useState<boolean>(false);
   const [showPassword2, setShowPassword2] = useState<boolean>(false);
-  const [startDate, setStartDate] = useState<Date | null>(new Date());
 
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
   const checkPasswordRef = useRef<HTMLInputElement>(null);
   const nicknameRef = useRef<HTMLInputElement>(null);
-  const nameRef = useRef<HTMLInputElement>(null);
-  const phoneRef = useRef<HTMLInputElement>(null);
 
   const navigate = useNavigate();
 
@@ -47,9 +43,7 @@ const RegisterForm: React.FC<OwnProps> = ({
       register.email === '' ||
       register.password === '' ||
       register.checkPassword === '' ||
-      register.nickname === '' ||
-      register.name === '' ||
-      register.phone === ''
+      register.nickname === ''
     ) {
       if (!error.emailErr) {
         // 중복 검사 적용 필요
@@ -69,29 +63,12 @@ const RegisterForm: React.FC<OwnProps> = ({
         nicknameRef.current?.style.setProperty('color', 'red');
         nicknameRef.current?.style.setProperty('font-weight', 'bold');
       }
-      if (register.name === '') {
-        nameRef.current?.style.setProperty('color', 'red');
-        nameRef.current?.style.setProperty('font-weight', 'bold');
-      }
-
-      if (register.phone === '') {
-        // 중복 검사 적용 필요
-        phoneRef.current?.style.setProperty('color', 'red');
-        phoneRef.current?.style.setProperty('font-weight', 'bold');
-      }
     } else {
       axios
         .post('#', {
           email: register.email,
           password: register.password,
           nickname: register.nickname,
-          name: register.name,
-          age:
-            Number(new Date().getFullYear()) -
-            Number(register.birth.slice(0, 4)),
-          sex: register.sex,
-          birth: register.birth,
-          phone: register.phone.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3'),
         })
         .then((response) => {
           // Handle success.
@@ -126,14 +103,6 @@ const RegisterForm: React.FC<OwnProps> = ({
       nicknameRef.current?.style.removeProperty('color');
       nicknameRef.current?.style.removeProperty('font-weight');
     }
-    if (register.name !== '') {
-      nameRef.current?.style.removeProperty('color');
-      nameRef.current?.style.removeProperty('font-weight');
-    }
-    if (register.phone !== '') {
-      phoneRef.current?.style.removeProperty('color');
-      phoneRef.current?.style.removeProperty('font-weight');
-    }
   };
 
   const onClickShowPassword1 = (): void => {
@@ -155,20 +124,8 @@ const RegisterForm: React.FC<OwnProps> = ({
     }
   };
 
-  useEffect(() => {
-    if (startDate) {
-      const formatted = startDate!.toISOString().split('T')[0]; // YYYY-MM-DD 형식
-      onChangeRegister({
-        target: {
-          name: 'birth',
-          value: formatted,
-        },
-      } as React.ChangeEvent<HTMLInputElement>);
-    }
-  }, [startDate]);
-
   return (
-    <form className="p-3">
+    <form className="p-3 flex flex-col gap-3 bg-white">
       <div>
         <p className="px-3 my-4 text-xl">회원가입</p>
       </div>
@@ -291,99 +248,6 @@ const RegisterForm: React.FC<OwnProps> = ({
             onChange={onChangeRegister}
             onBlur={onBlur}
           />
-        </div>
-      </section>
-
-      <section>
-        <p className="px-3 text-sm">이름/성별</p>
-        <div
-          className="m-2 rounded-lg border border-gray-300
-       w-[160px] h-[40px] flex items-center"
-        >
-          <input
-            ref={nameRef}
-            className="w-[135px] ml-3 outline-none"
-            name="name"
-            value={register.name}
-            type="text"
-            placeholder="이름을 입력하세요"
-            onChange={onChangeRegister}
-            onBlur={onBlur}
-          />
-          <div className="flex items-center ml-7">
-            <input
-              id="sex1"
-              className="hidden peer"
-              name="sex"
-              type="radio"
-              value="male"
-              onChange={onChangeRegister}
-              checked={register.sex === 'male'}
-            />
-            <label
-              className="flex justify-center items-center text-sm
-             peer-checked:bg-yellow-300 rounded-lg text-center
-              w-[75px] h-[40px] border border-solid border-gray-300"
-              htmlFor="sex1"
-            >
-              Male
-            </label>
-          </div>
-          <div className="flex items-center ml-2.5">
-            <input
-              id="sex2"
-              className="hidden peer"
-              name="sex"
-              type="radio"
-              value="female"
-              onChange={onChangeRegister}
-              checked={register.sex === 'female'}
-            />
-            <label
-              className="flex justify-center items-center text-sm
-             peer-checked:bg-yellow-300 rounded-lg text-center
-              w-[75px] h-[40px] border border-solid border-gray-300"
-              htmlFor="sex2"
-            >
-              Female
-            </label>
-          </div>
-        </div>
-      </section>
-
-      <section>
-        <p className="px-3 text-sm">생년월일/휴대전화</p>
-        <div className="flex">
-          <div>
-            <DatePicker
-              className="outline-none text-center w-[160px] h-[40px]
-             m-2 rounded-lg border border-gray-300 bg-white items-center "
-              name="birth"
-              selected={startDate}
-              onChange={(date) => setStartDate(date)}
-              peekNextMonth
-              showMonthDropdown
-              showYearDropdown
-              dropdownMode="select"
-              dateFormat="yyyy-MM-dd"
-            />
-          </div>
-
-          <div
-            className="m-2 rounded-lg border border-gray-300
-         flex items-center w-[160px] h-[40px]"
-          >
-            <input
-              ref={phoneRef}
-              className="w-[135px] ml-3 text-center outline-none"
-              name="phone"
-              value={register.phone}
-              type="text"
-              placeholder="010-0000-0000"
-              onChange={onChangeRegister}
-              onBlur={onBlur}
-            />
-          </div>
         </div>
       </section>
 
