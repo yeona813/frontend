@@ -14,6 +14,7 @@ const Register: React.FC = () => {
     emailErr: false,
     passwordErr: false,
     checkPasswordErr: false,
+    nicknameErr: false,
   });
 
   useEffect(() => {
@@ -54,6 +55,13 @@ const Register: React.FC = () => {
       setRegister({ ...register, [e.target.name]: e.target.value });
       if (!error.passwordErr) {
         setError({ ...error, checkPasswordErr: false });
+      }
+    } else if (e.target.name === 'nickname') {
+      setRegister({ ...register, [e.target.name]: e.target.value });
+      if (e.target.value.length >= 3) {
+        setError({ ...error, nicknameErr: true });
+      } else {
+        setError({ ...error, nicknameErr: false });
       }
     } else setRegister({ ...register, [e.target.name]: e.target.value });
   };

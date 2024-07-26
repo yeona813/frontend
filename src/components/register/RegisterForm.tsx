@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { info, err } from 'types/register';
 import 'react-datepicker/dist/react-datepicker.min.css';
 import axios from 'axios';
@@ -11,11 +11,9 @@ import { useNavigate } from 'react-router-dom';
 // 4. 비밀번호 일치 검사 - 해결
 // 5. 닉네임 중복 검사
 // 6. 컴포넌트 부분 별로 나누기
-// 7. 전화번호 대쉬로 가공하기 - 절반 해결
-// 8. 조건이 만족되지 않으면 빨간박스 대신 빨간 경고 메세지 뜨도록 수정하기 - 절반 해결
+// 7. 조건이 만족되지 않으면 빨간 경고 메세지 뜨도록 수정하기 - 절반 해결
 
 // 문제사항: 비밀번호 일치 불일치 - 해결
-// 문제사항: 제출하기 2번 눌러야 age가 넘어감 그리고 birth값 미아됨 - 해결
 
 interface OwnProps {
   register: info;
@@ -38,32 +36,64 @@ const RegisterForm: React.FC<OwnProps> = ({
 
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (!error.emailErr) {
+      if (register.email === '')
+        emailRef.current?.style.setProperty(
+          'border',
+          '1px solid rgb(209 213 219)',
+        );
+      else emailRef.current?.style.setProperty('border', '1px solid red');
+    } else
+      emailRef.current?.style.setProperty('border', '1px solid rgb(50,180,50)');
+
+    if (!error.passwordErr) {
+      if (register.password === '')
+        passwordRef.current?.style.setProperty(
+          'border',
+          '1px solid rgb(209 213 219)',
+        );
+      else passwordRef.current?.style.setProperty('border', '1px solid red');
+    } else
+      passwordRef.current?.style.setProperty(
+        'border',
+        '1px solid rgb(50,180,50)',
+      );
+
+    if (!error.checkPasswordErr) {
+      if (register.checkPassword === '')
+        checkPasswordRef.current?.style.setProperty(
+          'border',
+          '1px solid rgb(209 213 219)',
+        );
+      else
+        checkPasswordRef.current?.style.setProperty('border', '1px solid red');
+    } else
+      checkPasswordRef.current?.style.setProperty(
+        'border',
+        '1px solid rgb(50,180,50)',
+      );
+
+    if (!error.nicknameErr) {
+      if (register.nickname === '')
+        nicknameRef.current?.style.setProperty(
+          'border',
+          '1px solid rgb(209 213 219)',
+        );
+      else nicknameRef.current?.style.setProperty('border', '1px solid red');
+    } else
+      nicknameRef.current?.style.setProperty(
+        'border',
+        '1px solid rgb(50,180,50)',
+      );
+  }, [error]);
+
   const onSubmit = () => {
-    if (
-      register.email === '' ||
-      register.password === '' ||
-      register.checkPassword === '' ||
-      register.nickname === ''
-    ) {
-      if (!error.emailErr) {
-        // 중복 검사 적용 필요
-        emailRef.current?.style.setProperty('color', 'red');
-        emailRef.current?.style.setProperty('font-weight', 'bold');
-      }
-      if (!error.passwordErr) {
-        passwordRef.current?.style.setProperty('color', 'red');
-        passwordRef.current?.style.setProperty('font-weight', 'bold');
-      }
-      if (!error.checkPasswordErr) {
-        checkPasswordRef.current?.style.setProperty('color', 'red');
-        checkPasswordRef.current?.style.setProperty('font-weight', 'bold');
-      }
-      if (register.nickname === '') {
-        // 중복 검사 적용 필요
-        nicknameRef.current?.style.setProperty('color', 'red');
-        nicknameRef.current?.style.setProperty('font-weight', 'bold');
-      }
-    } else {
+    const result = Object.values(error).filter(
+      (element) => element !== true,
+    ).length;
+    console.log(result);
+    if (!result) {
       axios
         .post('#', {
           email: register.email,
@@ -82,27 +112,8 @@ const RegisterForm: React.FC<OwnProps> = ({
           // Handle error.
           console.log('An error occurred:', error.response);
         });
-      console.log(register);
     }
-  };
-
-  const onBlur = () => {
-    if (error.emailErr) {
-      emailRef.current?.style.removeProperty('color');
-      emailRef.current?.style.removeProperty('font-weight');
-    }
-    if (error.passwordErr) {
-      passwordRef.current?.style.removeProperty('color');
-      passwordRef.current?.style.removeProperty('font-weight');
-    }
-    if (error.checkPasswordErr) {
-      checkPasswordRef.current?.style.removeProperty('color');
-      checkPasswordRef.current?.style.removeProperty('font-weight');
-    }
-    if (register.nickname !== '') {
-      nicknameRef.current?.style.removeProperty('color');
-      nicknameRef.current?.style.removeProperty('font-weight');
-    }
+    console.log(register);
   };
 
   const onClickShowPassword1 = (): void => {
@@ -113,15 +124,11 @@ const RegisterForm: React.FC<OwnProps> = ({
     setShowPassword2(!showPassword2);
   };
 
-  const onKeyDownShowPassword1 = (e: React.KeyboardEvent<HTMLImageElement>) => {
-    if (e.key === ' ') {
-      setShowPassword1(!showPassword1);
-    }
+  const onKeyDownShowPassword1 = () => {
+    setShowPassword1(!showPassword1);
   };
-  const onKeyDownShowPassword2 = (e: React.KeyboardEvent<HTMLImageElement>) => {
-    if (e.key === ' ') {
-      setShowPassword2(!showPassword2);
-    }
+  const onKeyDownShowPassword2 = () => {
+    setShowPassword2(!showPassword2);
   };
 
   return (
@@ -133,15 +140,16 @@ const RegisterForm: React.FC<OwnProps> = ({
       <section>
         <span className="px-3 text-sm">이메일</span>
         {error.emailErr ? null : (
-          <span className="text-xs text-gray-400" ref={emailRef}>
+          <span className="text-xs text-gray-400">
             이메일 형식을 입력해 주세요
           </span>
         )}
-        <div className="flex gap-2 my-2 w-[335px] mx-auto">
+        <div className="flex gap-2 my-2 w-[335px] mx-auto ">
           <div
             className="flex-1 mx-auto rounded-lg border
-       border-gray-300 w-[250px] h-[40px] 
+       border-gray-300 w-[250px] h-[50px] 
        flex items-center justify-between px-3 "
+            ref={emailRef}
           >
             <input
               className="w-[250px] outline-none"
@@ -150,11 +158,10 @@ const RegisterForm: React.FC<OwnProps> = ({
               type="text"
               placeholder="이메일를 입력하세요"
               onChange={onChangeRegister}
-              onBlur={onBlur}
             />
           </div>
           <button
-            className="rounded-lg text-xs border bg-yellow-300 px-2"
+            className="rounded-lg text-xs border bg-yellow-300 px-2 shadow-md"
             type="button"
           >
             중복 확인
@@ -165,14 +172,15 @@ const RegisterForm: React.FC<OwnProps> = ({
       <section>
         <span className="px-3 text-sm">비밀번호</span>
         {error.passwordErr ? null : (
-          <span className="text-xs text-gray-400" ref={passwordRef}>
+          <span className="text-xs text-gray-400">
             숫자, 영문, 특수문자 조합 최소 8자를 입력해 주세요
           </span>
         )}
         <div
           className="mx-auto rounded-lg border
-       border-gray-300 w-[335px] h-[40px] 
+       border-gray-300 w-[335px] h-[50px] 
        flex items-center justify-between px-3 my-2"
+          ref={passwordRef}
         >
           <input
             className="w-[280px] outline-none flex-1"
@@ -181,7 +189,6 @@ const RegisterForm: React.FC<OwnProps> = ({
             type={showPassword1 ? 'text' : 'password'}
             placeholder="비밀번호를 입력하세요"
             onChange={onChangeRegister}
-            onBlur={onBlur}
           />
           <button type="button">
             <img
@@ -197,18 +204,17 @@ const RegisterForm: React.FC<OwnProps> = ({
 
         <span className="px-3 text-sm">비밀번호 확인</span>
         {error.checkPasswordErr ? (
-          <span className="text-xs text-gray-400" ref={checkPasswordRef}>
-            ✅
-          </span>
+          <span className="text-xs text-gray-400">✅</span>
         ) : (
-          <span className="text-xs text-gray-400" ref={checkPasswordRef}>
+          <span className="text-xs text-gray-400">
             비밀번호가 일치하지 않습니다
           </span>
         )}
         <div
           className="mx-auto rounded-lg border
-       border-gray-300 w-[335px] h-[40px] 
+       border-gray-300 w-[335px] h-[50px] 
        flex items-center justify-between px-3 my-2"
+          ref={checkPasswordRef}
         >
           <input
             className="w-[280px] outline-none"
@@ -217,7 +223,6 @@ const RegisterForm: React.FC<OwnProps> = ({
             type={showPassword2 ? 'text' : 'password'}
             placeholder="비밀번호를 확인하세요"
             onChange={onChangeRegister}
-            onBlur={onBlur}
           ></input>
           <button type="button">
             <img
@@ -233,10 +238,16 @@ const RegisterForm: React.FC<OwnProps> = ({
       </section>
 
       <section>
-        <p className="px-3 text-sm">닉네임</p>
+        <span className="px-3 text-sm">닉네임</span>
+        {error.nicknameErr ? null : (
+          <span className="text-xs text-gray-400">
+            닉네임을 최소 3자 입력해주세요
+          </span>
+        )}
         <div
+          ref={nicknameRef}
           className="mx-auto rounded-lg border border-gray-300 
-      w-[335px] h-[40px] flex items-center justify-between px-3 my-2"
+      w-[335px] h-[50px] flex items-center justify-between px-3 my-2"
         >
           <input
             ref={nicknameRef}
@@ -246,16 +257,15 @@ const RegisterForm: React.FC<OwnProps> = ({
             type="text"
             placeholder="닉네임를 입력하세요"
             onChange={onChangeRegister}
-            onBlur={onBlur}
           />
         </div>
       </section>
 
       <section>
-        <div className="mt-[20px] text-center">
+        <div className="mt-[20px] text-center flex flex-col gap-4 items-center">
           <button
             onClick={onSubmit}
-            className="rounded-lg bg-yellow-300 w-[335px] h-[45px]"
+            className="rounded-lg bg-yellow-300 w-[335px] h-[45px] shadow-md"
             type="button"
           >
             회원가입

@@ -9,4 +9,5 @@ export type err = {
   emailErr: boolean;
   passwordErr: boolean;
   checkPasswordErr: boolean;
+  nicknameErr: boolean;
 };
