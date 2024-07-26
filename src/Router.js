@@ -4,11 +4,11 @@ import MyPage from 'pages/my/MyPage';
 import QuotePage from 'pages/quote/QuotePage';
 import RegisterPage from 'pages/register/RegisterPage';
 import React from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 
 function Router() {
   return (
-    <BrowserRouter>
+    <div>
       <Header />
       <Routes>
         <Route path="/login" element={<LoginPage />} />
@@ -16,7 +16,7 @@ function Router() {
         <Route path="/quote" element={<QuotePage />} />
         <Route path="/my" element={<MyPage />} />
       </Routes>
-    </BrowserRouter>
+    </div>
   );
 }
 

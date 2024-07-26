@@ -1,7 +1,12 @@
 import React from 'react';
+import Register from 'components/register/Register';
 
 const RegisterPage = () => {
-  return <div>회원가입페이지입니다.</div>;
+  return (
+    <div>
+      <Register />
+    </div>
+  );
 };
 
 export default RegisterPage;

@@ -1,6 +1,6 @@
 module.exports = {
   parser: '@typescript-eslint/parser',
-  plugins: ['@typescript-eslint', 'prettier'],
+  plugins: ['@typescript-eslint', 'prettier', 'jsx-a11y'],
   extends: [
     'react-app',
     'prettier',
@@ -13,8 +13,11 @@ module.exports = {
     'plugin:prettier/recommended',
   ],
   rules: {
+    'no-restricted-syntax': 'off',
+    '@typescript-eslint/no-explicit-any': 'off',
+    'no-return-assign': 'off',
     'react/self-closing-comp': 'off',
-    'react/function-component-definition': 'off' /* */,
+    'react/function-component-definition': 'off',
     'linebreak-style': 0,
     'import/prefer-default-export': 0,
     'import/extensions': 0,
@@ -29,6 +32,13 @@ module.exports = {
       { extensions: ['.js', '.jsx', '.ts', '.tsx'] },
     ],
     'jsx-a11y/no-noninteractive-element-interactions': 0,
+    'jsx-a11y/label-has-associated-control': [
+      'error',
+      {
+        assert: 'either',
+        depth: 3,
+      },
+    ],
     '@typescript-eslint/explicit-module-boundary-types': 0,
     'prettier/prettier': [
       'error',
