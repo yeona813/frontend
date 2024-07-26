@@ -16,20 +16,16 @@ import { Link, useNavigate } from 'react-router-dom';
 
 // 문제사항: 비밀번호 일치 불일치 - 해결
 
-interface OwnProps {
+interface RegisterProps {
   register: info;
   error: err;
   onChangeRegister(e: React.ChangeEvent<HTMLInputElement>): void;
 }
 
-const RegisterForm: React.FC<OwnProps> = ({
-  register,
-  error,
-  onChangeRegister,
-}) => {
-  const [showPassword1, setShowPassword1] = useState<boolean>(false);
-  const [showPassword2, setShowPassword2] = useState<boolean>(false);
-  const [submitted, setSubmitted] = useState<boolean>(false);
+const RegisterForm = ({ register, error, onChangeRegister }: RegisterProps) => {
+  const [showPassword1, setShowPassword1] = useState(false);
+  const [showPassword2, setShowPassword2] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
 
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
@@ -83,6 +79,7 @@ const RegisterForm: React.FC<OwnProps> = ({
     }
   };
 
+  // 중복 로직 줄이기
   const onClickShowPassword1 = (): void => {
     setShowPassword1(!showPassword1);
   };
@@ -101,10 +98,7 @@ const RegisterForm: React.FC<OwnProps> = ({
 
   return (
     <form className="p-3 flex flex-col gap-3 bg-white">
-      <div>
-        <p className="px-3 my-4 text-xl">회원가입</p>
-      </div>
-
+      <h2 className="px-3 my-4 text-xl">회원가입</h2>
       <section>
         <span className="px-3 text-sm">이메일</span>
         {error.emailErr ? null : (
