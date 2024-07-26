@@ -1,21 +1,25 @@
 import Header from 'components/common/Header';
 import LoginPage from 'pages/login/LoginPage';
 import MyPage from 'pages/my/MyPage';
-import QuotePage from 'pages/quote/QuotePage';
 import RegisterPage from 'pages/register/RegisterPage';
 import Redirection from 'pages/login/Redirection';
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
+import HomePage from 'pages/home/HomePage';
+import WriteQuotePage from 'pages/writeQuote/WriteQuotePage';
+import QuoteListPage from 'pages/quoteList/QuoteListPage';
 
 function Router() {
   return (
     <div>
       <Header />
       <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/writeQuote" element={<WriteQuotePage />} />
+        <Route path="/quoteList" element={<QuoteListPage />} />
         <Route exact path="/oauth" element={<Redirection />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
-        <Route path="/quote" element={<QuotePage />} />
         <Route path="/my" element={<MyPage />} />
       </Routes>
     </div>

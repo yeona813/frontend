@@ -1,7 +1,7 @@
 import React from 'react';
 
-const Quote = () => {
+const HomePage = () => {
   return <div></div>;
 };
 
-export default Quote;
+export default HomePage;
