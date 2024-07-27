@@ -10,17 +10,16 @@ const QuoteItem = ({ element, onClickHeart }: QuoteItemProps) => {
   const [heart, setHeart] = useState(false);
   const [backgroundImage, setBackgroundImage] = useState('');
   const images = [
-    '/images/image01.jpg',
-    '/images/image02.jpg',
-    '/images/image03.jpg',
-    '/images/image04.jpg',
-    '/images/image05.jpg',
-    '/images/image06.jpg',
-    '/images/image07.jpg',
-    '/images/image08.jpg',
-    '/images/image09.jpg',
-    '/images/image10.jpg',
-    '/images/image11.jpg',
+    '/images/quoteImage1.jpg',
+    '/images/quoteImage2.jpg',
+    '/images/quoteImage3.jpg',
+    '/images/quoteImage4.jpg',
+    '/images/quoteImage5.jpg',
+    '/images/quoteImage6.jpg',
+    '/images/quoteImage7.jpg',
+    '/images/quoteImage8.jpg',
+    '/images/quoteImage9.jpg',
+    '/images/quoteImage10.jpg',
   ];
 
   useEffect(() => {
@@ -34,7 +33,7 @@ const QuoteItem = ({ element, onClickHeart }: QuoteItemProps) => {
   };
 
   return (
-    <div className="shadow-custom-bottom-right border rounded-lg border-none border-black py-3 flex flex-col gap-2">
+    <div className="shadow-custom-bottom-right border rounded-lg border-none border-black py-3 flex flex-col gap-2 bg-white">
       <div className="p-2">키워드 들어갈 자리</div>
       <div className="relative text-center h-96 text-white">
         <div

@@ -23,7 +23,7 @@ const LoginButton = ({ emailInput, passwordInput }: LoginButtonProps) => {
     <section>
       <div className="mt-[20px] text-center flex flex-col gap-4 items-center">
         <button
-          className="rounded-lg bg-yellow-300 w-[335px] h-[45.5px] shadow-md text-black"
+          className="rounded-lg bg-black w-[335px] h-[45.5px] shadow-md text-white"
           type="button"
           onClick={onClickNormalLogin}
         >

@@ -69,7 +69,7 @@ const SignUpSection = ({
       <div className="mt-[20px] text-center flex flex-col gap-4 items-center">
         <button
           onClick={onSubmit}
-          className="rounded-lg bg-yellow-300 w-[335px] h-[45px] shadow-md"
+          className="rounded-lg bg-black w-[335px] h-[45px] shadow-md text-white"
           type="button"
         >
           회원가입
