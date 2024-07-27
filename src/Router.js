@@ -6,6 +6,7 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import HomePage from 'pages/home/HomePage';
 import QuoteListPage from 'pages/quoteList/QuoteListPage';
+import ResultQuotePage from 'pages/resultQuote/ResultQuotePage';
 
 function Router() {
   return (
@@ -13,6 +14,7 @@ function Router() {
       <Header />
       <Routes>
         <Route path="/" element={<HomePage />} />
+        <Route paht="/resultQuote" element={<ResultQuotePage />} />
         <Route path="/quoteList" element={<QuoteListPage />} />
         <Route exact path="/oauth" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
