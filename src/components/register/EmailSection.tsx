@@ -37,7 +37,7 @@ const EmailSection = ({
         <div
           className="flex-1 mx-auto rounded-lg border
           border-gray-300 w-[250px] h-[50px] 
-          flex items-center justify-between px-3 "
+          flex items-center justify-between px-3 bg-white"
           ref={emailRef}
         >
           <input

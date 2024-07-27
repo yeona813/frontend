@@ -40,7 +40,7 @@ const RegisterForm = ({ register, error, onChangeRegister }: RegisterProps) => {
   };
 
   return (
-    <form className="p-3 flex flex-col gap-2 bg-white">
+    <form className="p-3 flex flex-col gap-2 bg-yellow-FF">
       <h2 className="px-3 my-4 text-xl">회원가입</h2>
       <EmailSection
         submitted={submitted}

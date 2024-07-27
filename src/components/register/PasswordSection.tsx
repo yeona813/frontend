@@ -60,12 +60,12 @@ const PasswordSection = ({
   };
 
   return (
-    <section className="flex flex-col gap-2">
+    <section className="flex flex-col gap-2 ">
       <div>
         <span className="px-3 text-sm">비밀번호</span>
         <div
           className="mx-auto rounded-lg border border-gray-300
-           w-[335px] h-[50px] flex items-center justify-between px-3 my-2"
+           w-[335px] h-[50px] flex items-center justify-between px-3 my-2 bg-white"
           ref={passwordRef}
         >
           <input
@@ -97,7 +97,7 @@ const PasswordSection = ({
         ) : null}
         <div
           className="mx-auto rounded-lg border border-gray-300
-           w-[335px] h-[50px] flex items-center justify-between px-3 my-2"
+           w-[335px] h-[50px] flex items-center justify-between px-3 my-2 bg-white"
           ref={checkPasswordRef}
         >
           <input

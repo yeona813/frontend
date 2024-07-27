@@ -23,22 +23,10 @@ const Login = () => {
     setPasswordInput(e.target.value);
   };
 
-  const onClickKakaoLogin = () => {
-    const REST_API_KEY = process.env.REACT_APP_KAKAO_REST_API_KEY; // 백엔드에서 받은 카카오 키 넣기
-    const REDIRECT_URI = `http://localhost:3000/oauth`; // 백엔드에서 받은 리다이렉트 URI 넣기
-    const link = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
-
-    window.location.href = link;
-  };
-
-  const onClickNormalLogin = () => {
-    console.log('정보 있는지 확인');
-  };
-
   return (
-    <form className="p-3 flex flex-col gap-3 bg-white">
-      <div>
-        <p className="px-3 my-4 text-xl">로그인</p>
+    <form className="p-3 flex flex-col gap-3 bg-yellow-FF">
+      <div className="px-3 my-4 text-xl">
+        <p>로그인</p>
       </div>
       <EmailInput
         emailInput={emailInput}
@@ -49,10 +37,7 @@ const Login = () => {
         passwordInput={passwordInput}
         onChangePasswordInput={onChangePasswordInput}
       />
-      <LoginButton
-        onClickKKakaoLogin={onClickKakaoLogin}
-        onClickNormalLogin={onClickNormalLogin}
-      />
+      <LoginButton emailInput={emailInput} passwordInput={passwordInput} />
     </form>
   );
 };
