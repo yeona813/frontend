@@ -4,6 +4,7 @@ export const mockData: quoteItem[] = [
   {
     id: 0,
     content: 'This is the first post content.',
+    description: 'A detailed description of the first post.',
     author: 'Alice',
     registrant: 'alice123',
     tag: ['news', 'updates'],
@@ -14,6 +15,7 @@ export const mockData: quoteItem[] = [
   {
     id: 1,
     content: 'Here is some interesting content.',
+    description: 'A detailed description of some interesting content.',
     author: 'Bob',
     registrant: 'bob_the_builder',
     tag: ['fun'],
@@ -24,6 +26,7 @@ export const mockData: quoteItem[] = [
   {
     id: 2,
     content: 'An update about the upcoming event.',
+    description: 'A detailed description of the upcoming event.',
     author: 'Charlie',
     registrant: 'charlie_events',
     tag: ['events', 'updates', 'announcements'],
@@ -34,6 +37,7 @@ export const mockData: quoteItem[] = [
   {
     id: 3,
     content: 'Tips and tricks for better productivity.',
+    description: 'A detailed description of productivity tips and tricks.',
     author: 'David',
     registrant: 'david_productivity',
     tag: ['tips', 'productivity', 'work'],
@@ -44,6 +48,7 @@ export const mockData: quoteItem[] = [
   {
     id: 4,
     content: 'A review of the latest gadget.',
+    description: 'A detailed description of the latest gadget review.',
     author: 'Eve',
     registrant: 'eve_gadgets',
     tag: ['reviews', 'gadgets'],
@@ -54,6 +59,7 @@ export const mockData: quoteItem[] = [
   {
     id: 5,
     content: 'Exploring new places to travel.',
+    description: 'A detailed description of travel destinations.',
     author: 'Frank',
     registrant: 'frank_travels',
     tag: ['travel', 'exploration'],
@@ -64,6 +70,7 @@ export const mockData: quoteItem[] = [
   {
     id: 6,
     content: 'Healthy recipes for a better lifestyle.',
+    description: 'A detailed description of healthy recipes.',
     author: 'Grace',
     registrant: 'grace_cooking',
     tag: ['health', 'recipes', 'food'],
@@ -74,6 +81,7 @@ export const mockData: quoteItem[] = [
   {
     id: 7,
     content: 'Understanding the basics of programming.',
+    description: 'A detailed description of programming basics.',
     author: 'Hank',
     registrant: 'hank_programming',
     tag: ['education', 'programming'],
@@ -84,6 +92,7 @@ export const mockData: quoteItem[] = [
   {
     id: 8,
     content: 'Latest trends in fashion.',
+    description: 'A detailed description of fashion trends.',
     author: 'Ivy',
     registrant: 'ivy_fashion',
     tag: ['fashion', 'trends'],
@@ -94,6 +103,7 @@ export const mockData: quoteItem[] = [
   {
     id: 9,
     content: 'How to stay fit during quarantine.',
+    description: 'A detailed description of staying fit during quarantine.',
     author: 'Jack',
     registrant: 'jack_fitness',
     tag: ['fitness', 'health'],
@@ -104,6 +114,7 @@ export const mockData: quoteItem[] = [
   {
     id: 10,
     content: 'Top 10 programming languages to learn in 2024.',
+    description: 'A detailed description of top programming languages.',
     author: 'Kevin',
     registrant: 'kevin_code',
     tag: ['programming', 'education', 'tech'],
@@ -118,6 +129,7 @@ export const mockData: quoteItem[] = [
   {
     id: 11,
     content: 'The ultimate guide to online marketing.',
+    description: 'A detailed description of online marketing guide.',
     author: 'Laura',
     registrant: 'laura_marketing',
     tag: ['marketing', 'guide'],
@@ -128,6 +140,7 @@ export const mockData: quoteItem[] = [
   {
     id: 12,
     content: 'Best practices for remote work.',
+    description: 'A detailed description of remote work practices.',
     author: 'Mike',
     registrant: 'mike_remote',
     tag: ['work', 'remote', 'productivity'],
@@ -138,6 +151,7 @@ export const mockData: quoteItem[] = [
   {
     id: 13,
     content: 'Understanding blockchain technology.',
+    description: 'A detailed description of blockchain technology.',
     author: 'Nina',
     registrant: 'nina_blockchain',
     tag: ['blockchain', 'tech'],
@@ -148,6 +162,7 @@ export const mockData: quoteItem[] = [
   {
     id: 14,
     content: 'A guide to healthy eating.',
+    description: 'A detailed description of healthy eating guide.',
     author: 'Oscar',
     registrant: 'oscar_health',
     tag: ['health', 'food', 'guide'],
@@ -158,6 +173,7 @@ export const mockData: quoteItem[] = [
   {
     id: 15,
     content: 'Tips for effective time management.',
+    description: 'A detailed description of time management tips.',
     author: 'Paul',
     registrant: 'paul_time',
     tag: ['time management', 'productivity'],
@@ -168,6 +184,7 @@ export const mockData: quoteItem[] = [
   {
     id: 16,
     content: 'Exploring the world of AI.',
+    description: 'A detailed description of AI technology.',
     author: 'Quinn',
     registrant: 'quinn_ai',
     tag: ['AI', 'tech'],
@@ -178,6 +195,7 @@ export const mockData: quoteItem[] = [
   {
     id: 17,
     content: 'A beginner’s guide to photography.',
+    description: 'A detailed description of photography guide.',
     author: 'Rachel',
     registrant: 'rachel_photos',
     tag: ['photography', 'guide'],
@@ -188,6 +206,7 @@ export const mockData: quoteItem[] = [
   {
     id: 18,
     content: 'Understanding personal finance.',
+    description: 'A detailed description of personal finance.',
     author: 'Sam',
     registrant: 'sam_finance',
     tag: ['finance', 'personal finance', 'money'],
@@ -198,6 +217,7 @@ export const mockData: quoteItem[] = [
   {
     id: 19,
     content: 'How to start a successful blog.',
+    description: 'A detailed description of starting a blog.',
     author: 'Tina',
     registrant: 'tina_blog',
     tag: ['blogging', 'guide'],
@@ -208,6 +228,7 @@ export const mockData: quoteItem[] = [
   {
     id: 20,
     content: 'Mastering the art of public speaking.',
+    description: 'A detailed description of public speaking.',
     author: 'Uma',
     registrant: 'uma_speaker',
     tag: ['public speaking', 'self-improvement'],
@@ -218,6 +239,7 @@ export const mockData: quoteItem[] = [
   {
     id: 21,
     content: 'A comprehensive guide to yoga.',
+    description: 'A detailed description of yoga practices.',
     author: 'Vince',
     registrant: 'vince_yoga',
     tag: ['yoga', 'health'],
@@ -228,6 +250,7 @@ export const mockData: quoteItem[] = [
   {
     id: 22,
     content: 'Exploring different cultures through food.',
+    description: 'A detailed description of cultural cuisines.',
     author: 'Wendy',
     registrant: 'wendy_foodie',
     tag: ['food', 'culture'],
@@ -238,6 +261,7 @@ export const mockData: quoteItem[] = [
   {
     id: 23,
     content: 'The benefits of meditation.',
+    description: 'A detailed description of meditation benefits.',
     author: 'Xander',
     registrant: 'xander_meditates',
     tag: ['meditation', 'health', 'mindfulness'],
@@ -248,6 +272,7 @@ export const mockData: quoteItem[] = [
   {
     id: 24,
     content: 'A travel guide to Japan.',
+    description: 'A detailed description of traveling in Japan.',
     author: 'Yara',
     registrant: 'yara_travels',
     tag: ['travel', 'Japan'],
@@ -258,6 +283,7 @@ export const mockData: quoteItem[] = [
   {
     id: 25,
     content: 'The essentials of cybersecurity.',
+    description: 'A detailed description of cybersecurity essentials.',
     author: 'Zane',
     registrant: 'zane_security',
     tag: ['cybersecurity', 'tech', 'essentials'],
@@ -271,6 +297,7 @@ export const mockData: quoteItem[] = [
   {
     id: 26,
     content: 'The art of minimalism.',
+    description: 'A detailed description of minimalism lifestyle.',
     author: 'Ava',
     registrant: 'ava_minimalist',
     tag: ['minimalism', 'lifestyle'],
@@ -281,6 +308,7 @@ export const mockData: quoteItem[] = [
   {
     id: 27,
     content: 'How to start investing in stocks.',
+    description: 'A detailed description of stock investing.',
     author: 'Brian',
     registrant: 'brian_investor',
     tag: ['investing', 'finance', 'stocks'],
@@ -291,6 +319,7 @@ export const mockData: quoteItem[] = [
   {
     id: 28,
     content: 'A beginner’s guide to cooking.',
+    description: 'A detailed description of cooking basics.',
     author: 'Clara',
     registrant: 'clara_cooks',
     tag: ['cooking', 'recipes', 'guide'],
@@ -304,6 +333,7 @@ export const mockData: quoteItem[] = [
   {
     id: 29,
     content: 'The future of renewable energy.',
+    description: 'A detailed description of renewable energy future.',
     author: 'Derek',
     registrant: 'derek_energy',
     tag: ['renewable energy', 'tech', 'future'],

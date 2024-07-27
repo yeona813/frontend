@@ -8,6 +8,8 @@ interface QuoteItemProps {
 
 const QuoteItem = ({ element, onClickHeart }: QuoteItemProps) => {
   const [heart, setHeart] = useState(false);
+  const [flipped, setFlipped] = useState(false);
+
   const [backgroundImage, setBackgroundImage] = useState('');
   const images = [
     '/images/quoteImage1.jpg',
@@ -32,6 +34,10 @@ const QuoteItem = ({ element, onClickHeart }: QuoteItemProps) => {
     onClickHeart(element.id, heart);
   };
 
+  const onClickCard = () => {
+    setFlipped(!flipped);
+  };
+
   return (
     <div className="shadow-custom-bottom-right border rounded-lg border-none border-black py-3 flex flex-col gap-2 bg-white">
       <div className="p-2">키워드 들어갈 자리</div>
@@ -43,10 +49,51 @@ const QuoteItem = ({ element, onClickHeart }: QuoteItemProps) => {
             filter: 'brightness(70%)',
           }}
         ></div>
-        <div className="p-3 relative z-10 flex flex-col items-center justify-center h-full font-semibold text-xl">
-          <p>{element.content}</p>
-          <br />
-          <p>{element.author}</p>
+        <div
+          style={{ perspective: '1100px' }}
+          className="p-3 relative z-10 flex flex-col items-center justify-center h-full font-semibold text-xl"
+        >
+          <div
+            style={{
+              position: 'relative',
+              transition: '.4s',
+              transformStyle: 'preserve-3d',
+              transform: flipped ? 'rotateY(180deg)' : '',
+            }}
+            role="button"
+            tabIndex={0}
+            onClick={onClickCard}
+            onKeyDown={onClickCard}
+          >
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+
+                backfaceVisibility: 'hidden',
+              }}
+            >
+              <div>
+                <p>{element.content}</p>
+                <br />
+                <p>{element.author}</p>
+              </div>
+            </div>
+
+            <div
+              style={{
+                display: 'flex',
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                transform: 'rotateY(180deg)',
+                backfaceVisibility: 'hidden',
+              }}
+            >
+              {element.description}
+            </div>
+          </div>
         </div>
       </div>
 

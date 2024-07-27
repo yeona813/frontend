@@ -20,7 +20,7 @@ const QuoteList = () => {
   return (
     <form className="p-3 flex flex-col gap-2  bg-yellow-FF">
       <div className="px-3 my-4 text-xl">
-        <p>명언</p>
+        <h2>명언</h2>
       </div>
       <section>
         <ul>
