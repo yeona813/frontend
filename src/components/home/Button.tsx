@@ -10,7 +10,7 @@ const Button = () => {
   };
   return (
     <button
-      className="w-[150px] h-[50px] bg-black text-white rounded-full"
+      className="w-[150px] h-[50px] bg-black font-mediun text-white rounded-full"
       type="button"
       onClick={handleClick}
     >
