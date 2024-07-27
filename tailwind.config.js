@@ -2,7 +2,14 @@
 module.exports = {
   content: ['./src/**/*.{js,jsx,ts,tsx}'],
   theme: {
-    extend: {},
+    extend: {
+      boxShadow: {
+        'custom-top-left': '-4px -4px 10px rgba(0, 0, 0, 0.5)',
+        'custom-top-right': '4px -4px 10px rgba(0, 0, 0, 0.5)',
+        'custom-bottom-left': '-4px 4px 10px rgba(0, 0, 0, 0.5)',
+        'custom-bottom-right': '4px 4px 10px rgba(0, 0, 0, 0.5)',
+      },
+    },
   },
   plugins: [],
 };

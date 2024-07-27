@@ -61,3 +61,7 @@ code {
 .react-datepicker{
   margin-left: 80px;
 }
+
+body::-webkit-scrollbar {
+  display: none;
+}
