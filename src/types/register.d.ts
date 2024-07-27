@@ -11,3 +11,10 @@ export type err = {
   checkPasswordErr: boolean;
   nicknameErr: boolean;
 };
+
+export type infoRef = {
+  emailRef: RefObject<HTMLInputElement>;
+  passwordRef: RefObject<HTMLInputElement>;
+  checkPasswordRef: RefObject<HTMLInputElement>;
+  nicknameRef: RefObject<HTMLInputElement>;
+};

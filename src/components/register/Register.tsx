@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { info, err } from 'types/register';
 import RegisterForm from './RegisterForm';
 
-const Register: React.FC = () => {
+const Register = () => {
   const [register, setRegister] = useState<info>({
     email: '',
     password: '',

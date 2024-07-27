@@ -2,7 +2,6 @@ import Header from 'components/common/Header';
 import LoginPage from 'pages/login/LoginPage';
 import MyPage from 'pages/my/MyPage';
 import RegisterPage from 'pages/register/RegisterPage';
-import Redirection from 'pages/login/Redirection';
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import HomePage from 'pages/home/HomePage';
@@ -15,7 +14,7 @@ function Router() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/quoteList" element={<QuoteListPage />} />
-        <Route exact path="/oauth" element={<Redirection />} />
+        <Route exact path="/oauth" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/my" element={<MyPage />} />

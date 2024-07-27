@@ -7,6 +7,7 @@ const HomePage = () => {
       <Question />
     </div>
   );
+
 };
 
 export default HomePage;
