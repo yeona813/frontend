@@ -11,7 +11,7 @@ const EmailInput = ({ emailInput, onChangeEmailInput }: EmailInputProps) => {
       <span className="px-3 text-sm">이메일</span>
       <div
         className="gap-2 my-2 w-[335px]  flex-1 mx-auto rounded-lg border
-         border-gray-300  h-[50px] 
+         border-gray-300  h-[50px] bg-white
         flex items-center justify-between px-3"
       >
         <input
