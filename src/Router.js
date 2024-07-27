@@ -5,7 +5,6 @@ import RegisterPage from 'pages/register/RegisterPage';
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import HomePage from 'pages/home/HomePage';
-import WriteQuotePage from 'pages/writeQuote/WriteQuotePage';
 import QuoteListPage from 'pages/quoteList/QuoteListPage';
 
 function Router() {
@@ -14,7 +13,6 @@ function Router() {
       <Header />
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/writeQuote" element={<WriteQuotePage />} />
         <Route path="/quoteList" element={<QuoteListPage />} />
         <Route exact path="/oauth" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
