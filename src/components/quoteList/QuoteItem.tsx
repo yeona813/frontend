@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { quoteItem } from 'types/quoteList';
+import { QuoteImage } from 'components/common/constants/QuoteImage';
 
 // 1. 명언 클릭하면 rotate되면서 명언 설명 나오게 css를 inline style로 적용했는데 필요 없으면 빼거나, 필요하면 tailwind로 바꿀 예정 - 해결
 // 2. 댓글 누르면 어떤 이벤트 발생??
 // 3. 5개씩 렌더링하기, 더보기 버튼 누르면 5개 씩 더 나오게 - 해결
+// 4. 이유는 모르겠지만 사진 하나가 걍 백지가 나옴 - 해결
 
 interface QuoteItemProps {
   element: quoteItem;
@@ -15,21 +17,10 @@ const QuoteItem = ({ element, onClickHeart }: QuoteItemProps) => {
   const [flipped, setFlipped] = useState(false);
 
   const [backgroundImage, setBackgroundImage] = useState('');
-  const images = [
-    '/images/quoteImage1.jpg',
-    '/images/quoteImage2.jpg',
-    '/images/quoteImage3.jpg',
-    '/images/quoteImage4.jpg',
-    '/images/quoteImage5.jpg',
-    '/images/quoteImage6.jpg',
-    '/images/quoteImage7.jpg',
-    '/images/quoteImage8.jpg',
-    '/images/quoteImage9.jpg',
-    '/images/quoteImage10.jpg',
-  ];
 
   useEffect(() => {
-    const chosenImage = images[Math.floor(Math.random() * images.length)];
+    const chosenImage =
+      QuoteImage[Math.floor(Math.random() * QuoteImage.length)];
     setBackgroundImage(`url(${chosenImage})`);
   }, []);
 
