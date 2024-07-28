@@ -1,11 +1,19 @@
 import Button from 'components/common/Button';
 import Question from 'components/home/Question';
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const HomePage = () => {
+  const isLoggedIn = true; // 로그인 여부 다시 가져와야함!
+
   const [text, setText] = useState('');
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      navigate('/login');
+    }
+  }, []);
 
   const handleTextChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     setText(event.target.value);
