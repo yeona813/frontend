@@ -3,8 +3,15 @@ import Comment from 'components/resultQuote/Comment';
 import ResultQuote from 'components/resultQuote/ResultQuote';
 import WriteComment from 'components/resultQuote/WriteComment';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const ResultQuotePage = () => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate('/quoteList');
+  };
+
   return (
     <div className="flex flex-col items-center pt-[30px] gap-[30px]">
       <div className="flex flex-col gap-[20px] w-[300px] rounded-xl bg-white shadow-custom p-5">
@@ -23,7 +30,7 @@ const ResultQuotePage = () => {
           comment="오늘 명언 추천 굿 오늘 힘내보자~~"
         />
       </div>
-      <Button text="명언 더 보기" navigate="quoteList" />
+      <Button text="명언 더 보기" handleClick={handleClick} />
     </div>
   );
 };
