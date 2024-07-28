@@ -21,7 +21,7 @@ const LoginButton = ({ emailInput, passwordInput }: LoginButtonProps) => {
 
   return (
     <section>
-      <div className="mt-[20px] text-center flex flex-col gap-4 items-center">
+      <div className="mt-[20px] text-center flex flex-col gap-6 items-center">
         <button
           className="rounded-lg bg-black w-[335px] h-[45.5px] shadow-md text-white"
           type="button"
@@ -31,11 +31,12 @@ const LoginButton = ({ emailInput, passwordInput }: LoginButtonProps) => {
         </button>
 
         <button
-          className="rounded-lg w-[335px] h-[45px] shadow-md"
+          className="flex gap-4 justify-center items-center rounded-lg w-[335px] h-[45px] shadow-md bg-kakao-yellow"
           type="button"
           onClick={onClickKakaoLogin}
         >
-          <img src="icons/kakao_login_button.png" alt="카카오 로그인" />
+          <img className="" src="icons/kakao_shape.png" alt="카카오 로그인" />
+          <span>카카오톡으로 1초만에 시작하기</span>
         </button>
         <div>
           <span>회원이 아니신가요? </span>

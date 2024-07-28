@@ -41,7 +41,7 @@ const EmailSection = ({
           ref={emailRef}
         >
           <input
-            className="w-[250px] outline-none"
+            className="w-[250px] outline-none "
             name="email"
             value={email}
             type="text"
