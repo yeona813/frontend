@@ -9,6 +9,8 @@ module.exports = {
       colors: {
         'yellow-FF': '#FFF099',
         'kakao-yellow': '#FEE500',
+        'yellow-FA': '#FAF9F3',
+        'gray-D1': '#D1D1D1',
       },
       boxShadow: {
         'custom-top-left': '-4px -4px 10px rgba(0, 0, 0, 0.5)',
