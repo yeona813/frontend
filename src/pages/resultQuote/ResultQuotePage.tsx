@@ -18,7 +18,7 @@ const ResultQuotePage = () => {
         />
         <Comment
           profileImage="/images/quoteImage3.jpg"
-          nickname="한원준"
+          nickname="ddd"
           date="2024-07-28"
           comment="오늘 명언 추천 굿 오늘 힘내보자~~"
         />
