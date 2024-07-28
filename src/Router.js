@@ -9,7 +9,7 @@ import ResultQuotePage from 'pages/resultQuote/ResultQuotePage';
 
 function Router() {
   return (
-    <div>
+    <div className="mt-16">
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/resultQuote" element={<ResultQuotePage />} />
