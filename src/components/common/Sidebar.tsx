@@ -4,9 +4,11 @@ interface SidebarProps {
   onClickMenu(): void;
 }
 
+// 넣고 싶은거 넣기
+
 const Sidebar = ({ onClickMenu }: SidebarProps) => {
   return (
-    <div className="absolute top-0 left-0 w-full h-screen flex">
+    <div className="absolute top-0 left-0 w-full h-[812px] flex">
       <div className="flex bg-white w-1/2 h-full">
         <button onClick={onClickMenu} type="button">
           나가기

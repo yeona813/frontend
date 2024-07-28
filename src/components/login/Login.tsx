@@ -10,6 +10,9 @@ import LoginButton from './LoginButton';
 // 2. 카카오 로그인 버튼 핸들 - 해결(추후에 백엔드와 잘 연결되는지 확인)
 // 3. 비밀번호에 눈 달기 - 해결
 // 4. 카카오 로그인 버튼 글씨체 바꾸기(카톡 이미지만 가져오고 span태그 사용하자)
+// 5. 유저 정보 어떻게 저장할 것인지
+// 6. useEffect 사용해서 isLoggin 생각하기
+// 7. 로그인 이메일, 비밀번호 형식 확인
 
 const Login = () => {
   const [emailInput, setEmailInput] = useState('');
