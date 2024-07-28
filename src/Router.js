@@ -14,7 +14,7 @@ function Router() {
       <Header />
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route paht="/resultQuote" element={<ResultQuotePage />} />
+        <Route path="/resultQuote" element={<ResultQuotePage />} />
         <Route path="/quoteList" element={<QuoteListPage />} />
         <Route exact path="/oauth" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
