@@ -1,18 +1,11 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 
 interface ButtonProps {
   text: string;
-  navigate: string;
+  handleClick: () => void;
 }
 
-const Button = ({ text, navigate }: ButtonProps) => {
-  const naviagte = useNavigate();
-
-  const handleClick = () => {
-    naviagte(`/${navigate}`);
-  };
-
+const Button = ({ text, handleClick }: ButtonProps) => {
   return (
     <button
       className="w-[150px] h-[50px] bg-black font-mediun text-white rounded-full"
