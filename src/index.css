@@ -62,6 +62,6 @@ code {
   margin-left: 80px;
 }
 
-body::-webkit-scrollbar {
+/* body::-webkit-scrollbar {
   display: none;
-}
+} */

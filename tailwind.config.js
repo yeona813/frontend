@@ -19,5 +19,48 @@ module.exports = {
       },
     },
   },
-  plugins: [require('tailwind-scrollbar-hide')],
+  plugins: [
+    require('tailwind-scrollbar-hide'),
+    function ({ addUtilities }) {
+      const newUtilities = {
+        '.backface-hidden': {
+          'backface-visibility': 'hidden',
+        },
+      };
+      addUtilities(newUtilities, ['responsive', 'hover', 'click']);
+    },
+    function ({ addUtilities }) {
+      const newUtilities = {
+        '.perspective-1100': {
+          perspective: '1100px',
+        },
+      };
+      addUtilities(newUtilities, ['responsive', 'hover', 'click']);
+    },
+    function ({ addUtilities }) {
+      const newUtilities = {
+        '.transformStyle-preserve-3d': {
+          transformStyle: 'preserve-3d',
+        },
+      };
+      addUtilities(newUtilities, ['responsive', 'hover', 'click']);
+    },
+
+    function ({ addUtilities }) {
+      const newUtilities = {
+        '.transform-rotY180': {
+          transform: 'rotateY(180deg)',
+        },
+      };
+      addUtilities(newUtilities, ['responsive', 'hover', 'click']);
+    },
+    function ({ addUtilities }) {
+      const newUtilities = {
+        '.transition-md': {
+          transition: '0.4s',
+        },
+      };
+      addUtilities(newUtilities, ['responsive', 'hover', 'click']);
+    },
+  ],
 };

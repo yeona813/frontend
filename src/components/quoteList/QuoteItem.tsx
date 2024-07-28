@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { quoteItem } from 'types/quoteList';
 
+// 1. 명언 클릭하면 rotate되면서 명언 설명 나오게 css를 inline style로 적용했는데 필요 없으면 빼거나, 필요하면 tailwind로 바꿀 예정 - 해결
+// 2. 댓글 누르면 어떤 이벤트 발생??
+// 3. 5개씩 렌더링하기, 더보기 버튼 누르면 5개 씩 더 나오게 - 해결
+
 interface QuoteItemProps {
   element: quoteItem;
   onClickHeart(id: number, heart: boolean): void;
@@ -50,47 +54,24 @@ const QuoteItem = ({ element, onClickHeart }: QuoteItemProps) => {
           }}
         ></div>
         <div
-          style={{ perspective: '1100px' }}
-          className="p-3 relative z-10 flex flex-col items-center justify-center h-full font-semibold text-xl"
+          tabIndex={0}
+          role="button"
+          onClick={onClickCard}
+          onKeyDown={onClickCard}
+          className="perspective-1100 p-3 relative z-10 flex flex-col items-center justify-center h-full font-semibold text-xl"
         >
           <div
-            style={{
-              position: 'relative',
-              transition: '.4s',
-              transformStyle: 'preserve-3d',
-              transform: flipped ? 'rotateY(180deg)' : '',
-            }}
-            role="button"
-            tabIndex={0}
-            onClick={onClickCard}
-            onKeyDown={onClickCard}
+            className={`transition-md relative transformStyle-preserve-3d ${flipped ? 'transform-rotY180' : ''}`}
           >
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-
-                backfaceVisibility: 'hidden',
-              }}
-            >
-              <div>
+            <div className="backface-hidden flex justify-center align-middle">
+              <div className="[text-shadow:_10px_10px_7px_rgb(0,0,0,50%)]">
                 <p>{element.content}</p>
                 <br />
                 <p>{element.author}</p>
               </div>
             </div>
 
-            <div
-              style={{
-                display: 'flex',
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                transform: 'rotateY(180deg)',
-                backfaceVisibility: 'hidden',
-              }}
-            >
+            <div className="transform-rotY180 flex absolute top-0 left-0 [text-shadow:_10px_10px_7px_rgb(0,0,0,50%)] backface-hidden">
               {element.description}
             </div>
           </div>
