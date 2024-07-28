@@ -34,9 +34,12 @@ const QuoteItem = ({ element, onClickHeart }: QuoteItemProps) => {
   };
 
   return (
-    <div className="shadow-custom-bottom-right border rounded-lg border-none border-black py-3 flex flex-col gap-2 bg-white">
+    <div
+      className="shadow-custom-bottom-right border rounded-lg
+     border-none border-black py-3 flex flex-col gap-2 bg-white"
+    >
       <div className="p-2">키워드 들어갈 자리</div>
-      <div className="relative text-center h-96 text-white">
+      <div className="relative text-center h-[320px] text-white">
         <div
           className="absolute inset-0 bg-cover bg-center"
           style={{
