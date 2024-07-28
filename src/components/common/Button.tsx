@@ -1,20 +1,25 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const Button = () => {
+interface ButtonProps {
+  text: string;
+  navigate: string;
+}
+
+const Button = ({ text, navigate }: ButtonProps) => {
   const naviagte = useNavigate();
 
   const handleClick = () => {
-    console.log('안녕');
-    naviagte('/resultQuote');
+    naviagte(`/${navigate}`);
   };
+
   return (
     <button
       className="w-[150px] h-[50px] bg-black font-mediun text-white rounded-full"
       type="button"
       onClick={handleClick}
     >
-      결과 보기
+      {text}
     </button>
   );
 };
