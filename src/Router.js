@@ -1,4 +1,3 @@
-import Header from 'components/common/Header';
 import LoginPage from 'pages/login/LoginPage';
 import MyPage from 'pages/my/MyPage';
 import RegisterPage from 'pages/register/RegisterPage';
@@ -11,7 +10,6 @@ import ResultQuotePage from 'pages/resultQuote/ResultQuotePage';
 function Router() {
   return (
     <div>
-      <Header />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/resultQuote" element={<ResultQuotePage />} />
