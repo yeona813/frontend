@@ -15,7 +15,7 @@ const ResultQuote = ({
 }: ResultQuoteProps) => {
   return (
     <div
-      className="relative p-10 flex items-center justify-center w-[260px] h-[260px] rounded-xl"
+      className="relative p-10 flex items-center justify-center w-[260px] h-[200px] rounded-xl"
       style={{
         backgroundImage: `url(${imageUrl})`,
         backgroundSize: 'cover',
