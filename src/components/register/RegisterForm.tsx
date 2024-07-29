@@ -43,8 +43,11 @@ const RegisterForm = ({ register, error, onChangeRegister }: RegisterProps) => {
   return (
     <section>
       {success ? (
-        <form className="p-5 flex flex-col gap-10 bg-white text-center mt-[300px]">
-          <h1 className="text-2xl">축하합니다!</h1>
+        <form
+          className="p-5 flex flex-col gap-10
+         bg-white text-center h-[812px] items-center"
+        >
+          <h1 className="text-2xl mt-[250px]">축하합니다!</h1>
           <Link
             to="/login"
             className="border rounded-lg text-white bg-black mx-[110px] p-3"

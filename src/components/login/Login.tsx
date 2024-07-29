@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { err } from 'types/register';
 import EmailInput from './EmailInput';
 import PasswordInput from './PasswordInput';
 import LoginButton from './LoginButton';
@@ -13,8 +14,41 @@ import LoginButton from './LoginButton';
 // 7. 로그인 이메일, 비밀번호 형식 확인
 
 const Login = () => {
+  const [success, setSuccess] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
   const [emailInput, setEmailInput] = useState('');
   const [passwordInput, setPasswordInput] = useState('');
+  const [error, setError] = useState<err>({
+    emailErr: false,
+    passwordErr: false,
+    checkPasswordErr: true,
+    nicknameErr: true,
+  });
+
+  const emailRef = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!regex.test(emailInput)) {
+      console.log('올바른 이메일 형식이 아닙니다.');
+      setError({ ...error, emailErr: false });
+    } else {
+      setError({ ...error, emailErr: true });
+    }
+  }, [emailInput]);
+
+  useEffect(() => {
+    const regex = /^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*]).{8,}$/;
+
+    if (!regex.test(passwordInput)) {
+      console.log('올바른 비밀번호 형식이 아닙니다.');
+      setError({ ...error, passwordErr: false });
+    } else {
+      setError({ ...error, passwordErr: true });
+    }
+  }, [passwordInput]);
 
   const onChangeEmailInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmailInput(e.target.value);
@@ -30,15 +64,30 @@ const Login = () => {
         <p>로그인</p>
       </div>
       <EmailInput
+        emailErr={error.emailErr}
+        submitted={submitted}
+        emailRef={emailRef}
         emailInput={emailInput}
         onChangeEmailInput={onChangeEmailInput}
       />
 
       <PasswordInput
+        passwordErr={error.passwordErr}
+        submitted={submitted}
+        passwordRef={passwordRef}
         passwordInput={passwordInput}
         onChangePasswordInput={onChangePasswordInput}
       />
-      <LoginButton emailInput={emailInput} passwordInput={passwordInput} />
+      <LoginButton
+        setSuccess={setSuccess}
+        emailInput={emailInput}
+        passwordInput={passwordInput}
+        submitted={submitted}
+        error={error}
+        setSubmitted={setSubmitted}
+        emailRef={emailRef}
+        passwordRef={passwordRef}
+      />
     </form>
   );
 };
