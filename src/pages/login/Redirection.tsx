@@ -22,7 +22,7 @@ const Redirection = () => {
         // console.log('User profile', response.data.user);
         console.log('User token', response.data.jwt);
         localStorage.setItem('data', response.data.jwt);
-        navigate('/quote');
+        navigate('/');
       })
       .catch((error) => {
         // Handle error.
