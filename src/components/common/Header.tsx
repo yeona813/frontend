@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import Sidebar from './Sidebar';
+import BlackArea from './BlackArea';
 
 const Header = () => {
   const [menuOpened, setMenuOpend] = useState(false);
 
   const onClickMenu = () => {
     setMenuOpend(!menuOpened);
-    console.log(menuOpened);
   };
 
   return (
@@ -29,7 +28,15 @@ const Header = () => {
         로고
       </Link>
 
-      {menuOpened ? <Sidebar onClickMenu={onClickMenu} /> : null}
+      <div
+        className={`fixed flex bg-white w-[188px] h-full
+        ${menuOpened ? 'transform-translatex-show' : 'transform-translatex-hide'} transition-md z-40 border rounded-lg`}
+      >
+        <button onClick={onClickMenu} type="button">
+          나가기
+        </button>
+      </div>
+      {menuOpened ? <BlackArea onClickMenu={onClickMenu} /> : null}
     </div>
   );
 };
