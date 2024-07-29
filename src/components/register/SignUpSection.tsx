@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { info, err, infoRef } from 'types/register';
 
 interface SignUpSectionProps {
@@ -20,7 +20,7 @@ const SignUpSection = ({
   setSubmitted,
   setSuccess,
 }: SignUpSectionProps) => {
-  const navigate = useNavigate();
+  const REGISTER_URL = '/accounts/register/';
 
   useEffect(() => {
     if (submitted) {
@@ -53,8 +53,27 @@ const SignUpSection = ({
       console.log('ERRRRRR');
       return;
     }
+
+    try {
+      const response = await axios.post(
+        REGISTER_URL,
+        JSON.stringify({
+          email: register.email,
+          password: register.password,
+          nickname: register.nickname,
+        }),
+        {
+          headers: { 'Content-Type': 'application/json' },
+          withCredentials: true,
+        },
+      );
+      console.log(response.data);
+      console.log(JSON.stringify(response));
+      setSuccess(true);
+    } catch (err) {
+      console.log('ERROR OCCURED');
+    }
     console.log(register.email, register.password);
-    setSuccess(true);
   };
   return (
     <section>
