@@ -29,6 +29,7 @@ const Header = () => {
         로고
       </Link>
 
+
       <div
         className={`fixed flex bg-white w-[250px] h-[812px] top-0
         ${menuOpened ? 'transform-translatex-show' : 'transform-translatex-hide'} 
