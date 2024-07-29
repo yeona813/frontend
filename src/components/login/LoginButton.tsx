@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 interface LoginButtonProps {
@@ -7,6 +7,8 @@ interface LoginButtonProps {
 }
 
 const LoginButton = ({ emailInput, passwordInput }: LoginButtonProps) => {
+  const [isLogin, setIsLogin] = useState(false);
+
   const onClickKakaoLogin = () => {
     const REST_API_KEY = process.env.REACT_APP_KAKAO_REST_API_KEY; // 백엔드에서 받은 카카오 키 넣기
     const REDIRECT_URI = `http://localhost:3000/oauth`; // 백엔드에서 받은 리다이렉트 URI 넣기
@@ -15,8 +17,8 @@ const LoginButton = ({ emailInput, passwordInput }: LoginButtonProps) => {
     window.location.href = link;
   };
 
-  const onClickNormalLogin = () => {
-    console.log('정보 있는지 확인');
+  const onClickNormalLogin = async () => {
+    console.log(`${emailInput}, ${passwordInput}`);
   };
 
   return (

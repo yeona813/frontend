@@ -41,6 +41,7 @@ const EmailSection = ({
           ref={emailRef}
         >
           <input
+            autoComplete="off"
             className="w-[250px] outline-none "
             name="email"
             value={email}

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import BlackArea from './BlackArea';
+import SideMenu from './SideMenu';
 
 const Header = () => {
   const [menuOpened, setMenuOpend] = useState(false);
@@ -30,12 +31,11 @@ const Header = () => {
 
 
       <div
-        className={`fixed flex bg-white w-[188px] h-full
-        ${menuOpened ? 'transform-translatex-show' : 'transform-translatex-hide'} transition-md z-40 border rounded-lg`}
+        className={`fixed flex bg-white w-[250px] h-[812px] top-0
+        ${menuOpened ? 'transform-translatex-show' : 'transform-translatex-hide'} 
+        transition-sm z-40 border rounded-lg`}
       >
-        <button onClick={onClickMenu} type="button">
-          나가기
-        </button>
+        <SideMenu />
       </div>
       {menuOpened ? <BlackArea onClickMenu={onClickMenu} /> : null}
     </div>

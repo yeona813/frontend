@@ -61,6 +61,9 @@ module.exports = {
         '.transition-md': {
           transition: '0.4s',
         },
+        '.transition-sm': {
+          transition: '0.8s',
+        },
       };
       addUtilities(newUtilities, ['responsive', 'hover', 'click']);
     },
