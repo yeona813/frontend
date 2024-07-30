@@ -14,6 +14,7 @@ import LoginButton from './LoginButton';
 // 7. 로그인 이메일, 비밀번호 형식 확인
 
 const Login = () => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [success, setSuccess] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [emailInput, setEmailInput] = useState('');

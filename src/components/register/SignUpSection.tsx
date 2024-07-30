@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { info, err, infoRef } from 'types/register';
 
 interface SignUpSectionProps {
+  emailCheck: boolean;
   submitted: boolean;
   register: info;
   error: err;
@@ -13,6 +14,7 @@ interface SignUpSectionProps {
 }
 
 const SignUpSection = ({
+  emailCheck,
   register,
   error,
   refObj,
@@ -20,8 +22,6 @@ const SignUpSection = ({
   setSubmitted,
   setSuccess,
 }: SignUpSectionProps) => {
-  const REGISTER_URL = '/accounts/register/';
-
   useEffect(() => {
     if (submitted) {
       refObj.emailRef.current?.style.setProperty(
@@ -49,27 +49,21 @@ const SignUpSection = ({
       (element) => element === true,
     );
 
-    if (!isErrorFree) {
-      console.log('ERRRRRR');
+    if (!isErrorFree || !emailCheck) {
+      console.log(`ERRRRRR, ${!isErrorFree}, ${!emailCheck}`);
       return;
     }
 
     try {
-      const response = await axios.post(
-        REGISTER_URL,
-        JSON.stringify({
-          email: register.email,
-          password: register.password,
-          nickname: register.nickname,
-        }),
-        {
-          headers: { 'Content-Type': 'application/json' },
-          withCredentials: true,
-        },
-      );
-      console.log(response.data);
-      console.log(JSON.stringify(response));
-      setSuccess(true);
+      const response = await axios.post('서버URL', {
+        email: register.email,
+        nickname: register.nickname,
+        password: register.password,
+      });
+
+      if (response.status === 201) {
+        setSuccess(true);
+      }
     } catch (err) {
       console.log('ERROR OCCURED');
     }
