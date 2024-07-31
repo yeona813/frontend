@@ -61,6 +61,22 @@ module.exports = {
         '.transition-md': {
           transition: '0.4s',
         },
+        '.transition-sm': {
+          transition: '0.8s',
+        },
+      };
+      addUtilities(newUtilities, ['responsive', 'hover', 'click']);
+    },
+    function ({ addUtilities }) {
+      const newUtilities = {
+        '.transform-translatex-show': {
+          transform: 'translateX(0)',
+          visibility: 'visible',
+        },
+        '.transform-translatex-hide': {
+          transform: 'translateX(-110%)',
+          visibility: 'hidden',
+        },
       };
       addUtilities(newUtilities, ['responsive', 'hover', 'click']);
     },

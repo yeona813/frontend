@@ -1,25 +1,27 @@
 import axios from 'axios';
 import React, { useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { info, err, infoRef } from 'types/register';
 
 interface SignUpSectionProps {
+  emailCheck: boolean;
   submitted: boolean;
   register: info;
   error: err;
   refObj: infoRef;
   setSubmitted: React.Dispatch<React.SetStateAction<boolean>>;
+  setSuccess: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const SignUpSection = ({
+  emailCheck,
   register,
   error,
   refObj,
   submitted,
   setSubmitted,
+  setSuccess,
 }: SignUpSectionProps) => {
-  const navigate = useNavigate();
-
   useEffect(() => {
     if (submitted) {
       refObj.emailRef.current?.style.setProperty(
@@ -41,28 +43,31 @@ const SignUpSection = ({
     }
   }, [submitted, error]);
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
     setSubmitted(true);
     const isErrorFree = Object.values(error).every(
       (element) => element === true,
     );
 
-    if (isErrorFree) {
-      axios
-        .post('#', {
-          email: register.email,
-          password: register.password,
-          nickname: register.nickname,
-        })
-        .then((response) => {
-          console.log('User token', response.data.jwt);
-          localStorage.setItem('data', response.data.jwt);
-          navigate('/login');
-        })
-        .catch((error) => {
-          console.log('An error occurred:', error.response);
-        });
+    if (!isErrorFree || !emailCheck) {
+      console.log(`ERRRRRR, ${!isErrorFree}, ${!emailCheck}`);
+      return;
     }
+
+    try {
+      const response = await axios.post('서버URL', {
+        email: register.email,
+        nickname: register.nickname,
+        password: register.password,
+      });
+
+      if (response.status === 201) {
+        setSuccess(true);
+      }
+    } catch (err) {
+      console.log('ERROR OCCURED');
+    }
+    console.log(register.email, register.password);
   };
   return (
     <section>

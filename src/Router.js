@@ -6,6 +6,7 @@ import { Route, Routes } from 'react-router-dom';
 import HomePage from 'pages/home/HomePage';
 import QuoteListPage from 'pages/quoteList/QuoteListPage';
 import ResultQuotePage from 'pages/resultQuote/ResultQuotePage';
+import Redirection from 'pages/login/Redirection';
 
 function Router() {
   return (
@@ -14,7 +15,7 @@ function Router() {
         <Route path="/" element={<HomePage />} />
         <Route path="/resultQuote" element={<ResultQuotePage />} />
         <Route path="/quoteList" element={<QuoteListPage />} />
-        <Route exact path="/oauth" element={<HomePage />} />
+        <Route exact path="/oauth" element={<Redirection />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/my" element={<MyPage />} />

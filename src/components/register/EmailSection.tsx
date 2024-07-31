@@ -1,32 +1,58 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useRef } from 'react';
 
 interface EmailSectionProps {
+  emailCheck: boolean;
   submitted: boolean;
   emailRef: React.RefObject<HTMLInputElement>;
   email: string;
   emailErr: boolean;
   onChangeRegister(e: React.ChangeEvent<HTMLInputElement>): void;
+  setEmailCheck: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const EmailSection = ({
+  emailCheck,
   submitted,
   emailRef,
   email,
   emailErr,
   onChangeRegister,
+  setEmailCheck,
 }: EmailSectionProps) => {
-  const niceInputEmail = (): JSX.Element => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const userListRef = useRef<any[]>([]);
+  const usingRef = useRef<HTMLSpanElement>(null);
+
+  const niceInputEmail = (): string => {
     if (submitted) {
-      if (emailErr) {
-        return <span></span>;
+      console.log(submitted, emailCheck, emailErr);
+      if (!emailErr) {
+        return '이메일 형식을 입력해 주세요';
       }
-      return (
-        <span className="px-3 text-xs text-red-400">
-          이메일 형식을 입력해 주세요
-        </span>
-      );
+      if (!emailCheck) {
+        return '이메일 중복을 확인하세요';
+      }
     }
-    return <span></span>;
+    return '';
+  };
+
+  const onAvail = async () => {
+    try {
+      const respone = await axios.get('서버URL');
+      if (respone.status === 200) {
+        userListRef.current = respone.data; // <- 이 녀석 배열인가?
+
+        if (!userListRef.current?.some((element) => element.email === email)) {
+          setEmailCheck(true);
+        }
+      }
+    } catch (error) {
+      console.log('ERROR OCCURED');
+    }
+
+    // 데이터 받아보면서 해결하자
+    // 아직 잘 모르겠음
   };
 
   return (
@@ -41,6 +67,7 @@ const EmailSection = ({
           ref={emailRef}
         >
           <input
+            autoComplete="off"
             className="w-[250px] outline-none "
             name="email"
             value={email}
@@ -53,11 +80,14 @@ const EmailSection = ({
           className="rounded-lg text-xs 
       border bg-yellow-300 px-2 shadow-md"
           type="button"
+          onClick={onAvail}
         >
           중복 확인
         </button>
       </div>
-      {niceInputEmail()}
+      <span ref={usingRef} className="px-3 text-xs text-red-400">
+        {niceInputEmail()}
+      </span>
     </section>
   );
 };
