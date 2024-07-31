@@ -11,10 +11,7 @@ const Header = () => {
   };
 
   return (
-    <div
-      className="fixed top-0 w-[376px] z-20 bg-yellow-FF grid
-    grid-cols-5 items-center py-5 h-[70px] shadow-sm"
-    >
+    <div className="fixed top-0 w-[376px] z-20 bg-yellow-FF grid grid-cols-5 items-center py-5 h-[70px] shadow-sm">
       <div className="text-center">
         <button onClick={onClickMenu} type="button">
           <img
@@ -29,11 +26,8 @@ const Header = () => {
         로고
       </Link>
 
-
       <div
-        className={`fixed flex bg-white w-[250px] h-[812px] top-0
-        ${menuOpened ? 'transform-translatex-show' : 'transform-translatex-hide'} 
-        transition-sm z-40 border rounded-lg`}
+        className={`fixed top-0 flex bg-white w-[250px] h-[812px] z-40 ${menuOpened ? 'transform-translatex-show' : 'transform-translatex-hide'} `}
       >
         <SideMenu />
       </div>

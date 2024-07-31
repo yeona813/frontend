@@ -64,8 +64,7 @@ const PasswordSection = ({
       <div>
         <span className="px-3 text-sm">비밀번호</span>
         <div
-          className="mx-auto rounded-lg border border-gray-300
-           w-[335px] h-[50px] flex items-center justify-between px-3 my-2 bg-white"
+          className="mx-auto rounded-lg border border-gray-300 w-[335px] h-[50px] flex items-center justify-between px-3 my-2 bg-white"
           ref={passwordRef}
         >
           <input
