@@ -34,12 +34,8 @@ const QuoteItem = ({ element, onClickHeart }: QuoteItemProps) => {
   };
 
   return (
-    <div
-      className="shadow-custom-bottom-right border rounded-lg
-     border-none border-black py-3 flex flex-col gap-2 bg-white"
-    >
-      <div className="p-2">키워드 들어갈 자리</div>
-      <div className="relative text-center h-[320px] text-white">
+    <div className="shadow-custom-bottom-right border rounded-lg border-none border-black pb-3 pt-12 flex flex-col gap-2 bg-white">
+      <div className=" relative text-center h-[320px] text-white">
         <div
           className="absolute inset-0 bg-cover bg-center"
           style={{
@@ -75,7 +71,7 @@ const QuoteItem = ({ element, onClickHeart }: QuoteItemProps) => {
       <div className="flex gap-3 px-3">
         <div className="flex items-center gap-2">
           <img
-            className="w-5 h-5"
+            className="w-5 h-5 hover:cursor-pointer"
             src={!heart ? '/icons/heart-regular.svg' : '/icons/heart-solid.svg'}
             alt={!heart ? '텅빈하트' : '꽉찬하트'}
             onClick={onClickToggleHeart}
@@ -85,7 +81,7 @@ const QuoteItem = ({ element, onClickHeart }: QuoteItemProps) => {
         </div>
         <div>
           <img
-            className="w-5 h-8"
+            className="w-5 h-8 hover:cursor-pointer"
             src="/icons/comment-dots-regular.svg"
             alt="댓글"
           />

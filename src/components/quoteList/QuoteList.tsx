@@ -25,8 +25,7 @@ const QuoteList = () => {
   return (
     <form className="p-3 flex flex-col gap-2  bg-yellow-FF">
       <div className="px-3 my-4 text-xl flex justify-between">
-        <h2>명언</h2>
-        <div>셀렉트바(키워드 필터)</div>
+        <h2>내가 좋아한 명언</h2>
       </div>
       <section>
         <ul>

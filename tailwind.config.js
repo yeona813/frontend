@@ -59,10 +59,10 @@ module.exports = {
     function ({ addUtilities }) {
       const newUtilities = {
         '.transition-md': {
-          transition: '0.4s',
+          transition: '2s',
         },
         '.transition-sm': {
-          transition: '0.8s',
+          transition: '2s',
         },
       };
       addUtilities(newUtilities, ['responsive', 'hover', 'click']);

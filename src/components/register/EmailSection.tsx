@@ -35,7 +35,9 @@ const EmailSection = ({
       }
     }
 
-    if (usingRef.current) usingRef.current.style.display = 'none';
+    if (usingRef.current && submitted) usingRef.current.style.display = 'none';
+    if (usingRef.current && !submitted)
+      usingRef.current.style.display = 'visible';
 
     return null;
   };
