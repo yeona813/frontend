@@ -17,53 +17,42 @@ const Register = () => {
     nicknameErr: false,
   });
 
-  useEffect(() => {
-    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const isValidEmail = (email: string) => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  };
+  const isValidPassword = (password: string) => {
+    return /^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*]).{8,}$/.test(password);
+  };
 
-    if (!regex.test(register.email)) {
-      // console.log('올바른 이메일 형식이 아닙니다.');
-      setError({ ...error, emailErr: false });
-    } else {
-      setError({ ...error, emailErr: true });
+  const updateError = (name: string, value: string) => {
+    let { emailErr, passwordErr, checkPasswordErr, nicknameErr } = error;
+
+    if (name === 'email') {
+      emailErr = isValidEmail(value);
+    } else if (name === 'password') {
+      passwordErr = isValidPassword(value);
+      if (!passwordErr) checkPasswordErr = false;
+    } else if (name === 'checkPassword') {
+      checkPasswordErr = value === register.password && value !== '';
+    } else if (name === 'nickname') {
+      nicknameErr = value.length >= 3;
     }
+
+    setError({ emailErr, passwordErr, checkPasswordErr, nicknameErr });
+  };
+
+  useEffect(() => {
+    updateError('email', register.email);
   }, [register.email]);
 
   useEffect(() => {
-    if (error.passwordErr) {
-      if (register.checkPassword !== register.password) {
-        // console.log('비밀번호가 일치하지 않습니다.');
-        setError({ ...error, checkPasswordErr: false });
-      } else if (register.password !== '' && register.checkPassword !== '') {
-        setError({ ...error, checkPasswordErr: true });
-      }
-    }
+    updateError('password', register.password);
+    updateError('checkPassword', register.checkPassword);
   }, [register.password, register.checkPassword]);
 
   const onChangeRegister = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.name === 'password') {
-      const regex = /^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*]).{8,}$/;
-
-      setRegister({ ...register, [e.target.name]: e.target.value });
-
-      if (!regex.test(e.target.value)) {
-        // console.log('올바른 비밀번호 형식이 아닙니다.');
-        setError({ ...error, passwordErr: false, checkPasswordErr: false });
-      } else {
-        setError({ ...error, passwordErr: true });
-      }
-    } else if (e.target.name === 'checkPassword') {
-      setRegister({ ...register, [e.target.name]: e.target.value });
-      if (!error.passwordErr) {
-        setError({ ...error, checkPasswordErr: false });
-      }
-    } else if (e.target.name === 'nickname') {
-      setRegister({ ...register, [e.target.name]: e.target.value });
-      if (e.target.value.length >= 3) {
-        setError({ ...error, nicknameErr: true });
-      } else {
-        setError({ ...error, nicknameErr: false });
-      }
-    } else setRegister({ ...register, [e.target.name]: e.target.value });
+    setRegister({ ...register, [e.target.name]: e.target.value });
+    updateError(e.target.name, e.target.value);
   };
 
   return (
