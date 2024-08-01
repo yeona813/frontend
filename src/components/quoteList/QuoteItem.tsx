@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import { quoteItem } from 'types/quoteList';
 import { QuoteImage } from 'components/common/constants/QuoteImage';
 
@@ -91,4 +91,21 @@ const QuoteItem = ({ element, onClickHeart }: QuoteItemProps) => {
   );
 };
 
-export default QuoteItem;
+export default memo(QuoteItem, (prev, next) => {
+  if (prev.element.id !== next.element.id) return false;
+  if (prev.element.author !== next.element.author) return false;
+  if (prev.element.description !== next.element.description) return false;
+  if (
+    JSON.stringify(prev.element.comments) !==
+    JSON.stringify(next.element.comments)
+  )
+    return false;
+  if (prev.element.created_at !== next.element.created_at) return false;
+  if (prev.element.likes !== next.element.likes) return false;
+  if (prev.element.content !== next.element.content) return false;
+  if (prev.element.registrant !== next.element.registrant) return false;
+  if (JSON.stringify(prev.element.tag) !== JSON.stringify(next.element.tag))
+    return false;
+
+  return true;
+});
