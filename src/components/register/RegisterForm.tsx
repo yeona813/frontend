@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { info, err, infoRef } from 'types/register';
 import { Link } from 'react-router-dom';
 import EmailSection from './EmailSection';
@@ -26,6 +26,8 @@ const RegisterForm = ({ register, error, onChangeRegister }: RegisterProps) => {
   const [submitted, setSubmitted] = useState(false);
   const [success, setSuccess] = useState(false);
   const [emailCheck, setEmailCheck] = useState(false);
+  const [message, setMessage] = useState(false);
+  const [toLogin, setToLogin] = useState(false);
 
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
@@ -39,23 +41,34 @@ const RegisterForm = ({ register, error, onChangeRegister }: RegisterProps) => {
     nicknameRef,
   };
 
+  useEffect(() => {
+    setMessage(true);
+    setTimeout(() => {
+      setToLogin(true);
+    }, 2000);
+  }, [success]);
+
   return (
-    <section>
+    <section className="">
       {success ? (
         <form
           className="p-5 flex flex-col gap-10
          bg-white text-center h-[812px] items-center"
         >
-          <h1 className="text-2xl mt-[250px]">축하합니다!</h1>
+          <h1
+            className={`text-2xl mt-[250px] transition-md ${message ? 'opacity-100' : 'opacity-0'}`}
+          >
+            축하합니다!
+          </h1>
           <Link
             to="/login"
-            className="border rounded-lg text-white bg-black mx-[110px] p-3"
+            className={`border rounded-lg text-white bg-black mx-[110px] p-3 transition-sm ${toLogin ? 'opacity-100' : 'opacity-0'}`}
           >
             로그인하기
           </Link>
         </form>
       ) : (
-        <form className="p-3 flex flex-col gap-2 bg-white">
+        <form className="p-3 flex flex-col gap-2 bg-white h-[812px]">
           <h2 className="px-3 my-4 text-xl">회원가입</h2>
           <EmailSection
             emailCheck={emailCheck}

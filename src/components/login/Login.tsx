@@ -60,7 +60,7 @@ const Login = () => {
   };
 
   return (
-    <form className="p-3 flex flex-col gap-3 h-full bg-white">
+    <form className="p-3 flex flex-col gap-3 bg-white h-[812px]">
       <div className="px-3 my-4 text-xl">
         <p>로그인</p>
       </div>

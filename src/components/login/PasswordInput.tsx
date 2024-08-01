@@ -40,9 +40,7 @@ const PasswordInput = ({
       {niceInputPassword()}
       <div
         ref={passwordRef}
-        className="gap-2 my-2 w-[335px]  flex-1 mx-auto rounded-lg border
-         border-gray-300  h-[50px] 
-        flex items-center justify-between px-3 bg-white"
+        className="gap-2 my-2 w-[335px]  flex-1 mx-auto rounded-lg border border-gray-300  h-[50px] flex items-center justify-between px-3 bg-white"
       >
         <input
           type={showPassword ? 'text' : 'password'}
