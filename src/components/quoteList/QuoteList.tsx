@@ -46,6 +46,7 @@ const QuoteList = () => {
               ) : null}
             </div>
           ))}
+          <div className="w-full pb-[40px]"></div>
         </ul>
       </section>
     </form>

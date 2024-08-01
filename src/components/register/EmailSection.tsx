@@ -24,7 +24,7 @@ const EmailSection = ({
   const userListRef = useRef<any[]>([]);
   const usingRef = useRef<HTMLSpanElement>(null);
 
-  const niceInputEmail = (): string => {
+  const niceInputEmail = () => {
     if (submitted) {
       console.log(submitted, emailCheck, emailErr);
       if (!emailErr) {
@@ -34,7 +34,10 @@ const EmailSection = ({
         return '이메일 중복을 확인하세요';
       }
     }
-    return '';
+
+    if (usingRef.current) usingRef.current.style.display = 'none';
+
+    return null;
   };
 
   const onAvail = async () => {

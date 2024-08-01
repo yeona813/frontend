@@ -40,7 +40,7 @@ const RegisterForm = ({ register, error, onChangeRegister }: RegisterProps) => {
   };
 
   return (
-    <section>
+    <section className="">
       {success ? (
         <form
           className="p-5 flex flex-col gap-10
@@ -55,7 +55,7 @@ const RegisterForm = ({ register, error, onChangeRegister }: RegisterProps) => {
           </Link>
         </form>
       ) : (
-        <form className="p-3 flex flex-col gap-2 bg-white">
+        <form className="p-3 flex flex-col gap-2 bg-white h-[812px]">
           <h2 className="px-3 my-4 text-xl">회원가입</h2>
           <EmailSection
             emailCheck={emailCheck}
