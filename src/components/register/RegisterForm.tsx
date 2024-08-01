@@ -24,7 +24,7 @@ interface RegisterProps {
 
 const RegisterForm = ({ register, error, onChangeRegister }: RegisterProps) => {
   const [submitted, setSubmitted] = useState(false);
-  const [success, setSuccess] = useState(true);
+  const [success, setSuccess] = useState(false);
   const [emailCheck, setEmailCheck] = useState(false);
   const [message, setMessage] = useState(false);
   const [toLogin, setToLogin] = useState(false);

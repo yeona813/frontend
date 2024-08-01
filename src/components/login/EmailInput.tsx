@@ -34,9 +34,7 @@ const EmailInput = ({
       {niceInputPassword()}
       <div
         ref={emailRef}
-        className="gap-2 my-2 w-[335px]  flex-1 mx-auto rounded-lg border
-         border-gray-300  h-[50px] bg-white
-        flex items-center justify-between px-3"
+        className="gap-2 my-2 w-[335px]  flex-1 mx-auto rounded-lg border border-gray-300  h-[50px] bg-white flex items-center justify-between px-3"
       >
         <input
           value={emailInput}

@@ -26,6 +26,7 @@ const EmailSection = ({
 
   const niceInputEmail = () => {
     if (submitted) {
+      if (usingRef.current) usingRef.current.style.display = 'block';
       console.log(submitted, emailCheck, emailErr);
       if (!emailErr) {
         return '이메일 형식을 입력해 주세요';
@@ -35,9 +36,7 @@ const EmailSection = ({
       }
     }
 
-    if (usingRef.current && submitted) usingRef.current.style.display = 'none';
-    if (usingRef.current && !submitted)
-      usingRef.current.style.display = 'visible';
+    if (usingRef.current) usingRef.current.style.display = 'none';
 
     return null;
   };
@@ -66,9 +65,7 @@ const EmailSection = ({
 
       <div className="flex gap-2 my-2 w-[335px] mx-auto ">
         <div
-          className="flex-1 mx-auto rounded-lg border
-          border-gray-300 w-[250px] h-[50px] 
-          flex items-center justify-between px-3 bg-white"
+          className="flex-1 mx-auto rounded-lg border border-gray-300 w-[250px] h-[50px] flex items-center justify-between px-3 bg-white"
           ref={emailRef}
         >
           <input
