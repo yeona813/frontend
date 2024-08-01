@@ -95,8 +95,7 @@ const PasswordSection = ({
           <span className="text-xs text-gray-400">✅</span>
         ) : null}
         <div
-          className="mx-auto rounded-lg border border-gray-300
-           w-[335px] h-[50px] flex items-center justify-between px-3 my-2 bg-white"
+          className="mx-auto rounded-lg border border-gray-300 w-[335px] h-[50px] flex items-center justify-between px-3 my-2 bg-white"
           ref={checkPasswordRef}
         >
           <input

@@ -9,18 +9,16 @@ const QuoteList = () => {
   const onClickHeart = (targetId: number, heart: boolean) => {
     setData(
       data.map((element) => {
-        if (element.id === targetId && !heart)
-          return { ...element, likes: element.likes + 1 };
-        if (element.id === targetId && heart)
-          return { ...element, likes: element.likes - 1 };
+        if (element.id === targetId) {
+          const afterLikes = heart ? element.likes + 1 : element.likes - 1;
+          return { ...element, likes: afterLikes };
+        }
         return { ...element };
       }),
     );
   };
 
-  const filteredData = () => {
-    return data.filter((element) => element.id < loadMore);
-  };
+  const filteredData = () => data.slice(0, loadMore);
 
   return (
     <form className="p-3 flex flex-col gap-2  bg-yellow-FF">

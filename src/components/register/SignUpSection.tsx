@@ -27,6 +27,7 @@ const SignUpSection = ({
       refObj.emailRef.current?.style.setProperty(
         'border',
         error.emailErr ? '1px solid rgb(50,180,50)' : '1px solid red',
+        // 여기는 중복확인까지 해서 스타일 적용
       );
       refObj.passwordRef.current?.style.setProperty(
         'border',
