@@ -20,13 +20,16 @@ const EmailSection = ({
   onChangeRegister,
   setEmailCheck,
 }: EmailSectionProps) => {
+  // console.log('EmailSection');
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const userListRef = useRef<any[]>([]);
   const usingRef = useRef<HTMLSpanElement>(null);
 
-  const niceInputEmail = (): string => {
+  const niceInputEmail = () => {
     if (submitted) {
-      console.log(submitted, emailCheck, emailErr);
+      if (usingRef.current) usingRef.current.style.display = 'block';
+
       if (!emailErr) {
         return '이메일 형식을 입력해 주세요';
       }
@@ -34,9 +37,11 @@ const EmailSection = ({
         return '이메일 중복을 확인하세요';
       }
     }
-    return '';
+
+    return null;
   };
 
+  // 중복 확인 하는 곳
   const onAvail = async () => {
     try {
       const respone = await axios.get('서버URL');
@@ -61,9 +66,7 @@ const EmailSection = ({
 
       <div className="flex gap-2 my-2 w-[335px] mx-auto ">
         <div
-          className="flex-1 mx-auto rounded-lg border
-          border-gray-300 w-[250px] h-[50px] 
-          flex items-center justify-between px-3 bg-white"
+          className="flex-1 mx-auto rounded-lg border border-gray-300 w-[250px] h-[50px] flex items-center justify-between px-3 bg-white"
           ref={emailRef}
         >
           <input
@@ -85,7 +88,7 @@ const EmailSection = ({
           중복 확인
         </button>
       </div>
-      <span ref={usingRef} className="px-3 text-xs text-red-400">
+      <span ref={usingRef} className="px-3 text-xs text-red-400 hidden">
         {niceInputEmail()}
       </span>
     </section>

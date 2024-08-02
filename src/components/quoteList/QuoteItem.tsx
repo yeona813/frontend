@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import { quoteItem } from 'types/quoteList';
 import { QuoteImage } from 'components/common/constants/QuoteImage';
 
@@ -34,9 +34,8 @@ const QuoteItem = ({ element, onClickHeart }: QuoteItemProps) => {
   };
 
   return (
-    <div className="shadow-custom-bottom-right border rounded-lg border-none border-black py-3 flex flex-col gap-2 bg-white">
-      <div className="p-2">키워드 들어갈 자리</div>
-      <div className="relative text-center h-[320px] text-white">
+    <div className="shadow-custom-bottom-right border rounded-lg border-none border-black pb-3 pt-12 flex flex-col gap-2 bg-white">
+      <div className=" relative text-center h-[320px] text-white">
         <div
           className="absolute inset-0 bg-cover bg-center"
           style={{
@@ -72,7 +71,7 @@ const QuoteItem = ({ element, onClickHeart }: QuoteItemProps) => {
       <div className="flex gap-3 px-3">
         <div className="flex items-center gap-2">
           <img
-            className="w-5 h-5"
+            className="w-5 h-5 hover:cursor-pointer"
             src={!heart ? '/icons/heart-regular.svg' : '/icons/heart-solid.svg'}
             alt={!heart ? '텅빈하트' : '꽉찬하트'}
             onClick={onClickToggleHeart}
@@ -82,7 +81,7 @@ const QuoteItem = ({ element, onClickHeart }: QuoteItemProps) => {
         </div>
         <div>
           <img
-            className="w-5 h-8"
+            className="w-5 h-8 hover:cursor-pointer"
             src="/icons/comment-dots-regular.svg"
             alt="댓글"
           />
@@ -92,4 +91,21 @@ const QuoteItem = ({ element, onClickHeart }: QuoteItemProps) => {
   );
 };
 
-export default QuoteItem;
+export default memo(QuoteItem, (prev, next) => {
+  if (prev.element.id !== next.element.id) return false;
+  if (prev.element.author !== next.element.author) return false;
+  if (prev.element.description !== next.element.description) return false;
+  if (
+    JSON.stringify(prev.element.comments) !==
+    JSON.stringify(next.element.comments)
+  )
+    return false;
+  if (prev.element.created_at !== next.element.created_at) return false;
+  if (prev.element.likes !== next.element.likes) return false;
+  if (prev.element.content !== next.element.content) return false;
+  if (prev.element.registrant !== next.element.registrant) return false;
+  if (JSON.stringify(prev.element.tag) !== JSON.stringify(next.element.tag))
+    return false;
+
+  return true;
+});

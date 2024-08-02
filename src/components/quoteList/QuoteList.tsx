@@ -9,24 +9,21 @@ const QuoteList = () => {
   const onClickHeart = (targetId: number, heart: boolean) => {
     setData(
       data.map((element) => {
-        if (element.id === targetId && !heart)
-          return { ...element, likes: element.likes + 1 };
-        if (element.id === targetId && heart)
-          return { ...element, likes: element.likes - 1 };
+        if (element.id === targetId) {
+          const afterLikes = heart ? element.likes + 1 : element.likes - 1;
+          return { ...element, likes: afterLikes };
+        }
         return { ...element };
       }),
     );
   };
 
-  const filteredData = () => {
-    return data.filter((element) => element.id < loadMore);
-  };
+  const filteredData = () => data.slice(0, loadMore);
 
   return (
     <form className="p-3 flex flex-col gap-2  bg-yellow-FF">
       <div className="px-3 my-4 text-xl flex justify-between">
-        <h2>명언</h2>
-        <div>셀렉트바(키워드 필터)</div>
+        <h2>내가 좋아한 명언</h2>
       </div>
       <section>
         <ul>
@@ -46,6 +43,7 @@ const QuoteList = () => {
               ) : null}
             </div>
           ))}
+          <div className="w-full pb-[40px]"></div>
         </ul>
       </section>
     </form>
