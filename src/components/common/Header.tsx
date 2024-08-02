@@ -27,7 +27,7 @@ const Header = () => {
       </Link>
 
       <div
-        className={`fixed flex bg-white w-[250px] h-[812px] top-0 ${menuOpened ? 'transform-translatex-show' : 'transform-translatex-hide'} z-40 border rounded-lg`}
+        className={`fixed top-0 flex bg-white w-[250px] h-[812px] z-40 ${menuOpened ? 'transform-translatex-show' : 'transform-translatex-hide'} `}
       >
         <SideMenu />
       </div>
