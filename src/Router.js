@@ -7,6 +7,7 @@ import HomePage from 'pages/home/HomePage';
 import QuoteListPage from 'pages/quoteList/QuoteListPage';
 import ResultQuotePage from 'pages/resultQuote/ResultQuotePage';
 import Redirection from 'pages/login/Redirection';
+import WriteQuotePage from 'pages/writeQuote/WriteQuotePage';
 
 function Router() {
   return (
@@ -14,6 +15,7 @@ function Router() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/resultQuote" element={<ResultQuotePage />} />
+        <Route path="/writeQuote" element={<WriteQuotePage />} />
         <Route path="/quoteList" element={<QuoteListPage />} />
         <Route exact path="/oauth" element={<Redirection />} />
         <Route path="/login" element={<LoginPage />} />
