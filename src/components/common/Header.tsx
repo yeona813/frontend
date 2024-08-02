@@ -4,10 +4,10 @@ import BlackArea from './BlackArea';
 import SideMenu from './SideMenu';
 
 const Header = () => {
-  const [menuOpened, setMenuOpend] = useState(false);
+  const [menuOpened, setMenuOpened] = useState(false);
 
   const onClickMenu = () => {
-    setMenuOpend(!menuOpened);
+    setMenuOpened(!menuOpened);
   };
 
   return (
