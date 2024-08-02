@@ -22,24 +22,29 @@ const SignUpSection = ({
   setSubmitted,
   setSuccess,
 }: SignUpSectionProps) => {
+  const apllyStyle = (errorType: boolean) => {
+    return errorType ? '1px solid rgb(50,180,50)' : '1px solid red';
+  };
+
   useEffect(() => {
+    console.log(error);
     if (submitted) {
       refObj.emailRef.current?.style.setProperty(
         'border',
-        error.emailErr ? '1px solid rgb(50,180,50)' : '1px solid red',
+        apllyStyle(error.emailErr),
         // 여기는 중복확인까지 해서 스타일 적용
       );
       refObj.passwordRef.current?.style.setProperty(
         'border',
-        error.passwordErr ? '1px solid rgb(50,180,50)' : '1px solid red',
+        apllyStyle(error.passwordErr),
       );
       refObj.checkPasswordRef.current?.style.setProperty(
         'border',
-        error.checkPasswordErr ? '1px solid rgb(50,180,50)' : '1px solid red',
+        apllyStyle(error.checkPasswordErr && error.passwordErr),
       );
       refObj.nicknameRef.current?.style.setProperty(
         'border',
-        error.nicknameErr ? '1px solid rgb(50,180,50)' : '1px solid red',
+        apllyStyle(error.nicknameErr),
       );
     }
   }, [submitted, error]);

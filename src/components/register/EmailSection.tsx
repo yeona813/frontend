@@ -41,6 +41,7 @@ const EmailSection = ({
     return null;
   };
 
+  //중복 확인 하는 곳
   const onAvail = async () => {
     try {
       const respone = await axios.get('서버URL');
