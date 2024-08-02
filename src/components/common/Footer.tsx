@@ -12,7 +12,7 @@ const FOOTER_ITEMS = [
     name: '나의명언',
     src: '/icons/plus.png',
     activeSrc: '/icons/plus-click.png',
-    to: '/plus',
+    to: '/writeQuote',
   },
   {
     name: '콘텐츠',
