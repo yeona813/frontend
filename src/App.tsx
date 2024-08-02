@@ -8,7 +8,7 @@ function App() {
   const location = useLocation();
 
   return (
-    <div className="relative h-[812px] mx-auto bg-yellow-FF overflow-auto scrollbar-hide">
+    <div className="relative w-screen h-screen mx-auto bg-yellow-FF overflow-auto scrollbar-hide">
       <Header />
       <Router />
       {location.pathname !== '/login' && location.pathname !== '/register' && (

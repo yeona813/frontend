@@ -62,7 +62,7 @@ const EmailSection = ({
 
   return (
     <section>
-      <span className="px-3 text-sm">이메일</span>
+      <span className="text-sm">이메일</span>
 
       <div className="flex gap-2 my-2 w-[335px] mx-auto ">
         <div
