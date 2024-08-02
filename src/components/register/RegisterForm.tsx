@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { memo, useEffect, useRef, useState } from 'react';
 import { info, err, infoRef } from 'types/register';
 import { Link } from 'react-router-dom';
 import EmailSection from './EmailSection';
@@ -23,6 +23,7 @@ interface RegisterProps {
 }
 
 const RegisterForm = ({ register, error, onChangeRegister }: RegisterProps) => {
+  // console.log('RegisterForm');
   const [submitted, setSubmitted] = useState(false);
   const [success, setSuccess] = useState(false);
   const [emailCheck, setEmailCheck] = useState(false);
@@ -35,6 +36,8 @@ const RegisterForm = ({ register, error, onChangeRegister }: RegisterProps) => {
   const checkPasswordRef = useRef<HTMLInputElement>(null);
   const nicknameRef = useRef<HTMLInputElement>(null);
 
+  const mountRef = useRef(false);
+
   const refObj: infoRef = {
     emailRef,
     passwordRef,
@@ -43,6 +46,12 @@ const RegisterForm = ({ register, error, onChangeRegister }: RegisterProps) => {
   };
 
   useEffect(() => {
+    if (!mountRef.current) {
+      // console.log('RegisterForm-Mount');
+      mountRef.current = !mountRef.current;
+      return;
+    }
+    console.log('RegisterForm-Update');
     setMessage(true);
     setTimeout(() => {
       setToLogin(true);
@@ -115,4 +124,4 @@ const RegisterForm = ({ register, error, onChangeRegister }: RegisterProps) => {
   );
 };
 
-export default RegisterForm;
+export default memo(RegisterForm);

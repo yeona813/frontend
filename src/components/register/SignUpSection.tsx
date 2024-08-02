@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { info, err, infoRef } from 'types/register';
 
@@ -22,29 +22,36 @@ const SignUpSection = ({
   setSubmitted,
   setSuccess,
 }: SignUpSectionProps) => {
-  const apllyStyle = (errorType: boolean) => {
+  const mountRef = useRef(false);
+  const applyStyle = (errorType: boolean) => {
     return errorType ? '1px solid rgb(50,180,50)' : '1px solid red';
   };
 
   useEffect(() => {
+    if (!mountRef.current) {
+      mountRef.current = !mountRef.current;
+      return;
+    }
     console.log(error);
     if (submitted) {
       refObj.emailRef.current?.style.setProperty(
         'border',
-        apllyStyle(error.emailErr),
+        applyStyle(error.emailErr),
         // 여기는 중복확인까지 해서 스타일 적용
+        // 중복확인에 사용하는 props drilling 해야함
+        // 형식은 맞지만 중복확인 안하면 border orange
       );
       refObj.passwordRef.current?.style.setProperty(
         'border',
-        apllyStyle(error.passwordErr),
+        applyStyle(error.passwordErr),
       );
       refObj.checkPasswordRef.current?.style.setProperty(
         'border',
-        apllyStyle(error.checkPasswordErr && error.passwordErr),
+        applyStyle(error.checkPasswordErr && error.passwordErr),
       );
       refObj.nicknameRef.current?.style.setProperty(
         'border',
-        apllyStyle(error.nicknameErr),
+        applyStyle(error.nicknameErr),
       );
     }
   }, [submitted, error]);
