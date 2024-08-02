@@ -43,6 +43,13 @@ const PasswordSection = ({
         );
       }
       if (index === 2 && !checkPasswordErr) {
+        if (!passwordErr && password === checkPassword) {
+          return (
+            <span className="px-3 text-xs text-red-400">
+              비밀번호 형식을 지켜주세요.
+            </span>
+          );
+        }
         if (checkPassword === '')
           return (
             <span className="px-3 text-xs text-red-400">
@@ -91,7 +98,7 @@ const PasswordSection = ({
 
       <div>
         <span className="px-3 text-sm">비밀번호 확인</span>
-        {checkPasswordErr ? (
+        {checkPasswordErr && passwordErr ? (
           <span className="text-xs text-gray-400">✅</span>
         ) : null}
         <div
