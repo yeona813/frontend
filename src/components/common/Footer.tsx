@@ -32,7 +32,7 @@ const Footer = () => {
   const location = useLocation();
 
   return (
-    <div className="fixed top-[732px] bottom-0 w-[376px] h-[80px] border border-t-gray-50 bg-yellow-FA flex px-[30px] items-center gap-[50px] z-10">
+    <div className="fixed top-[584px] bottom-0 w-[376px] h-[80px] border border-t-gray-50 bg-yellow-FA flex px-[30px] items-center gap-[50px] z-10">
       {FOOTER_ITEMS.map((item) => {
         const isActive = location.pathname === item.to;
         return (
