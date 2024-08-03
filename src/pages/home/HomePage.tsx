@@ -1,3 +1,4 @@
+import axios from 'axios';
 import Button from 'components/common/Button';
 import Question from 'components/home/Question';
 import React, { ChangeEvent, useEffect, useState } from 'react';
@@ -19,12 +20,20 @@ const HomePage = () => {
     setText(event.target.value);
   };
 
-  const handleClick = () => {
+  const handleClick = async () => {
     if (text !== '') {
-      navigate('/resultQuote');
-      // TODO get 요청 보내야함 -> 보내고 다시 또 받아오기 ? 흠
+      try {
+        const response = await axios.post('/quote/recommend', {
+          query: text,
+        });
+        if (response.status === 200) {
+          navigate('/resultQuote');
+        }
+      } catch (error) {
+        alert(error);
+      }
     } else {
-      alert('내용을 입력해주세요'); // 시간이 된다면 모달로 바꾸기 ?
+      alert('내용을 입력해주세요');
     }
   };
 
