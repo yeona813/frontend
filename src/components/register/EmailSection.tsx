@@ -44,10 +44,12 @@ const EmailSection = ({
   // 중복 확인 하는 곳
   const onAvail = async () => {
     try {
-      const respone = await axios.get('서버URL');
+      const respone = await axios.get(
+        'http://15.164.27.255/accounts/register/',
+      );
       if (respone.status === 200) {
         userListRef.current = respone.data; // <- 이 녀석 배열인가?
-
+        alert('이미 사용중인 이메일입니다.');
         if (!userListRef.current?.some((element) => element.email === email)) {
           setEmailCheck(true);
         }

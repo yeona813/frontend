@@ -2,6 +2,9 @@ import React, { memo, useCallback, useEffect, useRef, useState } from 'react';
 import { info, err } from 'types/register';
 import RegisterForm from './RegisterForm';
 
+// 문제
+// 1. register 컴포넌트가 update될 때 2번씩 리렌더링 되는데 해결을 못했음
+
 const Register = () => {
   // console.log('Register');
   const [register, setRegister] = useState<info>({

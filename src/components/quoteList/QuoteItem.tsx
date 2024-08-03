@@ -35,7 +35,7 @@ const QuoteItem = ({ element, onClickHeart }: QuoteItemProps) => {
 
   return (
     <div className="shadow-custom-bottom-right border rounded-lg border-none border-black pb-3 pt-12 flex flex-col gap-2 bg-white">
-      <div className=" relative text-center h-[320px] text-white">
+      <div className=" relative text-center h-[275px] text-white">
         <div
           className="absolute inset-0 bg-cover bg-center"
           style={{

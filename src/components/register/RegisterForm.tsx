@@ -51,7 +51,6 @@ const RegisterForm = ({ register, error, onChangeRegister }: RegisterProps) => {
       mountRef.current = !mountRef.current;
       return;
     }
-    console.log('RegisterForm-Update');
     setMessage(true);
     setTimeout(() => {
       setToLogin(true);
@@ -61,10 +60,7 @@ const RegisterForm = ({ register, error, onChangeRegister }: RegisterProps) => {
   return (
     <section className="">
       {success ? (
-        <form
-          className="p-5 flex flex-col gap-10
-         bg-white text-center h-[812px] items-center"
-        >
+        <form className="p-5 flex flex-col gap-10 bg-white text-center h-screen items-center">
           <h1
             className={`text-2xl mt-[250px] transition-md ${message ? 'opacity-100' : 'opacity-0'}`}
           >
