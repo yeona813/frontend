@@ -2,14 +2,21 @@ import Button from 'components/common/Button';
 import Comment from 'components/resultQuote/Comment';
 import ResultQuote from 'components/resultQuote/ResultQuote';
 import WriteComment from 'components/resultQuote/WriteComment';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 // @TODO 해당 명언 댓글 조회
 
 const ResultQuotePage = () => {
   const [isLike, setIsLike] = useState(false);
+  const isLoggedIn = localStorage.getItem('accessToken');
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      navigate('/login');
+    }
+  }, []);
 
   const handleClick = () => {
     // @TODO like 관련 post 요청 보내야함

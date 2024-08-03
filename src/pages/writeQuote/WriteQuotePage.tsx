@@ -1,8 +1,18 @@
 import Button from 'components/common/Button';
 import Textarea from 'components/writeQuote/Textarea';
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const WriteQuotePage = () => {
+  const isLoggedIn = localStorage.getItem('accessToken');
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      navigate('/login');
+    }
+  }, []);
+
   const handleClick = () => {
     console.log('등록');
   };
