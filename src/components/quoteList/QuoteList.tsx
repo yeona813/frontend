@@ -7,6 +7,7 @@ const QuoteList = () => {
   const [loadMore, setLoadMore] = useState(5);
 
   const onClickHeart = (targetId: number, heart: boolean) => {
+    // 하트 증가 보내기
     setData(
       data.map((element) => {
         if (element.id === targetId) {
@@ -21,14 +22,17 @@ const QuoteList = () => {
   const filteredData = () => data.slice(0, loadMore);
 
   return (
-    <form className="p-3 flex flex-col gap-2  bg-yellow-FF">
+    <form className=" p-3 flex flex-col gap-2  bg-yellow-FF">
       <div className="px-3 my-4 text-xl flex justify-between">
         <h2>내가 좋아한 명언</h2>
       </div>
       <section>
-        <ul>
+        <ul className="flex flex-col items-center">
           {filteredData().map((element) => (
-            <div key={element.id} className="flex flex-col mb-12 mx-4 gap-8">
+            <div
+              key={element.id}
+              className="flex flex-col mb-12 mx-4 gap-8 w-[300px]"
+            >
               <li>
                 <QuoteItem element={element} onClickHeart={onClickHeart} />
               </li>
