@@ -49,9 +49,12 @@ const EmailSection = ({
       );
       if (respone.status === 200) {
         userListRef.current = respone.data; // <- 이 녀석 배열인가?
-        alert('이미 사용중인 이메일입니다.');
+
         if (!userListRef.current?.some((element) => element.email === email)) {
           setEmailCheck(true);
+          alert('사용 가능한 이메일입니다.');
+        } else {
+          alert('이미 사용중인 이메일입니다.');
         }
       }
     } catch (error) {

@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { instance } from 'api/instance';
 import React, { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { err } from 'types/register';
@@ -60,7 +60,7 @@ const LoginButton = ({
     };
 
     try {
-      const response = await axios.post('accounts/login/', dataToSend);
+      const response = await instance.post('accounts/login/', dataToSend);
 
       if (response.status === 200) {
         setSuccess(true);
