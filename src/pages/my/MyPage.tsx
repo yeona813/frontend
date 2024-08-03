@@ -31,7 +31,11 @@ const MyPage = () => {
   const fetchProfileData = async () => {
     try {
       const userInfo = await axios.get('/api/user/info');
-      setUser(userInfo.data);
+      const updatedUserInfo = {
+        ...userInfo.data,
+        avatar: userInfo.data.avatar || '/Users/ihyeongbin/frontend/public/images/user.png' // 여기에 기본 이미지 경로를 설정하세요.
+      };
+      setUser(updatedUserInfo);
       const liked = await axios.get('/api/quotes/liked');
       setLikedQuotes(liked.data);
       const added = await axios.get('/api/quotes/added');
@@ -49,30 +53,18 @@ const MyPage = () => {
     <div className="bg-gray-100 min-h-screen p-4">
       <div className="container mx-auto bg-white p-6 rounded-lg shadow-lg">
         <div className="flex flex-col items-center text-center">
-          <img
-            className="w-32 h-32 rounded-full"
-            src={user.avatar}
-            alt="프로필 사진"
-          />
+          <img className="w-32 h-32 rounded-full" src={user.avatar} alt="프로필 사진" />
           <h1 className="text-2xl font-bold mt-2">{user.username}</h1>
-          <p className="text-gray-600">
-            팔로워 {user.followers} | 팔로잉 {user.following}
-          </p>
-          <button
-            className="bg-yellow-500 text-white py-2 px-4 rounded-lg mt-4"
-            type="button"
-          >
+          <p className="text-gray-600">팔로워 {user.followers} | 팔로잉 {user.following}</p>
+          <button className="bg-yellow-500 text-white py-2 px-4 rounded-lg mt-4" type="button">
             프로필 수정
           </button>
         </div>
         <div className="mt-6 flex-grow">
           <Tab.Group>
             <Tab.List className="flex border-b">
-              {['Liked', 'Added'].map((tabName) => (
-                <Tab
-                  key={tabName}
-                  className={`flex-1 p-2 text-center font-medium text-sm ${tabName === 'Liked' ? 'text-red-500' : 'text-blue-500'}`}
-                >
+              {['Liked', 'Added'].map(tabName => (
+                <Tab key={tabName} className={`flex-1 p-2 text-center font-medium text-sm ${tabName === 'Liked' ? 'text-red-500' : 'text-blue-500'}`}>
                   {({ selected }) => (
                     <button
                       type="button"
@@ -86,11 +78,8 @@ const MyPage = () => {
             </Tab.List>
             <Tab.Panels>
               <Tab.Panel className="p-3">
-                {likedQuotes.map((quote) => (
-                  <div
-                    key={quote.id}
-                    className="flex items-center border-b py-2"
-                  >
+                {likedQuotes.map(quote => (
+                  <div key={quote.id} className="flex items-center border-b py-2">
                     <span className="mr-2 text-red-500">❤️</span>
                     <p>{quote.text}</p>
                   </div>
@@ -100,15 +89,12 @@ const MyPage = () => {
                 <button
                   className="bg-yellow-500 text-white py-2 px-4 rounded-lg mb-4"
                   type="button"
-                  onClick={() => navigate('/writequote')}
+                  onClick={() => navigate('/write-quote')}
                 >
                   + 명언 등록하기
                 </button>
-                {addedQuotes.map((quote) => (
-                  <div
-                    key={quote.id}
-                    className="flex items-center border-b py-2"
-                  >
+                {addedQuotes.map(quote => (
+                  <div key={quote.id} className="flex items-center border-b py-2">
                     <p>{quote.text}</p>
                   </div>
                 ))}
