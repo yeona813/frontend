@@ -7,8 +7,6 @@ import WriteComment from 'components/resultQuote/WriteComment';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-// @TODO 해당 명언 댓글 조회
-
 const ResultQuotePage = () => {
   const [isLike, setIsLike] = useState(false);
   const [quoteData, setQuoteData] = useState({
@@ -43,8 +41,27 @@ const ResultQuotePage = () => {
     fetchData();
   }, []);
 
-  const handleClick = () => {
-    // @TODO like 관련 post 요청 보내야함
+  const handleClick = async () => {
+    if (isLike) {
+      try {
+        const headers = {
+          Authorization: `token ${localStorage.getItem('accessToken')}`,
+        };
+
+        const response = await instance.post(
+          `quote/${id}/like/`,
+          {},
+          {
+            headers,
+          },
+        );
+        if (response.status === 200) {
+          console.log('성공');
+        }
+      } catch (error) {
+        alert(error);
+      }
+    }
     navigate('/quoteList');
   };
 
