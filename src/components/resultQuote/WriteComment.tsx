@@ -1,37 +1,16 @@
-import { instance } from 'api/instance';
-import React, { ChangeEvent, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { ChangeEvent } from 'react';
 
-const WriteComment = () => {
-  const [comment, setComment] = useState('');
-  const { id } = useParams();
+interface WriteCommentProps {
+  comment: string;
+  handleChange: (event: ChangeEvent<HTMLTextAreaElement>) => void;
+  handleCommentClick: () => void;
+}
 
-  const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
-    setComment(event.target.value);
-  };
-
-  const handleClick = async () => {
-    try {
-      const headers = {
-        Authorization: `token ${localStorage.getItem('accessToken')}`,
-      };
-
-      const response = await instance.post(
-        `quote/${id}/comment/`,
-        { content: comment },
-        {
-          headers,
-        },
-      );
-      if (response.status === 200) {
-        console.log('댓글 달기 성공');
-        console.log(response.data);
-      }
-    } catch (error) {
-      alert(error);
-    }
-  };
-
+const WriteComment = ({
+  comment,
+  handleChange,
+  handleCommentClick,
+}: WriteCommentProps) => {
   return (
     <div className="flex flex-col gap-[10px]">
       <span className="text-sm font-semibold">댓글</span>
@@ -45,7 +24,7 @@ const WriteComment = () => {
         <button
           type="button"
           className="absolute right-3 bottom-3 border border-gray-200 rounded-xl w-[60px] h-[30px] text-xs"
-          onClick={handleClick}
+          onClick={handleCommentClick}
         >
           입력
         </button>
