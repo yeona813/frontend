@@ -60,9 +60,9 @@ const Login = () => {
   };
 
   return (
-    <form className="p-3 flex flex-col gap-3 bg-white h-[812px]">
-      <div className="px-3 my-4 text-xl">
-        <p>로그인</p>
+    <form className="p-3 flex flex-col gap-3 bg-white h-screen items-center">
+      <div className="my-4 text-xl">
+        <h2 className="text-xl w-[335px]">로그인</h2>
       </div>
       <EmailInput
         emailErr={error.emailErr}

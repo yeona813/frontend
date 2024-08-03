@@ -39,6 +39,7 @@ const LoginButton = ({
   // =============================================================== 공부 필요
   const onClickNormalLogin = async () => {
     setSubmitted(true);
+    // @@@@@@@@@@@@@@ 주석 없애기 @@@@@@@@@@@@@@@@@@@@@@@@
     const isErrorFree = Object.values(error).every(
       (element) => element === true,
     );
@@ -59,12 +60,11 @@ const LoginButton = ({
     };
 
     try {
-      const response = await axios.post('서버URL', dataToSend);
+      const response = await axios.post('accounts/login/', dataToSend);
 
       if (response.status === 200) {
         setSuccess(true);
         const accessToken = response.data.token;
-        console.log(accessToken);
         window.localStorage.setItem('accessToken', accessToken);
         navigate('/');
       }
@@ -77,6 +77,8 @@ const LoginButton = ({
   };
   // ========================================================================
 
+  // @@@@@@@@@@@@@@ 주석 없애기 @@@@@@@@@@@@@@@@@@@@@@@@
+  //
   useEffect(() => {
     if (submitted) {
       emailRef.current?.style.setProperty(
@@ -89,6 +91,7 @@ const LoginButton = ({
       );
     }
   }, [submitted, error]);
+  // ==========================================================
 
   return (
     <section>
