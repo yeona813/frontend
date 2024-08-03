@@ -1,15 +1,35 @@
+import { instance } from 'api/instance';
 import React, { ChangeEvent, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 const WriteComment = () => {
   const [comment, setComment] = useState('');
+  const { id } = useParams();
 
   const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     setComment(event.target.value);
   };
 
-  const handleClick = () => {
-    console.log(comment);
-    // 댓글 post 요청
+  const handleClick = async () => {
+    try {
+      const headers = {
+        Authorization: `token ${localStorage.getItem('accessToken')}`,
+      };
+
+      const response = await instance.post(
+        `quote/${id}/comment/`,
+        { content: comment },
+        {
+          headers,
+        },
+      );
+      if (response.status === 200) {
+        console.log('댓글 달기 성공');
+        console.log(response.data);
+      }
+    } catch (error) {
+      alert(error);
+    }
   };
 
   return (
