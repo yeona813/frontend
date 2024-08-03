@@ -14,7 +14,7 @@ function Router() {
     <div className="mt-16">
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/resultQuote" element={<ResultQuotePage />} />
+        <Route path="/resultQuote/:id" element={<ResultQuotePage />} />
         <Route path="/writeQuote" element={<WriteQuotePage />} />
         <Route path="/quoteList" element={<QuoteListPage />} />
         <Route exact path="/oauth" element={<Redirection />} />

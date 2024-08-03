@@ -1,21 +1,46 @@
+import { instance } from 'api/instance';
 import Button from 'components/common/Button';
+import { QuoteImage } from 'components/common/constants/QuoteImage';
 import Comment from 'components/resultQuote/Comment';
 import ResultQuote from 'components/resultQuote/ResultQuote';
 import WriteComment from 'components/resultQuote/WriteComment';
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 // @TODO 해당 명언 댓글 조회
 
 const ResultQuotePage = () => {
   const [isLike, setIsLike] = useState(false);
+  const [quoteData, setQuoteData] = useState({
+    author: '',
+    content: '',
+    description: '',
+    image: '',
+  });
   const isLoggedIn = localStorage.getItem('accessToken');
   const navigate = useNavigate();
+  const { id } = useParams();
 
   useEffect(() => {
-    if (!isLoggedIn) {
-      navigate('/login');
-    }
+    const fetchData = async () => {
+      if (!isLoggedIn) {
+        navigate('/login');
+      } else {
+        try {
+          const response = await instance.get(`quote/${id}/`);
+          setQuoteData({
+            author: response.data.author,
+            content: response.data.content,
+            description: response.data.description,
+            image: response.data.image,
+          });
+        } catch (error) {
+          alert(error);
+        }
+      }
+    };
+
+    fetchData();
   }, []);
 
   const handleClick = () => {
@@ -31,8 +56,12 @@ const ResultQuotePage = () => {
     <div className="flex flex-col items-center pt-[30px] gap-[30px]">
       <div className="flex flex-col gap-[20px] w-[300px] rounded-xl bg-white shadow-custom p-5">
         <ResultQuote
-          imageUrl="/images/quoteImage1.png"
-          quote="  오늘의 명언은 이거야 ~~~오늘의 명언은 아주아주 길다 길다기달다길다"
+          imageUrl={
+            quoteData.image ||
+            QuoteImage[Math.floor(Math.random() * QuoteImage.length)]
+          }
+          quote={quoteData.content}
+          author={quoteData.author}
           isLike={isLike}
           handleLike={handleLike}
         />
