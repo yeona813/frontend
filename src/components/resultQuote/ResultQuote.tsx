@@ -26,8 +26,8 @@ const ResultQuote = ({
         }}
       ></div>
       <div className="flex flex-col gap-[20px] z-10">
-        <span className="text-center text-black font-bold">{quote}</span>
-        <span className="text-center text-black font-bold">{author}</span>
+        <span className="text-center font-bold">{quote}</span>
+        <span className="text-center font-bold">{author}</span>
       </div>
       <button
         type="button"
