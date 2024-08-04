@@ -1,4 +1,4 @@
-import EditProfile from 'components/my/EditProfile';
+import EditProfile from 'components/edit/EditProfile';
 import React from 'react';
 
 const EditPage = () => {

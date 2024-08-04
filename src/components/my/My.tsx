@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 import { instance } from 'api/instance';
 
 interface Quote {
   id: number;
-  text: string;
+  content: string;
+  description: string;
   author: string;
+  image: null;
+  created_at: string;
+  like_count: 0;
+  user_author: null;
 }
 
 interface User {
@@ -24,31 +28,57 @@ const My = () => {
     followers: 0,
     following: 0,
   });
+  const [temp, setTemp] = useState<number[]>([1, 2, 3, 4]);
+  const [temp2, setTemp2] = useState();
 
   const [likedQuotes, setLikedQuotes] = useState<Quote[]>([]);
   const [addedQuotes, setAddedQuotes] = useState<Quote[]>([]);
   const [activeTab, setActiveTab] = useState('Liked');
   const navigate = useNavigate();
 
-  const fetchProfileData = async () => {
-    try {
-      const userInfoResponse = await instance.get('accounts/profile/', {
-        headers: {
-          Authorization: `token ${localStorage.getItem(`accessToken`)}`,
-        },
-      });
-      if (userInfoResponse.status === 200) {
-        setUser(userInfoResponse.data);
-        console.log(userInfoResponse.data);
-      }
-    } catch (error) {
-      console.error('데이터를 불러오는 데 실패했습니다', error);
-    }
+  // const fetchProfileData = async () => {
+  //   try {
+  //     const userInfoResponse = await instance.get('accounts/profile/', {
+  //       headers: {
+  //         Authorization: `token ${localStorage.getItem(`accessToken`)}`,
+  //       },
+  //     });
+  //     if (userInfoResponse.status === 200) {
+  //       setTemp(userInfoResponse.data.like_quotes);
+  //       console.log(userInfoResponse.data);
+  //     }
+  //   } catch (error) {
+  //     console.error('데이터를 불러오는 데 실패했습니다', error);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   fetchProfileData();
+  // }, []);
+
+  const getLikedQuotes = async () => {
+    const likedQuotesData = await Promise.all(
+      temp.map(async (element) => {
+        try {
+          const response = await instance.get(`quote/${element}/`);
+          if (response.status === 200) {
+            return response.data;
+          }
+          return undefined; // 반환 값 추가
+        } catch (error) {
+          console.error('데이터를 불러오는 데 실패했습니다', error);
+          return undefined; // 반환 값 추가
+        }
+      }),
+    );
+    setLikedQuotes(likedQuotesData.filter(Boolean));
   };
 
   useEffect(() => {
-    fetchProfileData();
+    getLikedQuotes();
   }, []);
+
+  console.log(likedQuotes);
 
   return (
     <div className="bg-yellow-FF min-h-screen p-[30px]">
@@ -91,7 +121,7 @@ const My = () => {
                   {activeTab === 'Liked' && (
                     <span className="mr-2 text-red-500">❤️</span>
                   )}
-                  <p>{quote.text}</p>
+                  <p>{quote.content}</p>
                 </div>
               ),
             )}
