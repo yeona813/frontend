@@ -20,8 +20,6 @@ const EmailSection = ({
   onChangeRegister,
   setEmailCheck,
 }: EmailSectionProps) => {
-  // console.log('EmailSection');
-
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const userListRef = useRef<any[]>([]);
   const usingRef = useRef<HTMLSpanElement>(null);
