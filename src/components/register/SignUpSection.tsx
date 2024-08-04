@@ -1,6 +1,6 @@
 import { instance } from 'api/instance';
 import React, { useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { info, err, infoRef } from 'types/register';
 
 interface SignUpSectionProps {
@@ -23,6 +23,7 @@ const SignUpSection = ({
   setSuccess,
 }: SignUpSectionProps) => {
   const mountRef = useRef(false);
+  const navigate = useNavigate();
 
   const applyStyle = (errorType: boolean) => {
     return errorType ? '1px solid rgb(50,180,50)' : '1px solid red';
@@ -33,7 +34,6 @@ const SignUpSection = ({
       mountRef.current = !mountRef.current;
       return;
     }
-    // console.log(error);
     if (submitted) {
       if (!emailCheck && error.emailErr) {
         refObj.emailRef.current?.style.setProperty(
@@ -72,7 +72,6 @@ const SignUpSection = ({
     );
 
     if (!isErrorFree || !emailCheck) {
-      console.log(`ERRRRRR, ${!isErrorFree}, ${!emailCheck}`);
       return;
     }
 
@@ -84,17 +83,14 @@ const SignUpSection = ({
 
     try {
       const response = await instance.post('accounts/register/', body);
-      console.log(response.status);
 
       if (response.status === 201) {
         setSuccess(true);
-      } else {
-        console.log(response.status);
+        navigate('/');
       }
     } catch (err) {
       console.log(err);
     }
-    console.log(register.email, register.password);
   };
   return (
     <section>

@@ -29,8 +29,10 @@ const LoginButton = ({
   const errRef = useRef<HTMLDivElement>(null);
 
   const onClickKakaoLogin = () => {
-    const REST_API_KEY = process.env.REACT_APP_KAKAO_REST_API_KEY; // 백엔드에서 받은 카카오 키 넣기
-    const REDIRECT_URI = `http://localhost:3000/oauth`; // 백엔드에서 받은 리다이렉트 URI 넣기
+    const REST_API_KEY = process.env.REACT_APP_KAKAO_REST_API_KEY;
+    const REDIRECT_URI = encodeURIComponent(
+      'http://localhost:3000/auth/callback',
+    ); // 프론트엔드의 Redirect URI
     const link = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
 
     window.location.href = link;
@@ -72,8 +74,6 @@ const LoginButton = ({
       console.log('ERROR OCCURED');
       setErrorMessage('회원 정보가 없습니다. 입력 정보를 확인해주세요.');
     }
-
-    console.log(`${emailInput}, ${passwordInput}`);
   };
   // ========================================================================
 

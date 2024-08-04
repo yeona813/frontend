@@ -30,7 +30,7 @@ const EmailInput = ({
 
   return (
     <section>
-      <span className="text-sm">이메일</span>
+      <span className="text-sm mr-3">이메일</span>
       {niceInputPassword()}
       <div
         ref={emailRef}

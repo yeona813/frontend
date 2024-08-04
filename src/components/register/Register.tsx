@@ -1,4 +1,5 @@
 import React, { memo, useCallback, useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { info, err } from 'types/register';
 import RegisterForm from './RegisterForm';
 
@@ -6,7 +7,15 @@ import RegisterForm from './RegisterForm';
 // 1. register 컴포넌트가 update될 때 2번씩 리렌더링 되는데 해결을 못했음
 
 const Register = () => {
-  // console.log('Register');
+  const isLoggedIn = localStorage.getItem('accessToken');
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate('/');
+    }
+  }, []);
+
   const [register, setRegister] = useState<info>({
     email: '',
     password: '',
@@ -35,7 +44,6 @@ const Register = () => {
     (name: string, value: string) => {
       let { emailErr, passwordErr, checkPasswordErr, nicknameErr } = error;
 
-      // console.log('Register-updateError');
       if (name === 'email') {
         emailErr = isValidEmail(value);
       } else if (name === 'password') {
@@ -66,23 +74,17 @@ const Register = () => {
 
   useEffect(() => {
     if (!emailMountRef.current) {
-      // console.log('Register-Email-Mount');
       emailMountRef.current = !emailMountRef.current;
       return;
     }
-    console.log('Register-Email-Update');
-    // console.log('useEffect checking(email) Called');
     updateError('email', register.email);
   }, [register.email]);
 
   useEffect(() => {
     if (!passwordMountRef.current) {
-      // console.log('Register-Password-Mount');
       passwordMountRef.current = !passwordMountRef.current;
       return;
     }
-    console.log('Register-Password-Update');
-    // console.log('useEffect checking(password, checkPassword) Called');
     updateError('password', register.password);
     updateError('checkPassword', register.checkPassword);
   }, [register.password, register.checkPassword]);

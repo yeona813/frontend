@@ -3,6 +3,7 @@ import { mockData } from './temporaryMockData';
 import QuoteItem from './QuoteItem';
 
 const QuoteList = () => {
+  // MockData 말고 quoteList 백엔드에서 받아오기
   const [data, setData] = useState(mockData);
   const [loadMore, setLoadMore] = useState(5);
 

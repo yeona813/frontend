@@ -35,9 +35,9 @@ const Header = () => {
         로고
       </Link>
       <div
-        className={`fixed top-0 left-0 flex bg-white w-[250px] h-screen z-40 ${menuOpened ? 'transform-translatex-show' : 'transform-translatex-hide'} `}
+        className={`fixed top-0 left-0 flex bg-white w-1/2 max-w-screen-sm h-screen z-40 ${menuOpened ? 'transform-translatex-show' : 'transform-translatex-hide'} `}
       >
-        <SideMenu />
+        <SideMenu onClickMenu={onClickMenu} />
       </div>
       {menuOpened ? <BlackArea onClickMenu={onClickMenu} /> : null}
     </div>
