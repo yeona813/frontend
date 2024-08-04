@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+
 import { instance } from 'api/instance';
 
 interface Quote {
@@ -98,7 +99,7 @@ const My = () => {
               <button
                 className="bg-yellow-500 text-white py-2 px-4 rounded-lg mb-4"
                 type="button"
-                onClick={() => navigate('/write-quote')}
+                onClick={() => navigate('/writeQuote')}
               >
                 + 명언 등록하기
               </button>
