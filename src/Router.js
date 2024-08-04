@@ -8,7 +8,7 @@ import QuoteListPage from 'pages/quoteList/QuoteListPage';
 import ResultQuotePage from 'pages/resultQuote/ResultQuotePage';
 import Redirection from 'pages/login/Redirection';
 import WriteQuotePage from 'pages/writeQuote/WriteQuotePage';
-import EditProfile from 'components/my/EditProfile';
+import EditProfile from 'components/edit/EditProfile';
 import DeleteAccount from 'components/my/DeleteAccount';
 import EditPassword from 'components/my/EditPassword';
 import EditNickname from 'components/my/EditNickname';
@@ -22,7 +22,7 @@ function Router() {
         <Route path="/resultQuote/:id" element={<ResultQuotePage />} />
         <Route path="/writeQuote" element={<WriteQuotePage />} />
         <Route path="/quoteList" element={<QuoteListPage />} />
-        <Route path="/auth/callback" element={<Redirection />} />
+        <Route path="/auth/callback/" element={<Redirection />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/my" element={<MyPage />} />
@@ -30,7 +30,6 @@ function Router() {
         <Route path="/deleteAccount" element={<DeleteAccount />} />
         <Route path="/edit/password" element={<EditPassword />} />
         <Route path="/edit/nickname" element={<EditNickname />} />
-        <Route path="/editProfile" element={<EditProfilePage />} />
       </Routes>
     </div>
   );

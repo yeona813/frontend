@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import PasswordStoreButton from './PasswordStoreButton';
 
-const EditPassword = () => {
+const EditPasswordInput = () => {
   const [currentPassword, setCurrentPassword] = useState('');
   const [NewPassword, setNewPassword] = useState('');
   const [checkNewPassword, setCheckNewPassword] = useState('');
@@ -55,11 +54,8 @@ const EditPassword = () => {
   }, [NewPassword, checkNewPassword]);
 
   return (
-    <form className="p-3 flex flex-col gap-3 bg-white h-screen items-center">
-      <div className="my-4 text-xl">
-        <h2 className="text-xl w-[335px]">회원정보 수정/비밀번호</h2>
-      </div>
-      <section>
+    <div className="flex flex-col justify-center items-center">
+      <section className="w-[335px]">
         <span className="text-sm mr-3">현재 비밀번호</span>
         <div className="gap-2 my-2 w-[335px] flex-1 mx-auto rounded-lg border border-gray-300 h-[50px] flex items-center justify-between px-3 bg-white">
           <input
@@ -87,7 +83,7 @@ const EditPassword = () => {
           </span>
         )}
       </section>
-      <section>
+      <section className="w-[335px]">
         <span className="text-sm mr-3">새로운 비밀번호</span>
         <div className="gap-2 my-2 w-[335px] flex-1 mx-auto rounded-lg border border-gray-300 h-[50px] flex items-center justify-between px-3 bg-white">
           <input
@@ -116,7 +112,7 @@ const EditPassword = () => {
           </span>
         )}
       </section>
-      <section>
+      <section className="w-[335px]">
         <span className="text-sm mr-3">새로운 비밀번호 확인</span>
         <div className="gap-2 my-2 w-[335px] flex-1 mx-auto rounded-lg border border-gray-300 h-[50px] flex items-center justify-between px-3 bg-white">
           <input
@@ -144,13 +140,8 @@ const EditPassword = () => {
           </span>
         )}
       </section>
-      <PasswordStoreButton
-        currentPassword={currentPassword}
-        NewPassword={NewPassword}
-        checkNewPassword={checkNewPassword}
-      />
-    </form>
+    </div>
   );
 };
 
-export default EditPassword;
+export default EditPasswordInput;
