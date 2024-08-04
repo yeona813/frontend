@@ -17,7 +17,7 @@ const Header = () => {
 
   return (
     <div
-      className={`fixed top-0 w-screen z-20 ${headerColor} flex items-center justify-center py-5 h-[70px] shadow-sm`}
+      className={`fixed top-0 w-screen max-w-md z-20 ${headerColor} flex items-center justify-center py-5 h-[70px] shadow-sm`}
       style={{
         backgroundImage: `url('/images/background.jpg')`,
         backgroundSize: 'cover',

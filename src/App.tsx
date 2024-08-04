@@ -9,7 +9,7 @@ function App() {
 
   return (
     <div
-      className="relative w-screen h-screen mx-auto overflow-auto scrollbar-hide"
+      className="relative w-screen max-w-md h-screen mx-auto overflow-auto scrollbar-hide"
       style={{
         backgroundImage: `url('/images/background.jpg')`,
         backgroundSize: 'cover',
