@@ -40,6 +40,7 @@ const QuoteItem = ({ element, onClickHeart }: QuoteItemProps) => {
             filter: 'brightness(70%)',
           }}
         ></div>
+
         <div
           tabIndex={0}
           role="button"

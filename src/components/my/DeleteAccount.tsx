@@ -34,7 +34,7 @@ const DeleteAccount = () => {
       </section>
       <section>
         <button
-          className="rounded-lg bg-black w-[335px] h-[45.5px] shadow-md text-white mt-5"
+          className="rounded-lg bg-black w-[335px] h-[45.5px] shadow-md text-white mt-3"
           type="button"
         >
           탈퇴하기
