@@ -36,7 +36,7 @@ const PasswordInput = ({
 
   return (
     <section>
-      <span className="text-sm">비밀번호</span>
+      <span className="text-sm mr-3">비밀번호</span>
       {niceInputPassword()}
       <div
         ref={passwordRef}

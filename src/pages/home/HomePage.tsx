@@ -1,11 +1,11 @@
-import axios from 'axios';
+import { instance } from 'api/instance';
 import Button from 'components/common/Button';
 import Question from 'components/home/Question';
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const HomePage = () => {
-  const isLoggedIn = true; // 로그인 여부 다시 가져와야함!
+  const isLoggedIn = localStorage.getItem('accessToken');
 
   const [text, setText] = useState('');
   const navigate = useNavigate();
@@ -21,13 +21,22 @@ const HomePage = () => {
   };
 
   const handleClick = async () => {
+    const headers = {
+      Authorization: `token ${localStorage.getItem('accessToken')}`,
+    };
+
     if (text !== '') {
       try {
-        const response = await axios.post('/quote/recommend', {
-          query: text,
-        });
+        const response = await instance.post(
+          'quote/recommend/',
+          {
+            query: text,
+          },
+          { headers },
+        );
         if (response.status === 200) {
-          navigate('/resultQuote');
+          console.log(response);
+          navigate(`/resultQuote/${response.data.quote_id}`);
         }
       } catch (error) {
         alert(error);
