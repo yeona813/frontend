@@ -1,5 +1,5 @@
 import { instance } from 'api/instance';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 // set~Err props로 받기
 
@@ -21,7 +21,7 @@ const PasswordStoreButton = ({
 
   const [userEmail, setUserEmail] = useState('');
   const [userNickname, setUserNickname] = useState('');
-  const [avail, setAvail] = useState(false);
+  const [loginStatus, setLoginStatus] = useState(false);
 
   const onLoad = async () => {
     try {
@@ -36,13 +36,44 @@ const PasswordStoreButton = ({
     }
   };
 
+  const isStatusOK = async () => {
+    const dataToSend = {
+      email: userEmail,
+      password: currentPassword,
+    };
+    try {
+      const response = await instance.post('accounts/profile/', dataToSend);
+
+      if (response.status === 200) {
+        setLoginStatus(true);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    onLoad();
+    isStatusOK();
+  }, []);
+
   const onStore = async () => {
     // 여기서 검사 시작
+    if (loginStatus === false) {
+      console.log('현재 비밀번호가 틀립니다.');
+      return;
+    }
+
+    if (NewPassword !== checkNewPassword) {
+      console.log('새로운 비밀번호가 일치하지 않습니다.');
+      return;
+    }
 
     // 패스 못하면 리턴
 
     // 검사 끝
     onLoad();
+
     try {
       const body = {
         email: userEmail,

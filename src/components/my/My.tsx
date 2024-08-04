@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { instance } from 'api/instance';
 
 interface Quote {
   id: number;
@@ -30,12 +31,15 @@ const My = () => {
 
   const fetchProfileData = async () => {
     try {
-      const userInfo = await axios.get('/api/user/info');
-      setUser(userInfo.data);
-      const liked = await axios.get('/api/quotes/liked');
-      setLikedQuotes(liked.data);
-      const added = await axios.get('/api/quotes/added');
-      setAddedQuotes(added.data);
+      const userInfoResponse = await instance.get('accounts/profile/', {
+        headers: {
+          Authorization: `token ${localStorage.getItem(`accessToken`)}`,
+        },
+      });
+      if (userInfoResponse.status === 200) {
+        setUser(userInfoResponse.data);
+        console.log(userInfoResponse.data);
+      }
     } catch (error) {
       console.error('데이터를 불러오는 데 실패했습니다', error);
     }
