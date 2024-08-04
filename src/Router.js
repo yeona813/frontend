@@ -9,6 +9,7 @@ import ResultQuotePage from 'pages/resultQuote/ResultQuotePage';
 import Redirection from 'pages/login/Redirection';
 import WriteQuotePage from 'pages/writeQuote/WriteQuotePage';
 import EditProfile from 'components/my/EditProfile';
+import DeleteAccount from 'components/my/DeleteAccount';
 
 function Router() {
   return (
@@ -23,6 +24,7 @@ function Router() {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/my" element={<MyPage />} />
         <Route path="/edit" element={<EditProfile />} />
+        <Route path="/deleteAccount" element={<DeleteAccount />} />
       </Routes>
     </div>
   );
