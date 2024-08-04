@@ -12,6 +12,7 @@ import EditProfile from 'components/my/EditProfile';
 import DeleteAccount from 'components/my/DeleteAccount';
 import EditPassword from 'components/my/EditPassword';
 import EditNickname from 'components/my/EditNickname';
+import EditProfilePage from 'pages/editProfile/EditProfilePage';
 
 function Router() {
   return (
@@ -29,6 +30,7 @@ function Router() {
         <Route path="/deleteAccount" element={<DeleteAccount />} />
         <Route path="/edit/password" element={<EditPassword />} />
         <Route path="/edit/nickname" element={<EditNickname />} />
+        <Route path="/editProfile" element={<EditProfilePage />} />
       </Routes>
     </div>
   );
