@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PasswordStoreButton from './PasswordStoreButton';
 
 const EditPassword = () => {
@@ -14,17 +14,14 @@ const EditPassword = () => {
   const [showPassword2, setShowPassword2] = useState(false);
   const [showPassword3, setShowPassword3] = useState(false);
 
-  const isValidPassword = (password: string) => {
-    return /^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*]).{8,}$/.test(password);
-  };
-
   const toggleShowPassword = (passwordNumber: number): void => {
     if (passwordNumber === 1) {
       setShowPassword1(!showPassword1);
     } else if (passwordNumber === 2) {
       setShowPassword2(!showPassword2);
+    } else {
+      setShowPassword3(!showPassword3);
     }
-    setShowPassword3(!showPassword3);
   };
 
   const onChangeCurrentPassword = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -39,6 +36,24 @@ const EditPassword = () => {
     setCheckNewPassword(e.target.value);
   };
 
+  useEffect(() => {
+    setCurrentPasswordErr(currentPassword === '');
+  }, [currentPassword]);
+
+  useEffect(() => {
+    const passwordRegex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    setNewPasswordErr(!passwordRegex.test(NewPassword));
+  }, [NewPassword]);
+
+  useEffect(() => {
+    const passwordsMatch = NewPassword === checkNewPassword;
+    setCheckNewPasswordErr(!passwordsMatch);
+    if (!passwordsMatch) {
+      console.log('비밀번호가 일치하지 않습니다');
+    }
+  }, [NewPassword, checkNewPassword]);
+
   return (
     <form className="p-3 flex flex-col gap-3 bg-white h-screen items-center">
       <div className="my-4 text-xl">
@@ -46,7 +61,7 @@ const EditPassword = () => {
       </div>
       <section>
         <span className="text-sm mr-3">현재 비밀번호</span>
-        <div className="gap-2 my-2 w-[335px] flex-1 mx-auto rounded-lg border border-gray-300  h-[50px] flex items-center justify-between px-3 bg-white">
+        <div className="gap-2 my-2 w-[335px] flex-1 mx-auto rounded-lg border border-gray-300 h-[50px] flex items-center justify-between px-3 bg-white">
           <input
             value={currentPassword}
             onChange={onChangeCurrentPassword}
@@ -66,10 +81,15 @@ const EditPassword = () => {
             />
           </button>
         </div>
+        {currentPasswordErr && (
+          <span className="text-red-500 text-sm">
+            현재 비밀번호를 입력하세요
+          </span>
+        )}
       </section>
       <section>
         <span className="text-sm mr-3">새로운 비밀번호</span>
-        <div className="gap-2 my-2 w-[335px] flex-1 mx-auto rounded-lg border border-gray-300  h-[50px] flex items-center justify-between px-3 bg-white">
+        <div className="gap-2 my-2 w-[335px] flex-1 mx-auto rounded-lg border border-gray-300 h-[50px] flex items-center justify-between px-3 bg-white">
           <input
             value={NewPassword}
             onChange={onChangeNewPassword}
@@ -89,10 +109,16 @@ const EditPassword = () => {
             />
           </button>
         </div>
+        {newPasswordErr && (
+          <span className="text-red-500 text-sm">
+            비밀번호는 최소 8자 이상, 대문자, 소문자, 숫자, 특수 문자를 포함해야
+            합니다.
+          </span>
+        )}
       </section>
       <section>
         <span className="text-sm mr-3">새로운 비밀번호 확인</span>
-        <div className="gap-2 my-2 w-[335px] flex-1 mx-auto rounded-lg border border-gray-300  h-[50px] flex items-center justify-between px-3 bg-white">
+        <div className="gap-2 my-2 w-[335px] flex-1 mx-auto rounded-lg border border-gray-300 h-[50px] flex items-center justify-between px-3 bg-white">
           <input
             value={checkNewPassword}
             onChange={onChangeCheckNewPassword}
@@ -112,6 +138,11 @@ const EditPassword = () => {
             />
           </button>
         </div>
+        {checkNewPasswordErr && (
+          <span className="text-red-500 text-sm">
+            비밀번호가 일치하지 않습니다
+          </span>
+        )}
       </section>
       <PasswordStoreButton
         currentPassword={currentPassword}
