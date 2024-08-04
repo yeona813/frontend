@@ -8,10 +8,7 @@ import QuoteListPage from 'pages/quoteList/QuoteListPage';
 import ResultQuotePage from 'pages/resultQuote/ResultQuotePage';
 import Redirection from 'pages/login/Redirection';
 import WriteQuotePage from 'pages/writeQuote/WriteQuotePage';
-import EditProfile from 'components/edit/EditProfile';
 import DeleteAccount from 'components/my/DeleteAccount';
-import EditPassword from 'components/my/EditPassword';
-import EditNickname from 'components/my/EditNickname';
 import EditProfilePage from 'pages/editProfile/EditProfilePage';
 
 function Router() {
@@ -26,10 +23,8 @@ function Router() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/my" element={<MyPage />} />
-        <Route path="/edit" element={<EditProfile />} />
         <Route path="/deleteAccount" element={<DeleteAccount />} />
-        <Route path="/edit/password" element={<EditPassword />} />
-        <Route path="/edit/nickname" element={<EditNickname />} />
+        <Route path="/editProfile" element={<EditProfilePage />} />
       </Routes>
     </div>
   );
