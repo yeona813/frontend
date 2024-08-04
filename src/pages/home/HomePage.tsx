@@ -35,7 +35,6 @@ const HomePage = () => {
           { headers },
         );
         if (response.status === 200) {
-          console.log(response);
           navigate(`/resultQuote/${response.data.quote_id}`);
         }
       } catch (error) {
