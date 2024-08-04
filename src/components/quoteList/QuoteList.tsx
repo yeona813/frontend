@@ -23,7 +23,7 @@ const QuoteList = () => {
   const filteredData = () => data.slice(0, loadMore);
 
   return (
-    <form className=" p-3 flex flex-col gap-2  bg-yellow-FF">
+    <form className=" p-3 flex flex-col gap-2">
       <div className="px-3 my-4 text-xl flex justify-between">
         <h2>내가 좋아한 명언</h2>
       </div>

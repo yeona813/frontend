@@ -46,7 +46,7 @@ const MyPage = () => {
   }, []);
 
   return (
-    <div className="bg-yellow-FF min-h-screen p-[30px]">
+    <div className="min-h-screen p-[30px]">
       <div className="container mx-auto w-[300px] bg-white p-6 rounded-lg shadow-lg">
         <div className="flex flex-col items-center text-center">
           <img

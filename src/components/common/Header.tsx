@@ -9,7 +9,7 @@ const Header = () => {
   const headerColor =
     location.pathname === '/login' || location.pathname === '/register'
       ? 'bg-white'
-      : 'bg-yellow-FF';
+      : '';
 
   const onClickMenu = () => {
     setMenuOpened(!menuOpened);
@@ -18,6 +18,11 @@ const Header = () => {
   return (
     <div
       className={`fixed top-0 w-screen z-20 ${headerColor} flex items-center justify-center py-5 h-[70px] shadow-sm`}
+      style={{
+        backgroundImage: `url('/images/background.jpg')`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      }}
     >
       <button onClick={onClickMenu} type="button">
         <img

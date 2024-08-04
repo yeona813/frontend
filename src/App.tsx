@@ -8,7 +8,14 @@ function App() {
   const location = useLocation();
 
   return (
-    <div className="relative w-screen h-screen mx-auto bg-yellow-FF overflow-auto scrollbar-hide">
+    <div
+      className="relative w-screen h-screen mx-auto overflow-auto scrollbar-hide"
+      style={{
+        backgroundImage: `url('/images/background.jpg')`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      }}
+    >
       <Header />
       <Router />
       {location.pathname !== '/login' && location.pathname !== '/register' && (

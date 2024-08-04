@@ -1,17 +1,16 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent } from 'react';
 
-const WriteComment = () => {
-  const [comment, setComment] = useState('');
+interface WriteCommentProps {
+  comment: string;
+  handleChange: (event: ChangeEvent<HTMLTextAreaElement>) => void;
+  handleCommentClick: () => void;
+}
 
-  const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
-    setComment(event.target.value);
-  };
-
-  const handleClick = () => {
-    console.log(comment);
-    // 댓글 post 요청
-  };
-
+const WriteComment = ({
+  comment,
+  handleChange,
+  handleCommentClick,
+}: WriteCommentProps) => {
   return (
     <div className="flex flex-col gap-[10px]">
       <span className="text-sm font-semibold">댓글</span>
@@ -25,7 +24,7 @@ const WriteComment = () => {
         <button
           type="button"
           className="absolute right-3 bottom-3 border border-gray-200 rounded-xl w-[60px] h-[30px] text-xs"
-          onClick={handleClick}
+          onClick={handleCommentClick}
         >
           입력
         </button>
