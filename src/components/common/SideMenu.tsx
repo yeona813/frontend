@@ -92,7 +92,7 @@ const SideMenu = ({ onClickMenu }: SideMenuProps) => {
               className="flex items-center gap-3 my-3 "
             >
               <img
-                src="icons/user-solid.svg"
+                src="icons/profileMenu-click.png"
                 alt="마이페이지 버튼"
                 className="w-5 h-5"
               />
