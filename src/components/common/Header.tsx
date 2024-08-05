@@ -38,11 +38,7 @@ const Header = () => {
         </button>
       )}
       <Link to="/" className="flex items-center text-[25px] font-bold">
-        <img
-          className="w-[60px] h-full"
-          src="/icons/favicon.png"
-          alt="조약돌"
-        />
+        <img className="w-[60px] h-full" src="/icons/header.png" alt="조약돌" />
         <span>Pebble</span>
       </Link>
       {menuOpened && (
