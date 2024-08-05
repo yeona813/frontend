@@ -103,7 +103,7 @@ const EditProfilePage = () => {
   };
 
   return (
-    <div className="flex justify-center p-[30px]">
+    <div className="flex justify-center p-[40px]">
       <div className="flex flex-col w-full bg-white rounded-xl p-[30px] gap-[25px]">
         <div>
           프로필 구역

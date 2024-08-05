@@ -123,8 +123,8 @@ const ResultQuotePage = () => {
   };
 
   return (
-    <div className="flex flex-col items-center pt-[30px] gap-[30px]">
-      <div className="flex flex-col gap-[20px] w-[300px] rounded-xl bg-white shadow-custom p-5">
+    <div className="flex flex-col items-center p-[30px] gap-[30px]">
+      <div className="flex flex-col gap-[20px] w-full rounded-xl bg-white shadow-custom p-5">
         <ResultQuote
           imageUrl={imageURL}
           quote={quoteData.content}
@@ -138,7 +138,7 @@ const ResultQuotePage = () => {
           handleChange={handleChange}
           handleCommentClick={handleCommentClick}
         />
-        <div className="flex flex-col h-[140px] gap-[30px] overflow-scroll scrollbar-hide">
+        <div className="flex flex-col h-[140px] gap-[40px] overflow-scroll scrollbar-hide">
           {commentData.map((comment: CommentType) => (
             <Comment
               key={comment.id}
@@ -150,7 +150,7 @@ const ResultQuotePage = () => {
           ))}
         </div>
       </div>
-      <Button text="명언 더 보기" handleClick={handleClick} />
+      <Button text="둘러보기" handleClick={handleClick} />
     </div>
   );
 };

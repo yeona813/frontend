@@ -37,8 +37,16 @@ const Header = () => {
           />
         </button>
       )}
-      <Link to="/" className="text-[25px]">
-        로고
+      <Link
+        to="/"
+        className="flex gap-[10px] items-center text-[25px] font-bold"
+      >
+        <img
+          className="w-[25px] h-[25px]"
+          src="/icons/favicon.png"
+          alt="조약돌"
+        />
+        <span>Pebble</span>
       </Link>
       {menuOpened && (
         <SideBarPortal>
