@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { mockData } from './temporaryMockData';
-import QuoteItem from './QuoteItem';
+import QuoteItem from './UserItem';
 
 const QuoteList = () => {
   // MockData 말고 quoteList 백엔드에서 받아오기

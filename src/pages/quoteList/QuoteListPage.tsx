@@ -1,4 +1,4 @@
-import QuoteList from 'components/quoteList/QuoteList';
+import QuoteList from 'components/userList/UserList';
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
