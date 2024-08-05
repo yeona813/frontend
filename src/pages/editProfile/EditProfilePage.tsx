@@ -29,7 +29,7 @@ const EditProfilePage = () => {
   useEffect(() => {
     const fetchData = async () => {
       const headers = {
-        Authorization: `token ${localStorage.getItem(`accessToken`)}`,
+        Authorization: `Bearer ${localStorage.getItem(`accessToken`)}`,
       };
       try {
         const response = await instance.get('accounts/profile/', { headers });
@@ -68,7 +68,7 @@ const EditProfilePage = () => {
 
     try {
       const headers = {
-        Authorization: `token ${localStorage.getItem(`accessToken`)}`,
+        Authorization: `Bearer ${localStorage.getItem(`accessToken`)}`,
         'Content-Type': 'multipart/form-data',
       };
       const response = await instance.put('accounts/profile/', formData, {

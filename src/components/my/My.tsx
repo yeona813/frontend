@@ -4,6 +4,17 @@ import { instance } from 'api/instance';
 import DeleteAccountPortal from 'helpers/DeleteAccountPortal';
 import DeleteAccount from './DeleteAccount';
 
+interface Quote {
+  id: number;
+  content: string;
+  description: string;
+  author: string;
+  image: null;
+  created_at: string;
+  like_count: 0;
+  user_author: null;
+}
+
 interface smallQuote {
   id: number;
   content: string;
@@ -22,11 +33,12 @@ interface userProfile {
   like_quotes: number[];
   nickname: string;
   profile_image: string;
-  registered_quotes: smallQuote;
+  registered_quotes: smallQuote[];
 }
 
 const My = () => {
   const [user, setUser] = useState<userProfile>();
+  const [likedQuotes, setLikedQuotes] = useState<Quote[]>();
 
   const [activeTab, setActiveTab] = useState('Liked');
   const navigate = useNavigate();
@@ -41,7 +53,7 @@ const My = () => {
     try {
       const userInfoResponse = await instance.get('accounts/profile/', {
         headers: {
-          Authorization: `token ${localStorage.getItem(`accessToken`)}`,
+          Authorization: `Bearer ${localStorage.getItem(`accessToken`)}`,
         },
       });
       if (userInfoResponse.status === 200) {
@@ -58,25 +70,49 @@ const My = () => {
 
   console.log(user);
 
+  const getLikedQuotes = async () => {
+    if (user) {
+      const likedQuotesData = await Promise.all(
+        user.like_quotes.map(async (element) => {
+          try {
+            const response = await instance.get(`quote/${element}/`);
+            if (response.status === 200) {
+              return response.data;
+            }
+            return undefined; // 반환 값 추가
+          } catch (error) {
+            console.error('데이터를 불러오는 데 실패했습니다', error);
+            return undefined; // 반환 값 추가
+          }
+        }),
+      );
+      setLikedQuotes(likedQuotesData.filter(Boolean));
+    }
+  };
+
+  useEffect(() => {
+    getLikedQuotes();
+  }, [user]);
+
+  console.log(likedQuotes);
+
   return (
-    <div className="min-h-screen p-[30px] flex flex-col gap-5 pb-[100px] items-center">
-      <div className="container mx-auto w-full bg-white p-[30px] rounded-lg shadow-custom">
-        <div className="flex flex-col items-center text-center gap-2">
+    <div className="bg-yellow-FF min-h-screen p-[30px] flex flex-col gap-5 pb-[100px] items-center">
+      <div className="container mx-auto w-[300px] bg-white p-6 rounded-lg shadow-lg">
+        <div className="flex flex-col items-center text-center">
           <img
-            className="w-[150px] h-[150px] rounded-full"
-            src={user?.profile_image}
+            className="w-32 h-32 rounded-full"
             alt="프로필 사진"
+            src={`${user?.profile_image}`}
           />
           <h1 className="text-2xl font-bold mt-2">{user?.nickname}</h1>
-          <div className="flex gap-5">
-            <p>팔로워 {user?.follower_count || 0}</p>
-            <p className="text-gray-600">|</p>
-            <p>팔로잉 {user?.following_count || 0}</p>
-          </div>
+          <p className="text-gray-600">
+            팔로워 {user?.follower_count}| 팔로잉 {user?.following_count}
+          </p>
           <button
-            className="bg-black text-white w-[150px] p-3 rounded-lg mt-3"
+            className="bg-yellow-500 text-white py-2 px-4 rounded-lg mt-4"
             type="button"
-            onClick={() => navigate('/editProfile')}
+            onClick={() => navigate('/edit-profile')}
           >
             프로필 수정
           </button>
@@ -94,23 +130,38 @@ const My = () => {
               </button>
             ))}
           </div>
+          {activeTab === 'Liked' ? (
+            <ul>
+              {likedQuotes?.map((element) => (
+                <li key={element.id}>{element.content}</li>
+              ))}
+            </ul>
+          ) : null}
+
           <div className="p-3">
             {activeTab === 'Added' && (
               <button
-                className="w-full border border-black font-semibold hover:bg-black hover:text-white p-3 rounded-lg mb-4"
+                className="bg-yellow-500 text-white py-2 px-4 rounded-lg mb-4"
                 type="button"
                 onClick={() => navigate('/writeQuote')}
               >
-                나의 명언 등록
+                + 명언 등록하기
               </button>
             )}
+            {activeTab === 'Added' ? (
+              <ul>
+                {user?.registered_quotes?.map((element) => (
+                  <li key={element.id}>{element.content}</li>
+                ))}
+              </ul>
+            ) : null}
           </div>
         </div>
       </div>
-      <div className="w-full flex justify-end">
+      <div className="w-[300px] flex justify-end">
         <button
           type="button"
-          className="bg-gray-400 opacity-60 p-2 w-[80px] text-sm text-white hover:bg-black hover:opacity-100 rounded-md "
+          className="bg-black p-1.5 text-sm text-white rounded-md "
           onClick={onClickDelete}
         >
           탈퇴하기

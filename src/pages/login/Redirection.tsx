@@ -19,7 +19,7 @@ const Redirection = () => {
         // 백엔드에서 완료 후 우리 사이트 전용 토큰을 넘겨주는 게 성공했다면
         console.log(res);
         // 계속 사용할 정보들(예: 이름 등)은 localStorage에 저장해두자
-        localStorage.setItem('accessToken', res.data.token);
+        localStorage.setItem('accessToken', res.data.access);
         // 로그인이 성공하면 이동할 페이지
         navigate('/');
       } catch (error) {
