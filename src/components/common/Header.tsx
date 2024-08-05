@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import SideBarPortal from 'helpers/SideBarPortal';
 import BlackArea from './BlackArea';
 import SideMenu from './SideMenu';
 
@@ -38,20 +37,14 @@ const Header = () => {
         </button>
       )}
       <Link to="/" className="flex items-center text-[25px] font-bold">
-        <img
-          className="w-[60px] h-full"
-          src="/icons/favicon.png"
-          alt="조약돌"
-        />
+        <img className="w-[60px] h-full" src="/icons/header.png" alt="조약돌" />
         <span>Pebble</span>
       </Link>
       {menuOpened && (
-        <SideBarPortal>
-          <div className="fixed top-0 left-0 flex bg-white w-1/2 max-w-screen-sm h-screen z-40">
-            <BlackArea onClickMenu={onClickMenu} />
-            <SideMenu onClickMenu={onClickMenu} />
-          </div>
-        </SideBarPortal>
+        <div className="absolute inset-0 flex bg-white w-1/2 max-w-sm h-screen z-40">
+          <BlackArea onClickMenu={onClickMenu} />
+          <SideMenu onClickMenu={onClickMenu} />
+        </div>
       )}
     </div>
   );

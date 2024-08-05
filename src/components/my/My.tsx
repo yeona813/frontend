@@ -60,7 +60,7 @@ const My = () => {
     try {
       const userInfoResponse = await instance.get('accounts/profile/', {
         headers: {
-          Authorization: `token ${localStorage.getItem(`accessToken`)}`,
+          Authorization: `Bearer ${localStorage.getItem(`accessToken`)}`,
         },
       });
       if (userInfoResponse.status === 200) {
@@ -107,7 +107,11 @@ const My = () => {
     <div className="bg-yellow-FF min-h-screen p-[30px] flex flex-col gap-5 pb-[100px] items-center">
       <div className="container mx-auto w-[300px] bg-white p-6 rounded-lg shadow-lg">
         <div className="flex flex-col items-center text-center">
-          <img className="w-32 h-32 rounded-full" alt="프로필 사진" />
+          <img
+            className="w-32 h-32 rounded-full"
+            alt="프로필 사진"
+            src={`${user?.profile_image}`}
+          />
           <h1 className="text-2xl font-bold mt-2">{user?.nickname}</h1>
           <p className="text-gray-600">
             팔로워 {user?.follower_count}| 팔로잉 {user?.following_count}
