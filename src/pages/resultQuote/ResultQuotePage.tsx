@@ -130,6 +130,7 @@ const ResultQuotePage = () => {
           quote={quoteData.content}
           author={quoteData.author}
           isLike={isLike}
+          description={quoteData.description}
           handleLike={handleLike}
         />
         <WriteComment
