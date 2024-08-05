@@ -30,7 +30,7 @@ const SideMenu = ({ onClickMenu }: SideMenuProps) => {
     try {
       const response = await instance.get('accounts/profile/', {
         headers: {
-          Authorization: `token ${localStorage.getItem('accessToken')}`,
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
         },
       });
       if (response.status === 200) {

@@ -24,13 +24,6 @@ interface smallQuote {
   like_count: number;
 }
 
-interface User {
-  username: string;
-  avatar: string;
-  followers: number;
-  following: number;
-}
-
 interface userProfile {
   email: string;
   follower_count: number;

@@ -40,7 +40,6 @@ const LoginButton = ({
   // =============================================================== 공부 필요
   const onClickNormalLogin = async () => {
     setSubmitted(true);
-    // @@@@@@@@@@@@@@ 주석 없애기 @@@@@@@@@@@@@@@@@@@@@@@@
     const isErrorFree = Object.values(error).every(
       (element) => element === true,
     );
@@ -65,7 +64,8 @@ const LoginButton = ({
 
       if (response.status === 200) {
         setSuccess(true);
-        const accessToken = response.data.token;
+        const accessToken = response.data.access;
+        console.log(response);
         window.localStorage.setItem('accessToken', accessToken);
         navigate('/');
       }

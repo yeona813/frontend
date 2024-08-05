@@ -1,24 +1,41 @@
 import { instance } from 'api/instance';
-import React, { useRef } from 'react';
-import { user } from 'types/userList';
+import React, { useEffect, useRef } from 'react';
+import { smallUser, user } from 'types/userList';
 
 interface UserItemProps {
   element: user;
+  smallUser: smallUser[];
+  currentuser?: user;
   showUserProfile(targetEmail: string): void;
 }
 
-const UserItem = ({ element, showUserProfile }: UserItemProps) => {
+const UserItem = ({
+  element,
+  smallUser,
+  showUserProfile,
+  currentuser,
+}: UserItemProps) => {
   const followRef = useRef<HTMLButtonElement>(null);
 
   const onClickFollow = async () => {
     const headers = {
-      Authorization: `token ${localStorage.getItem('accessToken')}`,
+      Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
     };
+    const [user] = smallUser.filter((value) => {
+      if (value.email === element.email) return value.id;
+      return null;
+    });
+
+    console.log(user.id);
 
     try {
-      const response = await instance.post(`accounts/follow/${element.id}/`, {
-        headers,
-      });
+      const response = await instance.post(
+        `accounts/follow/${user.id}/`,
+        {},
+        {
+          headers,
+        },
+      );
       if (response.status === 200) {
         console.log('팔로우 하거나 끊거나하~~');
       }
@@ -31,6 +48,12 @@ const UserItem = ({ element, showUserProfile }: UserItemProps) => {
       followRef.current.style.border = 'none';
     }
   };
+
+  useEffect(() => {
+    if (currentuser) {
+      console.log(currentuser.followings);
+    }
+  }, []);
 
   return (
     <div

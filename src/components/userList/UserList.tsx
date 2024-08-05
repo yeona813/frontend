@@ -1,13 +1,15 @@
 import { instance } from 'api/instance';
 import React, { useEffect, useState } from 'react';
-import { user } from 'types/userList';
+import { user, smallUser } from 'types/userList';
 import UserProfilePortal from 'helpers/UserProfilePortal';
 import UserItem from './UserItem';
 import UserProfile from './UserProfile';
 
 const UserList = () => {
-  const [user, setUser] = useState<user[]>();
+  const [smallUser, setSmallUser] = useState<smallUser[]>([]); // 초기값을 빈 배열로 설정
+  const [user, setUser] = useState<user[]>([]);
   const [showingUser, setShowingUser] = useState<user>();
+  const [currentuser, setCurrentUser] = useState<user>();
 
   const [show, setShow] = useState(false);
 
@@ -17,6 +19,20 @@ const UserList = () => {
 
       if (response.status === 200) {
         setUser(response.data);
+        console.log(response.data);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const getSmallUsers = async () => {
+    try {
+      const response = await instance.get('accounts/register/');
+
+      if (response.status === 200) {
+        setSmallUser(response.data);
+        console.log(response.data);
       }
     } catch (err) {
       console.log(err);
@@ -25,6 +41,7 @@ const UserList = () => {
 
   useEffect(() => {
     getUsers();
+    getSmallUsers();
   }, []);
 
   const showUserProfile = (targetEmail: string) => {
@@ -47,6 +64,8 @@ const UserList = () => {
         <UserItem
           key={element.email}
           element={element}
+          smallUser={smallUser}
+          currentuser={currentuser}
           showUserProfile={showUserProfile}
         />
       ))}

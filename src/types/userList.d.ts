@@ -6,6 +6,13 @@ export type quote = {
   like_count: number;
 };
 
+export type smallUser = {
+  id: number;
+  email: string;
+  nickname: string;
+  like_quotes: number[];
+};
+
 export type user = {
   id: number;
   nickname: string;
