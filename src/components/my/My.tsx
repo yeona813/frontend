@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
 import { instance } from 'api/instance';
+import DeleteAccountPortal from 'helpers/DeleteAccountPortal';
+import DeleteAccount from './DeleteAccount';
 
 interface Quote {
   id: number;
@@ -35,6 +36,12 @@ const My = () => {
   const [addedQuotes, setAddedQuotes] = useState<Quote[]>([]);
   const [activeTab, setActiveTab] = useState('Liked');
   const navigate = useNavigate();
+
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const onClickDelete = () => {
+    setModalOpen(!modalOpen);
+  };
 
   // const fetchProfileData = async () => {
   //   try {
@@ -81,7 +88,7 @@ const My = () => {
   console.log(likedQuotes);
 
   return (
-    <div className="bg-yellow-FF min-h-screen p-[30px]">
+    <div className="bg-yellow-FF min-h-screen p-[30px] flex flex-col gap-5 pb-[100px] items-center">
       <div className="container mx-auto w-[300px] bg-white p-6 rounded-lg shadow-lg">
         <div className="flex flex-col items-center text-center">
           <img
@@ -137,6 +144,29 @@ const My = () => {
           </div>
         </div>
       </div>
+      <div className="w-[300px] flex justify-end">
+        <button
+          type="button"
+          className="bg-black p-1.5 text-sm text-white rounded-md "
+          onClick={onClickDelete}
+        >
+          탈퇴하기
+        </button>
+      </div>
+      {modalOpen && (
+        <DeleteAccountPortal>
+          <DeleteAccount></DeleteAccount>
+          <div className="absolute top-0 left-0 h-screen flex w-full">
+            <div
+              tabIndex={0}
+              role="button"
+              onClick={onClickDelete}
+              onKeyDown={onClickDelete}
+              className="flex bg-black opacity-50 fixed top-0 w-screen h-screen z-40"
+            ></div>
+          </div>
+        </DeleteAccountPortal>
+      )}
     </div>
   );
 };

@@ -13,6 +13,7 @@ module.exports = {
     'plugin:prettier/recommended',
   ],
   rules: {
+    'react/require-default-props': 'off',
     'no-restricted-syntax': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
     'no-return-assign': 'off',

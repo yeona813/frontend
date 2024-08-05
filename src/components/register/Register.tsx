@@ -3,9 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { info, err } from 'types/register';
 import RegisterForm from './RegisterForm';
 
-// 문제
-// 1. register 컴포넌트가 update될 때 2번씩 리렌더링 되는데 해결을 못했음
-
 const Register = () => {
   const isLoggedIn = localStorage.getItem('accessToken');
   const navigate = useNavigate();
@@ -14,7 +11,7 @@ const Register = () => {
     if (isLoggedIn) {
       navigate('/');
     }
-  }, []);
+  }, [isLoggedIn, navigate]);
 
   const [register, setRegister] = useState<info>({
     email: '',
@@ -33,27 +30,24 @@ const Register = () => {
   const emailMountRef = useRef(false);
   const passwordMountRef = useRef(false);
 
-  const isValidEmail = (email: string) => {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  };
-  const isValidPassword = (password: string) => {
-    return /^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*]).{8,}$/.test(password);
-  };
+  const isValidEmail = (email: string) =>
+    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  const isValidPassword = (password: string) =>
+    /^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*]).{8,}$/.test(password);
 
   const updateError = useCallback(
     (name: string, value: string) => {
       let { emailErr, passwordErr, checkPasswordErr, nicknameErr } = error;
 
       if (name === 'email') {
-        emailErr = isValidEmail(value);
+        emailErr = !isValidEmail(value);
       } else if (name === 'password') {
-        passwordErr = isValidPassword(value);
-        if (!passwordErr) checkPasswordErr = false;
+        passwordErr = !isValidPassword(value);
+        if (!passwordErr) checkPasswordErr = value !== register.password;
       } else if (name === 'checkPassword') {
-        checkPasswordErr =
-          value === register.password && passwordErr && value !== '';
+        checkPasswordErr = value !== register.password;
       } else if (name === 'nickname') {
-        nicknameErr = value.length >= 3;
+        nicknameErr = value.length < 3;
       }
 
       // 불필요한 리렌더링 방지용
@@ -74,27 +68,30 @@ const Register = () => {
 
   useEffect(() => {
     if (!emailMountRef.current) {
-      emailMountRef.current = !emailMountRef.current;
+      emailMountRef.current = true;
       return;
     }
     updateError('email', register.email);
-  }, [register.email]);
+  }, [register.email, updateError]);
 
   useEffect(() => {
     if (!passwordMountRef.current) {
-      passwordMountRef.current = !passwordMountRef.current;
+      passwordMountRef.current = true;
       return;
     }
     updateError('password', register.password);
     updateError('checkPassword', register.checkPassword);
-  }, [register.password, register.checkPassword]);
+  }, [register.password, register.checkPassword, updateError]);
 
   const onChangeRegister = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      setRegister({ ...register, [e.target.name]: e.target.value });
+      setRegister((prevRegister) => ({
+        ...prevRegister,
+        [e.target.name]: e.target.value,
+      }));
       updateError(e.target.name, e.target.value);
     },
-    [register, updateError],
+    [updateError],
   );
 
   return (
@@ -102,7 +99,7 @@ const Register = () => {
       register={register}
       error={error}
       onChangeRegister={onChangeRegister}
-    ></RegisterForm>
+    />
   );
 };
 

@@ -13,7 +13,7 @@ import DeleteAccount from 'components/my/DeleteAccount';
 
 function Router() {
   return (
-    <div className="mt-16">
+    <div className="mt-16 ">
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/resultQuote/:id" element={<ResultQuotePage />} />

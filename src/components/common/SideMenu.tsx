@@ -1,4 +1,5 @@
-import React from 'react';
+import { instance } from 'api/instance';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 interface SideMenuProps {
@@ -7,14 +8,46 @@ interface SideMenuProps {
 
 const SideMenu = ({ onClickMenu }: SideMenuProps) => {
   const navigate = useNavigate();
+  const [nickname, setNickname] = useState('');
+
+  useEffect(() => {
+    onGetUserNickname();
+  }, []);
+
+  const onGetUserNickname = async () => {
+    console.log(localStorage.getItem('accessToken'));
+    try {
+      const response = await instance.get('accounts/profile/', {
+        headers: {
+          Authorization: `token ${localStorage.getItem('accessToken')}`,
+        },
+      });
+      if (response.status === 200) {
+        setNickname(response.data.nickname);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const onClickLogout = () => {
     window.localStorage.removeItem('accessToken');
     navigate('/login');
     onClickMenu();
   };
 
+  const onClickHome = () => {
+    navigate('/');
+    onClickMenu();
+  };
+
+  const onClickMy = () => {
+    navigate('/my');
+    onClickMenu();
+  };
+
   return (
-    <section className="flex w-full flex-col gap-4 px-3 h-screen relative">
+    <section className="flex w-full flex-col px-3 h-screen relative bg-white">
       <button
         type="button"
         className="w-full h-[30px] mt-[15px] text-xl flex"
@@ -23,24 +56,53 @@ const SideMenu = ({ onClickMenu }: SideMenuProps) => {
         <img
           src="/icons/x-solid.svg"
           alt="X버튼"
-          className="ml-[18px] mt-[5px] w-5 h-5"
+          className="ml-[4px] mt-[5px] w-5 h-5"
         />
       </button>
-      <div className="w-full h-[70px] bg-sky-400 ">로고, 서비스 이름</div>
-      <div className="w-full h-[70px] bg-green-400">
-        사용자 정보 (클릭: 마이페이지)
+      <div className="w-full flex h-[70px] items-center gap-2 border-b-[1px] border-slate-400">
+        <span className="text-xl font-semibold border-b-2 border-black">
+          {nickname}
+        </span>
+        <span>님</span>
       </div>
       <div>
-        <ul className="flex flex-col gap-4">
-          <li className=" bg-orange-400">홈</li>
-          <li className=" bg-orange-400">좋아한 컨텐츠</li>
-          <li className=" bg-orange-400">또</li>
+        <ul className="flex flex-col">
+          <li className="  border-b-[1px] border-slate-400">
+            <div
+              tabIndex={0}
+              role="button"
+              onClick={onClickHome}
+              onKeyDown={onClickHome}
+              className="flex items-center gap-3 my-3 "
+            >
+              <img
+                src="icons/house-solid.svg"
+                alt="홈 버튼"
+                className="w-5 h-5"
+              />
+              <span>홈</span>
+            </div>
+          </li>
+          <li className="  border-b-[1px] border-slate-400">
+            <div
+              tabIndex={0}
+              role="button"
+              onClick={onClickMy}
+              onKeyDown={onClickMy}
+              className="flex items-center gap-3 my-3 "
+            >
+              <img
+                src="icons/user-solid.svg"
+                alt="마이페이지 버튼"
+                className="w-5 h-5"
+              />
+              <span>마이페이지</span>
+            </div>
+          </li>
         </ul>
       </div>
-      <div className="w-full h-[200px] bg-pink-300 mt-[100px] absolute bottom-[100px] left-0 px-4">
-        우리조 이미지?
-      </div>
-      <div className="w-full h-[45px]  mb-7 absolute bottom-0 left-0 px-4 flex justify-end gap-3">
+
+      <div className="w-full h-[70px]  absolute bottom-0 left-0 px-4 flex justify-end gap-3 items-center border-t-[1px] border-slate-400">
         <h2 className="font-semibold">로그아웃</h2>
         <button
           type="button"

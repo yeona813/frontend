@@ -23,13 +23,13 @@ const QuoteList = () => {
   const filteredData = () => data.slice(0, loadMore);
 
   return (
-    <form className=" p-3 pt-10 flex flex-col gap-2">
+    <form className="pt-10 flex flex-col gap-2">
       <section>
         <ul className="flex flex-col items-center">
           {filteredData().map((element) => (
             <div
               key={element.id}
-              className="flex flex-col mb-12 mx-4 gap-8 w-[300px]"
+              className="flex flex-col mb-12 gap-8 w-full px-[30px]"
             >
               <li>
                 <QuoteItem element={element} onClickHeart={onClickHeart} />
