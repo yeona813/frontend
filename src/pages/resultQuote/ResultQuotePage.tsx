@@ -150,7 +150,7 @@ const ResultQuotePage = () => {
           ))}
         </div>
       </div>
-      <Button text="명언 더 보기" handleClick={handleClick} />
+      <Button text="둘러보기" handleClick={handleClick} />
     </div>
   );
 };
