@@ -1,11 +1,12 @@
 import { instance } from 'api/instance';
 import ChangeNickname from 'components/editProfile/ChangeNickname';
 import ChangePassword from 'components/editProfile/ChangePassword';
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
 
 interface UserDataProps {
   nickname: string;
   email: string;
+  profile_image: string;
   passwordCheck: string;
   password: string;
   newPassword: string;
@@ -16,11 +17,14 @@ const EditProfilePage = () => {
   const [userData, setUserData] = useState<UserDataProps>({
     nickname: '',
     email: '',
+    profile_image: '',
     passwordCheck: '',
     password: '',
     newPassword: '',
     newPasswordCheck: '',
   });
+  const [newProfileImage, setNewProfileImage] = useState<File | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,6 +38,7 @@ const EditProfilePage = () => {
             ...prevState,
             nickname: response.data.nickname,
             email: response.data.email,
+            profile_image: response.data.profile_image,
           }));
         }
       } catch (error) {
@@ -52,24 +57,28 @@ const EditProfilePage = () => {
     }));
   };
 
-  const handleChangeNickname = async () => {
+  const handleChangeProfile = async () => {
+    const formData = new FormData();
+    formData.append('email', userData.email);
+    formData.append('nickname', userData.nickname);
+    formData.append('current_password', userData.passwordCheck);
+    if (newProfileImage) {
+      formData.append('profile_image', newProfileImage);
+    }
+
     try {
       const headers = {
         Authorization: `token ${localStorage.getItem(`accessToken`)}`,
+        'Content-Type': 'multipart/form-data',
       };
-      const response = await instance.put(
-        'accounts/profile/',
-        {
-          email: userData.email,
-          nickname: userData.nickname,
-          current_password: userData.passwordCheck,
-        },
-        { headers },
-      );
+      const response = await instance.put('accounts/profile/', formData, {
+        headers,
+      });
       if (response.status === 200) {
         setUserData((prevState) => ({
           ...prevState,
           passwordCheck: '',
+          profile_image: response.data.profile_image,
         }));
         console.log('닉네임 변경 완료!');
       }
@@ -102,20 +111,68 @@ const EditProfilePage = () => {
     }
   };
 
+  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files[0]) {
+      const file = event.target.files[0];
+      setNewProfileImage(file);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setUserData((prevState) => ({
+          ...prevState,
+          profile_image: reader.result as string,
+        }));
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleFileSelect = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+
   return (
     <div className="flex justify-center p-[40px]">
       <div className="flex flex-col w-full bg-white rounded-xl p-[30px] gap-[25px]">
-        <div>
-          프로필 구역
+        <div className="flex items-center gap-[10px]">
+          <div
+            className="relative w-[70px] h-[70px] rounded-full opacity-60"
+            style={{
+              backgroundImage: `url(${userData.profile_image})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+            }}
+          >
+            <button type="button" onClick={handleFileSelect}>
+              <img
+                src="/icons/edit.png"
+                alt="프로필 사진 편집"
+                className="absolute top-[25px] left-[25px] w-5 h-5"
+              />
+            </button>
+            <input
+              type="file"
+              ref={fileInputRef}
+              onChange={handleFileChange}
+              style={{ display: 'none' }}
+            />
+          </div>
           <span>{userData.email}</span>
-          {/* 프로필 부분 수정 필요! */}
         </div>
+
         <ChangeNickname
           nickname={userData.nickname}
           passwordCheck={userData.passwordCheck}
           handleChange={handleChange}
-          handleClickButton={handleChangeNickname}
         />
+        <button
+          type="button"
+          onClick={handleChangeProfile}
+          className="border border-black rounded-lg p-2 text-sm font-semibold hover:bg-black hover:text-white cursor-pointer"
+        >
+          프로필 변경
+        </button>
         <ChangePassword
           password={userData.password}
           newPassword={userData.newPassword}

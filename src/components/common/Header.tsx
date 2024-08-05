@@ -37,12 +37,9 @@ const Header = () => {
           />
         </button>
       )}
-      <Link
-        to="/"
-        className="flex gap-[10px] items-center text-[25px] font-bold"
-      >
+      <Link to="/" className="flex items-center text-[25px] font-bold">
         <img
-          className="w-[25px] h-[25px]"
+          className="w-[60px] h-full"
           src="/icons/favicon.png"
           alt="조약돌"
         />
