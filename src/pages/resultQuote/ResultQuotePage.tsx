@@ -138,7 +138,7 @@ const ResultQuotePage = () => {
           handleChange={handleChange}
           handleCommentClick={handleCommentClick}
         />
-        <div className="flex flex-col h-[140px] gap-[30px] overflow-scroll scrollbar-hide">
+        <div className="flex flex-col h-[140px] gap-[40px] overflow-scroll scrollbar-hide">
           {commentData.map((comment: CommentType) => (
             <Comment
               key={comment.id}

@@ -71,7 +71,7 @@ const WriteQuotePage = () => {
   };
 
   return (
-    <div className="flex flex-col items-center p-[30px] gap-[30px]">
+    <div className="flex flex-col items-center p-[40px] gap-[30px]">
       <div className="flex flex-col items-center w-full p-5 rounded-xl bg-white shadow-custom gap-[20px]">
         <p className="font-semibold">나만의 명언 만들기</p>
         <div className="relative p-10 flex items-center justify-center w-full h-[200px] rounded-xl">

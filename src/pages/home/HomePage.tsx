@@ -46,7 +46,7 @@ const HomePage = () => {
   };
 
   return (
-    <div className="flex flex-col items-center p-[30px] gap-[30px]">
+    <div className="flex flex-col items-center p-[40px] gap-[30px]">
       <Question text={text} handleTextChange={handleTextChange} />
       <Button text="결과 보기" handleClick={handleClick} />
     </div>
