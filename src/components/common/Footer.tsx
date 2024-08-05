@@ -15,9 +15,9 @@ const FOOTER_ITEMS = [
     to: '/writeQuote',
   },
   {
-    name: '콘텐츠',
-    src: '/icons/note.png',
-    activeSrc: '/icons/note-click.png',
+    name: '둘러보기',
+    src: '/icons/follow.png',
+    activeSrc: '/icons/follow-click.png',
     to: '/quoteList',
   },
   {
