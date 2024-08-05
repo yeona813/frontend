@@ -4,14 +4,12 @@ interface ChangeNicknameProps {
   nickname: string;
   passwordCheck: string;
   handleChange: (event: ChangeEvent<HTMLInputElement>) => void;
-  handleClickButton: () => void;
 }
 
 const ChangeNickname = ({
   nickname,
   passwordCheck,
   handleChange,
-  handleClickButton,
 }: ChangeNicknameProps) => {
   const [showPassword, setShowPassword] = useState(false);
 
@@ -60,13 +58,6 @@ const ChangeNickname = ({
           </button>
         </div>
       </section>
-      <button
-        type="button"
-        onClick={handleClickButton}
-        className="border border-black rounded-lg p-2 text-sm font-semibold hover:bg-black hover:text-white cursor-pointer"
-      >
-        닉네임 변경
-      </button>
     </div>
   );
 };
