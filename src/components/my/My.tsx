@@ -4,36 +4,30 @@ import { instance } from 'api/instance';
 import DeleteAccountPortal from 'helpers/DeleteAccountPortal';
 import DeleteAccount from './DeleteAccount';
 
-interface Quote {
+interface smallQuote {
   id: number;
   content: string;
-  description: string;
-  author: string;
+  descriptrion: string;
   image: null;
   created_at: string;
-  like_count: 0;
-  user_author: null;
+  like_count: number;
 }
 
-interface User {
-  username: string;
-  avatar: string;
-  followers: number;
-  following: number;
+interface userProfile {
+  email: string;
+  follower_count: number;
+  followers: string[];
+  following_count: number;
+  followings: string[];
+  like_quotes: number[];
+  nickname: string;
+  profile_image: string;
+  registered_quotes: smallQuote;
 }
 
 const My = () => {
-  const [user, setUser] = useState<User>({
-    username: '',
-    avatar: '',
-    followers: 0,
-    following: 0,
-  });
-  const [temp, setTemp] = useState<number[]>([1, 2, 3, 4]);
-  const [temp2, setTemp2] = useState();
+  const [user, setUser] = useState<userProfile>();
 
-  const [likedQuotes, setLikedQuotes] = useState<Quote[]>([]);
-  const [addedQuotes, setAddedQuotes] = useState<Quote[]>([]);
   const [activeTab, setActiveTab] = useState('Liked');
   const navigate = useNavigate();
 
@@ -43,67 +37,46 @@ const My = () => {
     setModalOpen(!modalOpen);
   };
 
-  // const fetchProfileData = async () => {
-  //   try {
-  //     const userInfoResponse = await instance.get('accounts/profile/', {
-  //       headers: {
-  //         Authorization: `token ${localStorage.getItem(`accessToken`)}`,
-  //       },
-  //     });
-  //     if (userInfoResponse.status === 200) {
-  //       setTemp(userInfoResponse.data.like_quotes);
-  //       console.log(userInfoResponse.data);
-  //     }
-  //   } catch (error) {
-  //     console.error('데이터를 불러오는 데 실패했습니다', error);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   fetchProfileData();
-  // }, []);
-
-  const getLikedQuotes = async () => {
-    const likedQuotesData = await Promise.all(
-      temp.map(async (element) => {
-        try {
-          const response = await instance.get(`quote/${element}/`);
-          if (response.status === 200) {
-            return response.data;
-          }
-          return undefined; // 반환 값 추가
-        } catch (error) {
-          console.error('데이터를 불러오는 데 실패했습니다', error);
-          return undefined; // 반환 값 추가
-        }
-      }),
-    );
-    setLikedQuotes(likedQuotesData.filter(Boolean));
+  const fetchProfileData = async () => {
+    try {
+      const userInfoResponse = await instance.get('accounts/profile/', {
+        headers: {
+          Authorization: `token ${localStorage.getItem(`accessToken`)}`,
+        },
+      });
+      if (userInfoResponse.status === 200) {
+        setUser(userInfoResponse.data);
+      }
+    } catch (error) {
+      console.error('데이터를 불러오는 데 실패했습니다', error);
+    }
   };
 
   useEffect(() => {
-    getLikedQuotes();
+    fetchProfileData();
   }, []);
 
-  console.log(likedQuotes);
+  console.log(user);
 
   return (
-    <div className="bg-yellow-FF min-h-screen p-[30px] flex flex-col gap-5 pb-[100px] items-center">
-      <div className="container mx-auto w-[300px] bg-white p-6 rounded-lg shadow-lg">
-        <div className="flex flex-col items-center text-center">
+    <div className="min-h-screen p-[30px] flex flex-col gap-5 pb-[100px] items-center">
+      <div className="container mx-auto w-full bg-white p-[30px] rounded-lg shadow-custom">
+        <div className="flex flex-col items-center text-center gap-2">
           <img
-            className="w-32 h-32 rounded-full"
-            src={user.avatar}
+            className="w-[150px] h-[150px] rounded-full"
+            src={user?.profile_image}
             alt="프로필 사진"
           />
-          <h1 className="text-2xl font-bold mt-2">{user.username}</h1>
-          <p className="text-gray-600">
-            팔로워 {user.followers} | 팔로잉 {user.following}
-          </p>
+          <h1 className="text-2xl font-bold mt-2">{user?.nickname}</h1>
+          <div className="flex gap-5">
+            <p>팔로워 {user?.follower_count || 0}</p>
+            <p className="text-gray-600">|</p>
+            <p>팔로잉 {user?.following_count || 0}</p>
+          </div>
           <button
-            className="bg-yellow-500 text-white py-2 px-4 rounded-lg mt-4"
+            className="bg-black text-white w-[150px] p-3 rounded-lg mt-3"
             type="button"
-            onClick={() => navigate('/edit-profile')}
+            onClick={() => navigate('/editProfile')}
           >
             프로필 수정
           </button>
@@ -122,32 +95,22 @@ const My = () => {
             ))}
           </div>
           <div className="p-3">
-            {(activeTab === 'Liked' ? likedQuotes : addedQuotes).map(
-              (quote) => (
-                <div key={quote.id} className="flex items-center border-b py-2">
-                  {activeTab === 'Liked' && (
-                    <span className="mr-2 text-red-500">❤️</span>
-                  )}
-                  <p>{quote.content}</p>
-                </div>
-              ),
-            )}
             {activeTab === 'Added' && (
               <button
-                className="bg-yellow-500 text-white py-2 px-4 rounded-lg mb-4"
+                className="w-full border border-black font-semibold hover:bg-black hover:text-white p-3 rounded-lg mb-4"
                 type="button"
                 onClick={() => navigate('/writeQuote')}
               >
-                + 명언 등록하기
+                나의 명언 등록
               </button>
             )}
           </div>
         </div>
       </div>
-      <div className="w-[300px] flex justify-end">
+      <div className="w-full flex justify-end">
         <button
           type="button"
-          className="bg-black p-1.5 text-sm text-white rounded-md "
+          className="bg-gray-400 opacity-60 p-2 w-[80px] text-sm text-white hover:bg-black hover:opacity-100 rounded-md "
           onClick={onClickDelete}
         >
           탈퇴하기
