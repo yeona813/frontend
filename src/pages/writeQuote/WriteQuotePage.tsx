@@ -71,10 +71,10 @@ const WriteQuotePage = () => {
   };
 
   return (
-    <div className="flex flex-col items-center pt-[30px] gap-[30px]">
-      <div className="flex flex-col items-center w-[300px] p-5 rounded-xl bg-white shadow-custom gap-[20px]">
+    <div className="flex flex-col items-center p-[30px] gap-[30px]">
+      <div className="flex flex-col items-center w-full p-5 rounded-xl bg-white shadow-custom gap-[20px]">
         <p className="font-semibold">나만의 명언 만들기</p>
-        <div className="relative p-10 flex items-center justify-center w-[260px] h-[200px] rounded-xl">
+        <div className="relative p-10 flex items-center justify-center w-full h-[200px] rounded-xl">
           <div
             className="absolute top-0 left-0 w-full h-full bg-black opacity-50 z-0 rounded-xl"
             style={{
@@ -97,7 +97,7 @@ const WriteQuotePage = () => {
         />
         <button
           type="button"
-          className="border border-gray-300 rounded-xl p-2 text-sm font-semibold hover:border-black cursor-pointer"
+          className="border border-gray-300 rounded-xl w-[150px] p-3 text-sm font-semibold hover:border-black cursor-pointer"
           onClick={handleFileSelect}
         >
           배경 이미지 선택
