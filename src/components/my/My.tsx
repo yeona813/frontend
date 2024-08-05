@@ -15,6 +15,15 @@ interface Quote {
   user_author: null;
 }
 
+interface smallQuote {
+  id: number;
+  content: string;
+  descriptrion: string;
+  image: null;
+  created_at: string;
+  like_count: number;
+}
+
 interface User {
   username: string;
   avatar: string;
@@ -22,18 +31,22 @@ interface User {
   following: number;
 }
 
-const My = () => {
-  const [user, setUser] = useState<User>({
-    username: '',
-    avatar: '',
-    followers: 0,
-    following: 0,
-  });
-  const [temp, setTemp] = useState<number[]>([1, 2, 3, 4]);
-  const [temp2, setTemp2] = useState();
+interface userProfile {
+  email: string;
+  follower_count: number;
+  followers: string[];
+  following_count: number;
+  followings: string[];
+  like_quotes: number[];
+  nickname: string;
+  profile_image: string;
+  registered_quotes: smallQuote[];
+}
 
-  const [likedQuotes, setLikedQuotes] = useState<Quote[]>([]);
-  const [addedQuotes, setAddedQuotes] = useState<Quote[]>([]);
+const My = () => {
+  const [user, setUser] = useState<userProfile>();
+  const [likedQuotes, setLikedQuotes] = useState<Quote[]>();
+
   const [activeTab, setActiveTab] = useState('Liked');
   const navigate = useNavigate();
 
@@ -43,47 +56,50 @@ const My = () => {
     setModalOpen(!modalOpen);
   };
 
-  // const fetchProfileData = async () => {
-  //   try {
-  //     const userInfoResponse = await instance.get('accounts/profile/', {
-  //       headers: {
-  //         Authorization: `token ${localStorage.getItem(`accessToken`)}`,
-  //       },
-  //     });
-  //     if (userInfoResponse.status === 200) {
-  //       setTemp(userInfoResponse.data.like_quotes);
-  //       console.log(userInfoResponse.data);
-  //     }
-  //   } catch (error) {
-  //     console.error('데이터를 불러오는 데 실패했습니다', error);
-  //   }
-  // };
+  const fetchProfileData = async () => {
+    try {
+      const userInfoResponse = await instance.get('accounts/profile/', {
+        headers: {
+          Authorization: `token ${localStorage.getItem(`accessToken`)}`,
+        },
+      });
+      if (userInfoResponse.status === 200) {
+        setUser(userInfoResponse.data);
+      }
+    } catch (error) {
+      console.error('데이터를 불러오는 데 실패했습니다', error);
+    }
+  };
 
-  // useEffect(() => {
-  //   fetchProfileData();
-  // }, []);
+  useEffect(() => {
+    fetchProfileData();
+  }, []);
+
+  console.log(user);
 
   const getLikedQuotes = async () => {
-    const likedQuotesData = await Promise.all(
-      temp.map(async (element) => {
-        try {
-          const response = await instance.get(`quote/${element}/`);
-          if (response.status === 200) {
-            return response.data;
+    if (user) {
+      const likedQuotesData = await Promise.all(
+        user.like_quotes.map(async (element) => {
+          try {
+            const response = await instance.get(`quote/${element}/`);
+            if (response.status === 200) {
+              return response.data;
+            }
+            return undefined; // 반환 값 추가
+          } catch (error) {
+            console.error('데이터를 불러오는 데 실패했습니다', error);
+            return undefined; // 반환 값 추가
           }
-          return undefined; // 반환 값 추가
-        } catch (error) {
-          console.error('데이터를 불러오는 데 실패했습니다', error);
-          return undefined; // 반환 값 추가
-        }
-      }),
-    );
-    setLikedQuotes(likedQuotesData.filter(Boolean));
+        }),
+      );
+      setLikedQuotes(likedQuotesData.filter(Boolean));
+    }
   };
 
   useEffect(() => {
     getLikedQuotes();
-  }, []);
+  }, [user]);
 
   console.log(likedQuotes);
 
@@ -91,14 +107,10 @@ const My = () => {
     <div className="bg-yellow-FF min-h-screen p-[30px] flex flex-col gap-5 pb-[100px] items-center">
       <div className="container mx-auto w-[300px] bg-white p-6 rounded-lg shadow-lg">
         <div className="flex flex-col items-center text-center">
-          <img
-            className="w-32 h-32 rounded-full"
-            src={user.avatar}
-            alt="프로필 사진"
-          />
-          <h1 className="text-2xl font-bold mt-2">{user.username}</h1>
+          <img className="w-32 h-32 rounded-full" alt="프로필 사진" />
+          <h1 className="text-2xl font-bold mt-2">{user?.nickname}</h1>
           <p className="text-gray-600">
-            팔로워 {user.followers} | 팔로잉 {user.following}
+            팔로워 {user?.follower_count}| 팔로잉 {user?.following_count}
           </p>
           <button
             className="bg-yellow-500 text-white py-2 px-4 rounded-lg mt-4"
@@ -121,17 +133,15 @@ const My = () => {
               </button>
             ))}
           </div>
+          {activeTab === 'Liked' ? (
+            <ul>
+              {likedQuotes?.map((element) => (
+                <li key={element.id}>{element.content}</li>
+              ))}
+            </ul>
+          ) : null}
+
           <div className="p-3">
-            {(activeTab === 'Liked' ? likedQuotes : addedQuotes).map(
-              (quote) => (
-                <div key={quote.id} className="flex items-center border-b py-2">
-                  {activeTab === 'Liked' && (
-                    <span className="mr-2 text-red-500">❤️</span>
-                  )}
-                  <p>{quote.content}</p>
-                </div>
-              ),
-            )}
             {activeTab === 'Added' && (
               <button
                 className="bg-yellow-500 text-white py-2 px-4 rounded-lg mb-4"
@@ -141,6 +151,13 @@ const My = () => {
                 + 명언 등록하기
               </button>
             )}
+            {activeTab === 'Added' ? (
+              <ul>
+                {user?.registered_quotes?.map((element) => (
+                  <li key={element.id}>{element.content}</li>
+                ))}
+              </ul>
+            ) : null}
           </div>
         </div>
       </div>
