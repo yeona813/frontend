@@ -14,7 +14,7 @@ const BlackArea = ({ onClickMenu }: BlackAreaProps) => {
         role="button"
         onClick={onClickMenu}
         onKeyDown={onClickMenu}
-        className="flex bg-black opacity-50 fixed top-0 w-screen h-screen z-30"
+        className="flex bg-black opacity-50 fixed top-0 w-screen h-screen"
       ></div>
     </div>
   );

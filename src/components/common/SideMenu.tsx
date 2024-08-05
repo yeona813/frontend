@@ -15,6 +15,7 @@ const SideMenu = ({ onClickMenu }: SideMenuProps) => {
   }, []);
 
   const onGetUserNickname = async () => {
+    console.log(localStorage.getItem('accessToken'));
     try {
       const response = await instance.get('accounts/profile/', {
         headers: {
@@ -46,7 +47,7 @@ const SideMenu = ({ onClickMenu }: SideMenuProps) => {
   };
 
   return (
-    <section className="flex w-full flex-col px-3 h-screen relative ">
+    <section className="flex w-full flex-col px-3 h-screen relative bg-white">
       <button
         type="button"
         className="w-full h-[30px] mt-[15px] text-xl flex"
@@ -55,17 +56,9 @@ const SideMenu = ({ onClickMenu }: SideMenuProps) => {
         <img
           src="/icons/x-solid.svg"
           alt="X버튼"
-          className="ml-[18px] mt-[5px] w-5 h-5"
+          className="ml-[4px] mt-[5px] w-5 h-5"
         />
       </button>
-      <div className="w-full h-[70px] border-b-[1px] border-slate-400 flex items-center gap-3">
-        <img
-          src="icons/tiny_stone.png"
-          alt="로고"
-          className="w-10 h-10 rounded-full"
-        />
-        <span className="font-semibold">조약돌</span>
-      </div>
       <div className="w-full flex h-[70px] items-center gap-2 border-b-[1px] border-slate-400">
         <span className="text-xl font-semibold border-b-2 border-black">
           {nickname}
@@ -108,15 +101,7 @@ const SideMenu = ({ onClickMenu }: SideMenuProps) => {
           </li>
         </ul>
       </div>
-      <div className="w-full  mt-[100px] absolute bottom-[100px] left-0 px-4 items-center justify-center">
-        <div>
-          <img
-            src="icons/team-image.png"
-            alt="홈 버튼"
-            className="w-[180px] h-[180px] rounded-lg"
-          />
-        </div>
-      </div>
+
       <div className="w-full h-[70px]  absolute bottom-0 left-0 px-4 flex justify-end gap-3 items-center border-t-[1px] border-slate-400">
         <h2 className="font-semibold">로그아웃</h2>
         <button

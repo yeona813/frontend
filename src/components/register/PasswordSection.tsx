@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+// PasswordSection.tsx
+import React from 'react';
+import PasswordField from 'components/common/input/PasswordField';
 
 interface PasswordSectionProps {
   submitted: boolean;
@@ -8,10 +10,10 @@ interface PasswordSectionProps {
   checkPassword: string;
   passwordErr: boolean;
   checkPasswordErr: boolean;
-  onChangeRegister(e: React.ChangeEvent<HTMLInputElement>): void;
+  onChangeRegister: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const PasswordSection = ({
+const PasswordSection: React.FC<PasswordSectionProps> = ({
   submitted,
   passwordRef,
   checkPasswordRef,
@@ -20,113 +22,49 @@ const PasswordSection = ({
   passwordErr,
   checkPasswordErr,
   onChangeRegister,
-}: PasswordSectionProps) => {
-  const [showPassword1, setShowPassword1] = useState(false);
-  const [showPassword2, setShowPassword2] = useState(false);
-
-  // 중복 로직 줄이기
-  const toggleShowPassword = (passwordNumber: number) => {
-    if (passwordNumber === 1) {
-      setShowPassword1(!showPassword1);
-    } else if (passwordNumber === 2) {
-      setShowPassword2(!showPassword2);
+}) => {
+  const getPasswordError = () => {
+    if (submitted && !passwordErr) {
+      return '숫자, 영문, 특수문자 조합 최소 8자를 입력해 주세요';
     }
+    return '';
   };
 
-  const niceInputPassword = (index: number): JSX.Element => {
-    if (submitted) {
-      if (index === 1 && !passwordErr) {
-        return (
-          <span className="px-3 text-xs text-red-400">
-            숫자, 영문, 특수문자 조합 최소 8자를 입력해 주세요
-          </span>
-        );
+  const getCheckPasswordError = () => {
+    if (submitted && !checkPasswordErr) {
+      if (!passwordErr && password === checkPassword) {
+        return '비밀번호 형식을 지켜주세요.';
       }
-      if (index === 2 && !checkPasswordErr) {
-        if (!passwordErr && password === checkPassword) {
-          return (
-            <span className="px-3 text-xs text-red-400">
-              비밀번호 형식을 지켜주세요.
-            </span>
-          );
-        }
-        if (checkPassword === '')
-          return (
-            <span className="px-3 text-xs text-red-400">
-              위와 동일한 비밀번호를 입력해주세요.
-            </span>
-          );
-        return (
-          <span className="px-3 text-xs text-red-400">
-            비밀번호가 일치하지 않습니다.
-          </span>
-        );
+      if (checkPassword === '') {
+        return '위와 동일한 비밀번호를 입력해주세요.';
       }
+      return '비밀번호가 일치하지 않습니다.';
     }
-    return <span></span>;
+    return '';
   };
 
   return (
-    <section className="flex flex-col gap-2 ">
-      <div>
-        <span className="text-sm">비밀번호</span>
-        <div
-          className="mx-auto rounded-lg border border-gray-300 w-[335px] h-[50px] flex items-center justify-between px-3 my-2 bg-white"
-          ref={passwordRef}
-        >
-          <input
-            className="w-[280px] outline-none flex-1"
-            name="password"
-            value={password}
-            type={showPassword1 ? 'text' : 'password'}
-            placeholder="숫자, 영문, 특수문자 조합 8자 이상"
-            onChange={onChangeRegister}
-          />
-          <button type="button" name="password">
-            <img
-              src={
-                !showPassword1 ? '/icons/eyeClosed.svg' : '/icons/eyeOpend.svg'
-              }
-              alt="비밀번호눈"
-              onClick={() => toggleShowPassword(1)}
-              onKeyDown={() => toggleShowPassword(1)}
-            />
-          </button>
-        </div>
-        {niceInputPassword(1)}
-      </div>
-
-      <div>
-        <span className="text-sm">비밀번호 확인</span>
-        {checkPasswordErr && passwordErr ? (
-          <span className="text-xs text-gray-400">✅</span>
-        ) : null}
-        <div
-          className="mx-auto rounded-lg border border-gray-300 w-[335px] h-[50px] flex items-center justify-between px-3 my-2 bg-white"
-          ref={checkPasswordRef}
-        >
-          <input
-            className="w-[280px] outline-none"
-            name="checkPassword"
-            value={checkPassword}
-            type={showPassword2 ? 'text' : 'password'}
-            placeholder="비밀번호를 확인하세요"
-            onChange={onChangeRegister}
-          ></input>
-          <button type="button">
-            <img
-              src={
-                !showPassword2 ? '/icons/eyeClosed.svg' : '/icons/eyeOpend.svg'
-              }
-              alt="비밀번호확인눈"
-              onClick={() => toggleShowPassword(2)}
-              onKeyDown={() => toggleShowPassword(2)}
-            />
-          </button>
-        </div>
-        {niceInputPassword(2)}
-      </div>
+    <section className="flex flex-col gap-2">
+      <PasswordField
+        label="비밀번호"
+        name="password"
+        value={password}
+        onChange={onChangeRegister}
+        placeholder="숫자, 영문, 특수문자 조합 8자 이상"
+        error={getPasswordError()}
+        inputRef={passwordRef}
+      />
+      <PasswordField
+        label={`비밀번호 확인 ${checkPasswordErr && passwordErr ? '✅' : ''}`}
+        name="checkPassword"
+        value={checkPassword}
+        onChange={onChangeRegister}
+        placeholder="비밀번호를 확인하세요"
+        error={getCheckPasswordError()}
+        inputRef={checkPasswordRef}
+      />
     </section>
   );
 };
+
 export default PasswordSection;
