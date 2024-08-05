@@ -123,8 +123,8 @@ const ResultQuotePage = () => {
   };
 
   return (
-    <div className="flex flex-col items-center pt-[30px] gap-[30px]">
-      <div className="flex flex-col gap-[20px] w-[300px] rounded-xl bg-white shadow-custom p-5">
+    <div className="flex flex-col items-center p-[30px] gap-[30px]">
+      <div className="flex flex-col gap-[20px] w-full rounded-xl bg-white shadow-custom p-5">
         <ResultQuote
           imageUrl={imageURL}
           quote={quoteData.content}

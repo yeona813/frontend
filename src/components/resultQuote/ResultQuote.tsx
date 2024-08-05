@@ -35,7 +35,7 @@ const ResultQuote = ({
         role="button"
         onClick={onClickCard}
         onKeyDown={onClickCard}
-        className="perspective-1100 relative p-10 flex items-center justify-center w-[260px] h-[200px] rounded-xl"
+        className="perspective-1100 relative p-10 flex items-center justify-center w-full h-[200px] rounded-xl"
       >
         <div
           className="absolute top-0 left-0 w-full h-full bg-black opacity-50 z-0 rounded-xl"
