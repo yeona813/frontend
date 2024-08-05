@@ -1,4 +1,6 @@
 import { instance } from 'api/instance';
+import ChangeNickname from 'components/editProfile/ChangeNickname';
+import ChangePassword from 'components/editProfile/ChangePassword';
 import React, { ChangeEvent, useEffect, useState } from 'react';
 
 interface UserDataProps {
@@ -65,6 +67,10 @@ const EditProfilePage = () => {
         { headers },
       );
       if (response.status === 200) {
+        setUserData((prevState) => ({
+          ...prevState,
+          passwordCheck: '',
+        }));
         console.log('닉네임 변경 완료!');
       }
     } catch (error) {
@@ -98,64 +104,25 @@ const EditProfilePage = () => {
 
   return (
     <div className="flex justify-center p-[30px]">
-      <div className="flex flex-col w-full bg-white rounded-xl p-[30px] gap-5">
+      <div className="flex flex-col w-full bg-white rounded-xl p-[30px] gap-[25px]">
         <div>
           프로필 구역
           <span>{userData.email}</span>
+          {/* 프로필 부분 수정 필요! */}
         </div>
-        <div className="flex flex-col gap-[10px]">
-          <span className="font-bold">닉네임 변경</span>
-          <label htmlFor="nickname">닉네임</label>
-          <input
-            type="text"
-            name="nickname"
-            value={userData.nickname}
-            placeholder={userData.nickname}
-            onChange={handleChange}
-            className="border border-gray-300"
-          />
-          <label htmlFor="passwordCheck">비밀번호 확인</label>
-          <input
-            type="text"
-            name="passwordCheck"
-            value={userData.passwordCheck}
-            onChange={handleChange}
-            className="border border-gray-300"
-          />
-          <button type="button" onClick={handleChangeNickname}>
-            닉네임 변경하기
-          </button>
-        </div>
-        <div className="flex flex-col gap-[10px]">
-          <span className="font-bold">비밀번호 변경</span>
-          <label htmlFor="password">비밀번호</label>
-          <input
-            type="text"
-            name="password"
-            value={userData.password}
-            onChange={handleChange}
-            className="border border-gray-300"
-          />
-          <label htmlFor="newPassword">새 비밀번호</label>
-          <input
-            type="text"
-            name="newPassword"
-            value={userData.newPassword}
-            onChange={handleChange}
-            className="border border-gray-300"
-          />
-          <label htmlFor="newPasswordCheck">새 비밀번호 확인</label>
-          <input
-            type="text "
-            name="newPasswordCheck"
-            value={userData.newPasswordCheck}
-            onChange={handleChange}
-            className="border border-gray-300"
-          />
-          <button type="button" onClick={handleChangePassword}>
-            비밀번호 변경하기
-          </button>
-        </div>
+        <ChangeNickname
+          nickname={userData.nickname}
+          passwordCheck={userData.passwordCheck}
+          handleChange={handleChange}
+          handleClickButton={handleChangeNickname}
+        />
+        <ChangePassword
+          password={userData.password}
+          newPassword={userData.newPassword}
+          newPasswordCheck={userData.newPasswordCheck}
+          handleChange={handleChange}
+          handleClickButton={handleChangePassword}
+        />
       </div>
     </div>
   );
