@@ -2,6 +2,7 @@ import React, { memo, useEffect, useState } from 'react';
 import { quoteItem } from 'types/quoteList';
 import { QuoteImage } from 'components/common/constants/QuoteImage';
 
+// 1.
 // 2. 댓글 누르면 어떤 이벤트 발생??
 
 interface QuoteItemProps {
