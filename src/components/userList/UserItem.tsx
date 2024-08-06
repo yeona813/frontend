@@ -1,9 +1,9 @@
 import { instance } from 'api/instance';
-import React, { useEffect, useRef } from 'react';
-import { smallUser, user } from 'types/userList';
+import React, { useEffect, useRef, useState } from 'react';
+import { smallUser, user, listUser } from 'types/userList';
 
 interface UserItemProps {
-  element: user;
+  element: listUser;
   smallUser: smallUser[];
   currentuser?: user;
   showUserProfile(targetEmail: string): void;
@@ -16,15 +16,14 @@ const UserItem = ({
   currentuser,
 }: UserItemProps) => {
   const followRef = useRef<HTMLButtonElement>(null);
+  const [user] = smallUser.filter((value) => value.email === element.email);
+  const [followed, setFollowed] = useState(false);
 
-  const onClickFollow = async () => {
+  const onClickFollow = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
     const headers = {
       Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
     };
-    const [user] = smallUser.filter((value) => {
-      if (value.email === element.email) return value.id;
-      return null;
-    });
 
     console.log(user.id);
 
@@ -32,9 +31,7 @@ const UserItem = ({
       const response = await instance.post(
         `accounts/follow/${user.id}/`,
         {},
-        {
-          headers,
-        },
+        { headers },
       );
       if (response.status === 200) {
         console.log('팔로우 하거나 끊거나하~~');
@@ -42,18 +39,32 @@ const UserItem = ({
     } catch (error) {
       console.log(error);
     }
+
     if (followRef.current) {
-      followRef.current.style.backgroundColor = 'blue';
-      followRef.current.style.textDecorationColor = 'white';
-      followRef.current.style.border = 'none';
+      if (followed) {
+        followRef.current.style.backgroundColor = 'white';
+        followRef.current.style.color = 'black';
+        followRef.current.style.border = '1px solid black';
+      } else {
+        followRef.current.style.backgroundColor = 'blue';
+        followRef.current.style.color = 'white';
+        followRef.current.style.border = 'none';
+      }
+      setFollowed(!followed);
     }
   };
 
   useEffect(() => {
-    if (currentuser) {
-      console.log(currentuser.followings);
+    // 팔로우 초기 상태
+    if (currentuser?.followings.some((element) => element.id === user.id)) {
+      if (followRef.current) {
+        followRef.current.style.backgroundColor = 'blue';
+        followRef.current.style.color = 'white';
+        followRef.current.style.border = 'none';
+        setFollowed(true);
+      }
     }
-  }, []);
+  }, [currentuser, user.id]);
 
   return (
     <div
@@ -90,7 +101,7 @@ const UserItem = ({
           className="border-black border p-2 text-sm rounded-md hover:bg-black hover:text-white"
           onClick={onClickFollow}
         >
-          팔로우
+          {followed ? '언팔로우' : '팔로우'}
         </button>
       </div>
     </div>
