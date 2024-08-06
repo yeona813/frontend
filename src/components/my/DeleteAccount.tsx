@@ -27,7 +27,7 @@ const DeleteAccount = () => {
     try {
       const response = await instance.get('accounts/profile/', {
         headers: {
-          Authorization: `token ${localStorage.getItem('accessToken')}`,
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
         },
       });
       if (response.status === 200) {
@@ -62,7 +62,7 @@ const DeleteAccount = () => {
       try {
         const response = await instance.delete('accounts/profile/', {
           headers: {
-            Authorization: `token ${localStorage.getItem('accessToken')}`,
+            Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
           },
         });
         if (response.status === 204) {
