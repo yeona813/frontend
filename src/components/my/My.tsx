@@ -98,7 +98,7 @@ const My = () => {
   }, [user]);
 
   return (
-    <div className="min-h-screen p-[30px] flex flex-col gap-5 pb-[100px] items-center">
+    <div className="p-[30px] flex flex-col gap-5 pb-[100px] items-center">
       <div className="container mx-auto w-full bg-white p-[30px] rounded-lg shadow-custom">
         <div className="flex flex-col items-center text-center gap-2">
           <img
@@ -152,9 +152,14 @@ const My = () => {
               </button>
             )}
             {activeTab === 'Added' ? (
-              <ul>
+              <ul className="flex flex-col h-[200px] gap-4 overflow-scroll scrollbar-hide">
                 {user?.registered_quotes?.map((element) => (
-                  <li key={element.id}>{element.content}</li>
+                  <li
+                    key={element.id}
+                    className="border-b-[1px] border-gray-300"
+                  >
+                    <p className="mb-3">{element.content}</p>
+                  </li>
                 ))}
               </ul>
             ) : null}
