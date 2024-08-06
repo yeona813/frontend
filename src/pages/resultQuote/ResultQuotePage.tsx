@@ -7,12 +7,19 @@ import WriteComment from 'components/resultQuote/WriteComment';
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
+interface UserType {
+  email: string;
+  id: number;
+  nickname: string;
+  profile_image: string;
+}
+
 interface CommentType {
   id: number;
   quote: number;
   content: string;
   created_at: string;
-  user: string;
+  user: UserType;
 }
 
 const ResultQuotePage = () => {
@@ -142,8 +149,8 @@ const ResultQuotePage = () => {
           {commentData.map((comment: CommentType) => (
             <Comment
               key={comment.id}
-              profileImage="/images/quoteImage2.jpg"
-              nickname={comment.user}
+              profileImage={comment.user.profile_image}
+              nickname={comment.user.nickname}
               date={new Date(comment.created_at).toLocaleDateString()}
               comment={comment.content}
             />
