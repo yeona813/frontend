@@ -149,7 +149,7 @@ const ResultQuotePage = () => {
           {commentData.map((comment: CommentType) => (
             <Comment
               key={comment.id}
-              profileImage={comment.user.profile_image}
+              profileImage={`${process.env.REACT_APP_API_URL}${comment.user.profile_image}`}
               nickname={comment.user.nickname}
               date={new Date(comment.created_at).toLocaleDateString()}
               comment={comment.content}
