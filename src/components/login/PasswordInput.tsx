@@ -1,39 +1,64 @@
-import React from 'react';
-import PasswordField from 'components/common/input/PasswordField';
+import React, { useState } from 'react';
 
 interface PasswordInputProps {
   submitted: boolean;
   passwordErr: boolean;
   passwordInput: string;
-  onChangePasswordInput: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChangePasswordInput(e: React.ChangeEvent<HTMLInputElement>): void;
   passwordRef: React.RefObject<HTMLInputElement>;
 }
 
-const PasswordInput: React.FC<PasswordInputProps> = ({
+const PasswordInput = ({
   submitted,
   passwordErr,
   passwordInput,
   onChangePasswordInput,
   passwordRef,
-}) => {
-  const getErrorMessage = () => {
-    if (submitted && !passwordErr) {
-      return '숫자, 영문, 특수문자 조합 최소 8자를 입력해 주세요';
+}: PasswordInputProps) => {
+  const [showPassword, setShowPassword] = useState(false);
+
+  const toggleShowPassword = (): void => {
+    setShowPassword(!showPassword);
+  };
+
+  const niceInputPassword = (): JSX.Element => {
+    if (submitted) {
+      if (!passwordErr) {
+        return (
+          <span className="text-xs text-red-400">
+            숫자, 영문, 특수문자 조합 최소 8자를 입력해 주세요
+          </span>
+        );
+      }
     }
-    return '';
+    return <span></span>;
   };
 
   return (
     <section>
-      <PasswordField
-        label="비밀번호"
-        name="password"
-        value={passwordInput}
-        onChange={onChangePasswordInput}
-        placeholder="비밀번호를 입력하세요"
-        error={getErrorMessage()}
-        inputRef={passwordRef}
-      />
+      <span className="text-sm mr-3">비밀번호</span>
+      {niceInputPassword()}
+      <div
+        ref={passwordRef}
+        className="gap-2 my-2 w-[335px] flex-1 mx-auto rounded-lg border border-gray-300  h-[50px] flex items-center justify-between px-3 bg-white"
+      >
+        <input
+          type={showPassword ? 'text' : 'password'}
+          value={passwordInput}
+          onChange={onChangePasswordInput}
+          className="outline-none flex-1"
+          name="password"
+          placeholder="비밀번호를 입력하세요"
+        />
+        <button type="button">
+          <img
+            onClick={toggleShowPassword}
+            src={!showPassword ? '/icons/eyeClosed.svg' : '/icons/eyeOpend.svg'}
+            alt="눈"
+            onKeyDown={toggleShowPassword}
+          />
+        </button>
+      </div>
     </section>
   );
 };

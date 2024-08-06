@@ -73,7 +73,7 @@ const ResultQuotePage = () => {
     if (isLike) {
       try {
         const headers = {
-          Authorization: `token ${localStorage.getItem('accessToken')}`,
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
         };
 
         const response = await instance.post(
@@ -100,7 +100,7 @@ const ResultQuotePage = () => {
   const handleCommentClick = async () => {
     try {
       const headers = {
-        Authorization: `token ${localStorage.getItem('accessToken')}`,
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
       };
 
       const response = await instance.post(

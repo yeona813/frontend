@@ -22,7 +22,7 @@ const HomePage = () => {
 
   const handleClick = async () => {
     const headers = {
-      Authorization: `token ${localStorage.getItem('accessToken')}`,
+      Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
     };
 
     if (text !== '') {

@@ -1,110 +1,111 @@
-import React, { memo, useEffect, useState } from 'react';
-import { quoteItem } from 'types/quoteList';
-import { QuoteImage } from 'components/common/constants/QuoteImage';
+import { instance } from 'api/instance';
+import React, { useEffect, useRef, useState } from 'react';
+import { smallUser, user, listUser } from 'types/userList';
 
-// 1.
-// 2. 댓글 누르면 어떤 이벤트 발생??
-
-interface QuoteItemProps {
-  element: quoteItem;
-  onClickHeart(id: number, heart: boolean): void;
+interface UserItemProps {
+  element: listUser;
+  smallUser: smallUser[];
+  currentuser?: user;
+  showUserProfile(targetEmail: string): void;
 }
 
-const QuoteItem = ({ element, onClickHeart }: QuoteItemProps) => {
-  const [heart, setHeart] = useState(false);
-  const [flipped, setFlipped] = useState(false);
+const UserItem = ({
+  element,
+  smallUser,
+  showUserProfile,
+  currentuser,
+}: UserItemProps) => {
+  const followRef = useRef<HTMLButtonElement>(null);
+  const [user] = smallUser.filter((value) => value.email === element.email);
+  const [followed, setFollowed] = useState(false);
 
-  const [backgroundImage, setBackgroundImage] = useState('');
+  const onClickFollow = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    const headers = {
+      Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+    };
+
+    console.log(user.id);
+
+    try {
+      const response = await instance.post(
+        `accounts/follow/${user.id}/`,
+        {},
+        { headers },
+      );
+      if (response.status === 200) {
+        console.log('팔로우 하거나 끊거나하~~');
+      }
+    } catch (error) {
+      console.log(error);
+    }
+
+    if (followRef.current) {
+      if (followed) {
+        followRef.current.style.backgroundColor = 'white';
+        followRef.current.style.color = 'black';
+        followRef.current.style.border = '1px solid black';
+      } else {
+        followRef.current.style.backgroundColor = 'blue';
+        followRef.current.style.color = 'white';
+        followRef.current.style.border = 'none';
+      }
+      setFollowed(!followed);
+    }
+  };
 
   useEffect(() => {
-    const chosenImage =
-      QuoteImage[Math.floor(Math.random() * QuoteImage.length)];
-    setBackgroundImage(`url(${chosenImage})`);
-  }, []);
-
-  const onClickToggleHeart = () => {
-    setHeart(!heart);
-    onClickHeart(element.id, heart);
-  };
-
-  const onClickCard = () => {
-    setFlipped(!flipped);
-  };
+    // 팔로우 초기 상태
+    if (currentuser?.followings.some((element) => element.id === user.id)) {
+      if (followRef.current) {
+        followRef.current.style.backgroundColor = 'blue';
+        followRef.current.style.color = 'white';
+        followRef.current.style.border = 'none';
+        setFollowed(true);
+      }
+    }
+  }, [currentuser, user.id]);
 
   return (
-    <div className="shadow-custom-bottom-right border rounded-lg border-none border-black pb-3 pt-12 flex flex-col gap-2 bg-white">
-      <div className=" relative text-center h-[275px] text-white">
-        <div
-          className="absolute inset-0 bg-cover bg-center"
-          style={{
-            backgroundImage,
-            filter: 'brightness(70%)',
-          }}
-        ></div>
-
-        <div
-          tabIndex={0}
-          role="button"
-          onClick={onClickCard}
-          onKeyDown={onClickCard}
-          className="perspective-1100 p-3 relative z-10 flex flex-col items-center justify-center h-full font-semibold text-xl"
-        >
-          <div
-            className={`transition-md relative transformStyle-preserve-3d ${flipped ? 'transform-rotY180' : ''}`}
-          >
-            <div className="backface-hidden flex justify-center align-middle">
-              <div className="[text-shadow:_10px_10px_7px_rgb(0,0,0,50%)]">
-                <p>{element.content}</p>
-                <br />
-                <p>{element.author}</p>
-              </div>
-            </div>
-
-            <div className="transform-rotY180 flex absolute top-0 left-0 [text-shadow:_10px_10px_7px_rgb(0,0,0,50%)] backface-hidden">
-              {element.description}
-            </div>
+    <div
+      className="shadow-custom-bottom-right border rounded-lg border-none border-black p-1 flex bg-white items-center"
+      tabIndex={0}
+      role="button"
+      onClick={() => showUserProfile(element.email)}
+      onKeyDown={() => showUserProfile(element.email)}
+    >
+      <div className="p-3 ">
+        <img
+          src={`${element.profile_image}`}
+          alt="유저이미지"
+          className="rounded-full h-11 w-11"
+        />
+      </div>
+      <div className="flex-1 p-3">
+        <div>{element.nickname}</div>
+        <div className="flex gap-7">
+          <div className="flex gap-2">
+            <img src="/icons/heart-solid.svg" alt="하트" />
+            <span>{element.like_quotes.length}</span>
+          </div>
+          <div className="flex gap-2">
+            <span className="font-extrabold">+</span>
+            <span>{element.registered_quotes.length}</span>
           </div>
         </div>
       </div>
-
-      <div className="flex gap-3 px-3">
-        <div className="flex items-center gap-2">
-          <img
-            className="w-5 h-5 hover:cursor-pointer"
-            src={!heart ? '/icons/heart-regular.svg' : '/icons/heart-solid.svg'}
-            alt={!heart ? '텅빈하트' : '꽉찬하트'}
-            onClick={onClickToggleHeart}
-            onKeyDown={onClickToggleHeart}
-          />
-          <span>{element.likes}</span>
-        </div>
-        <div>
-          <img
-            className="w-5 h-8 hover:cursor-pointer"
-            src="/icons/comment-dots-regular.svg"
-            alt="댓글"
-          />
-        </div>
+      <div className="p-3">
+        <button
+          ref={followRef}
+          type="button"
+          className="border-black border p-2 text-sm rounded-md hover:bg-black hover:text-white"
+          onClick={onClickFollow}
+        >
+          {followed ? '언팔로우' : '팔로우'}
+        </button>
       </div>
     </div>
   );
 };
 
-export default memo(QuoteItem, (prev, next) => {
-  if (prev.element.id !== next.element.id) return false;
-  if (prev.element.author !== next.element.author) return false;
-  if (prev.element.description !== next.element.description) return false;
-  if (
-    JSON.stringify(prev.element.comments) !==
-    JSON.stringify(next.element.comments)
-  )
-    return false;
-  if (prev.element.created_at !== next.element.created_at) return false;
-  if (prev.element.likes !== next.element.likes) return false;
-  if (prev.element.content !== next.element.content) return false;
-  if (prev.element.registrant !== next.element.registrant) return false;
-  if (JSON.stringify(prev.element.tag) !== JSON.stringify(next.element.tag))
-    return false;
-
-  return true;
-});
+export default UserItem;
