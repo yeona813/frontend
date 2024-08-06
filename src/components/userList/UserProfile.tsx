@@ -1,14 +1,29 @@
 import { instance } from 'api/instance';
-import React, { useEffect, useState } from 'react';
-import { realQuote, listUser } from 'types/userList';
+import React, { useEffect, useRef, useState } from 'react';
+import { realQuote, listUser, smallUser, user } from 'types/userList';
 
 interface UserProfileProps {
   showingUser: listUser;
+  smallUser: smallUser[];
+  currentuser?: user;
+  followed: boolean;
+  setFollowed: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const UserProfile = ({ showingUser }: UserProfileProps) => {
+const UserProfile = ({
+  showingUser,
+  smallUser,
+  currentuser,
+  followed,
+  setFollowed,
+}: UserProfileProps) => {
   const [activeTab, setActiveTab] = useState('Liked');
   const [likedQuotes, setLikedQuotes] = useState<realQuote[]>([]);
+
+  const followRef = useRef<HTMLButtonElement>(null);
+  const [user] = smallUser.filter(
+    (value) => value.email === currentuser!.email,
+  );
 
   const getLikedQuotes = async () => {
     const likedQuotesData = await Promise.all(
@@ -28,8 +43,36 @@ const UserProfile = ({ showingUser }: UserProfileProps) => {
     setLikedQuotes(likedQuotesData.filter(Boolean));
   };
 
-  const onClickFollow = () => {
-    console.log('Follow button clicked');
+  const onClickFollow = async () => {
+    if (followRef.current) {
+      const headers = {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      };
+
+      console.log(user.id);
+
+      try {
+        const response = await instance.post(
+          `accounts/follow/${user.id}/`,
+          {},
+          { headers },
+        );
+        if (response.status === 200) {
+          console.log('팔로우 하거나 끊거나하~~');
+        }
+      } catch (error) {
+        console.log(error);
+      }
+      setFollowed(!followed);
+    }
+  };
+
+  const handleProfileClick = (e: React.MouseEvent) => {
+    e.stopPropagation(); // 이벤트 전파를 막습니다
+  };
+
+  const handleProfileKeyDown = (e: React.KeyboardEvent) => {
+    e.stopPropagation(); // 이벤트 전파를 막습니다
   };
 
   useEffect(() => {
@@ -38,7 +81,13 @@ const UserProfile = ({ showingUser }: UserProfileProps) => {
 
   return (
     <div className="flex items-center justify-center">
-      <div className="bg-white flex flex-col items-center w-[300px] fixed top-20 z-50 h-[500px] rounded-lg overflow-hidden">
+      <div
+        onClick={handleProfileClick}
+        tabIndex={0}
+        role="button"
+        onKeyDown={handleProfileKeyDown}
+        className="bg-white flex flex-col items-center w-[300px] fixed top-20 z-50 h-[500px] rounded-lg overflow-hidden"
+      >
         <div className="container mx-auto w-[300px] bg-white p-6 rounded-lg shadow-lg h-full flex flex-col">
           <div className="flex flex-col items-center text-center gap-2">
             <img
@@ -52,11 +101,11 @@ const UserProfile = ({ showingUser }: UserProfileProps) => {
               <span>팔로워 : {showingUser.follower_count}</span>
             </div>
             <button
-              className="border border-black p-2 rounded-lg mt-4 text-sm hover:text-white hover:bg-black z-60"
+              className={` ${!followed ? 'border border-black p-2 rounded-lg' : 'bg-blue-400 border-none p-2 rounded-lg text-white'}  mt-4 text-sm hover:text-white hover:bg-black z-60`}
               type="button"
               onClick={onClickFollow}
             >
-              팔로우
+              {followed ? '팔로잉' : '팔로우'}
             </button>
           </div>
           <div className="mt-4 flex-grow overflow-y-auto">

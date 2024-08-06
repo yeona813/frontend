@@ -1,17 +1,13 @@
 import { instance } from 'api/instance';
 import React, { useEffect, useState } from 'react';
 import { user, smallUser, listUser } from 'types/userList';
-import UserProfilePortal from 'helpers/UserProfilePortal';
 import UserItem from './UserItem';
-import UserProfile from './UserProfile';
 
 const UserList = () => {
   const [smallUser, setSmallUser] = useState<smallUser[]>([]); // 초기값을 빈 배열로 설정
   const [user, setUser] = useState<listUser[]>([]);
   const [showingUser, setShowingUser] = useState<listUser>();
   const [currentuser, setCurrentUser] = useState<user>();
-
-  const [show, setShow] = useState(false);
 
   const getUsers = async () => {
     try {
@@ -23,6 +19,15 @@ const UserList = () => {
       }
     } catch (err) {
       console.log(err);
+    }
+  };
+
+  const showUserProfile = (targetEmail: string) => {
+    if (user) {
+      const [showingUser] = user.filter(
+        (element) => element.email === targetEmail,
+      );
+      setShowingUser(showingUser);
     }
   };
 
@@ -64,20 +69,6 @@ const UserList = () => {
     console.log(fetchedData());
   }, [smallUser, currentuser, user]);
 
-  const showUserProfile = (targetEmail: string) => {
-    if (user) {
-      const [showingUser] = user.filter(
-        (element) => element.email === targetEmail,
-      );
-      setShow(!show);
-      setShowingUser(showingUser);
-    }
-  };
-
-  const onClickToggleShow = () => {
-    setShow(!show);
-  };
-
   const fetchedData = () => {
     if (user && currentuser) {
       return user.filter((element) => element.email !== currentuser.email);
@@ -93,24 +84,10 @@ const UserList = () => {
           element={element}
           smallUser={smallUser}
           currentuser={currentuser}
+          showingUser={showingUser}
           showUserProfile={showUserProfile}
         />
       ))}
-
-      {show && showingUser && (
-        <UserProfilePortal>
-          <UserProfile showingUser={showingUser} />
-          <div className="absolute top-0 left-0 h-screen flex w-full">
-            <div
-              tabIndex={0}
-              role="button"
-              className="flex bg-black opacity-50 fixed top-0 w-screen h-screen z-40"
-              onClick={onClickToggleShow}
-              onKeyDown={onClickToggleShow}
-            ></div>
-          </div>
-        </UserProfilePortal>
-      )}
     </div>
   );
 };
