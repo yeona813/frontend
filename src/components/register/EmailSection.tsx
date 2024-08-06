@@ -20,6 +20,8 @@ const EmailSection = ({
   onChangeRegister,
   setEmailCheck,
 }: EmailSectionProps) => {
+  // console.log('EmailSection');
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const userListRef = useRef<any[]>([]);
   const usingRef = useRef<HTMLSpanElement>(null);
@@ -42,17 +44,12 @@ const EmailSection = ({
   // 중복 확인 하는 곳
   const onAvail = async () => {
     try {
-      const respone = await axios.get(
-        'http://15.164.27.255/accounts/register/',
-      );
+      const respone = await axios.get('서버URL');
       if (respone.status === 200) {
         userListRef.current = respone.data; // <- 이 녀석 배열인가?
 
         if (!userListRef.current?.some((element) => element.email === email)) {
           setEmailCheck(true);
-          alert('사용 가능한 이메일입니다.');
-        } else {
-          alert('이미 사용중인 이메일입니다.');
         }
       }
     } catch (error) {
@@ -65,7 +62,7 @@ const EmailSection = ({
 
   return (
     <section>
-      <span className="text-sm">이메일</span>
+      <span className="px-3 text-sm">이메일</span>
 
       <div className="flex gap-2 my-2 w-[335px] mx-auto ">
         <div

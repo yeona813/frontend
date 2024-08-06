@@ -1,23 +1,28 @@
 import { instance } from 'api/instance';
+import UserProfilePortal from 'helpers/UserProfilePortal';
 import React, { useEffect, useRef, useState } from 'react';
 import { smallUser, user, listUser } from 'types/userList';
+import UserProfile from './UserProfile';
 
 interface UserItemProps {
   element: listUser;
   smallUser: smallUser[];
   currentuser?: user;
+  showingUser?: listUser;
   showUserProfile(targetEmail: string): void;
 }
 
 const UserItem = ({
   element,
   smallUser,
-  showUserProfile,
   currentuser,
+  showingUser,
+  showUserProfile,
 }: UserItemProps) => {
   const followRef = useRef<HTMLButtonElement>(null);
   const [user] = smallUser.filter((value) => value.email === element.email);
   const [followed, setFollowed] = useState(false);
+  const [show, setShow] = useState(false);
 
   const onClickFollow = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
@@ -66,13 +71,18 @@ const UserItem = ({
     }
   }, [currentuser, user.id]);
 
+  const onClickShow = () => {
+    showUserProfile(element.email);
+    setShow(!show);
+  };
+
   return (
     <div
       className="shadow-custom-bottom-right border rounded-lg border-none border-black p-1 flex bg-white items-center"
       tabIndex={0}
       role="button"
-      onClick={() => showUserProfile(element.email)}
-      onKeyDown={() => showUserProfile(element.email)}
+      onClick={onClickShow}
+      onKeyDown={onClickShow}
     >
       <div className="p-3 ">
         <img
@@ -101,9 +111,29 @@ const UserItem = ({
           className="border-black border p-2 text-sm rounded-md hover:bg-black hover:text-white"
           onClick={onClickFollow}
         >
-          {followed ? '언팔로우' : '팔로우'}
+          {followed ? '팔로잉' : '팔로우'}
         </button>
       </div>
+      {show && showingUser && (
+        <UserProfilePortal>
+          <UserProfile
+            showingUser={showingUser}
+            smallUser={smallUser}
+            currentuser={currentuser}
+            followed={followed}
+            setFollowed={setFollowed}
+          />
+          <div className="absolute top-0 left-0 h-screen flex w-full">
+            <div
+              tabIndex={0}
+              role="button"
+              className="flex bg-black opacity-50 fixed top-0 w-screen h-screen z-40"
+              onClick={onClickShow}
+              onKeyDown={onClickShow}
+            ></div>
+          </div>
+        </UserProfilePortal>
+      )}
     </div>
   );
 };
