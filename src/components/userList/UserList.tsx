@@ -1,14 +1,14 @@
 import { instance } from 'api/instance';
 import React, { useEffect, useState } from 'react';
-import { user, smallUser } from 'types/userList';
+import { user, smallUser, listUser } from 'types/userList';
 import UserProfilePortal from 'helpers/UserProfilePortal';
 import UserItem from './UserItem';
 import UserProfile from './UserProfile';
 
 const UserList = () => {
   const [smallUser, setSmallUser] = useState<smallUser[]>([]); // 초기값을 빈 배열로 설정
-  const [user, setUser] = useState<user[]>([]);
-  const [showingUser, setShowingUser] = useState<user>();
+  const [user, setUser] = useState<listUser[]>([]);
+  const [showingUser, setShowingUser] = useState<listUser>();
   const [currentuser, setCurrentUser] = useState<user>();
 
   const [show, setShow] = useState(false);
@@ -23,6 +23,21 @@ const UserList = () => {
       }
     } catch (err) {
       console.log(err);
+    }
+  };
+
+  const fetchProfileData = async () => {
+    try {
+      const userInfoResponse = await instance.get('accounts/profile/', {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem(`accessToken`)}`,
+        },
+      });
+      if (userInfoResponse.status === 200) {
+        setCurrentUser(userInfoResponse.data);
+      }
+    } catch (error) {
+      console.error('데이터를 불러오는 데 실패했습니다', error);
     }
   };
 
@@ -42,7 +57,12 @@ const UserList = () => {
   useEffect(() => {
     getUsers();
     getSmallUsers();
+    fetchProfileData();
   }, []);
+
+  useEffect(() => {
+    console.log(fetchedData());
+  }, [smallUser, currentuser, user]);
 
   const showUserProfile = (targetEmail: string) => {
     if (user) {
@@ -58,9 +78,16 @@ const UserList = () => {
     setShow(!show);
   };
 
+  const fetchedData = () => {
+    if (user && currentuser) {
+      return user.filter((element) => element.email !== currentuser.email);
+    }
+    return null;
+  };
+
   return (
     <div className="flex flex-col gap-7 mt-[100px] w-full px-[40px] pb-[100px]">
-      {user?.map((element) => (
+      {fetchedData()?.map((element) => (
         <UserItem
           key={element.email}
           element={element}

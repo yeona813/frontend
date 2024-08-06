@@ -1,9 +1,9 @@
 import { instance } from 'api/instance';
 import React, { useEffect, useState } from 'react';
-import { user, realQuote } from 'types/userList';
+import { realQuote, listUser } from 'types/userList';
 
 interface UserProfileProps {
-  showingUser: user;
+  showingUser: listUser;
 }
 
 const UserProfile = ({ showingUser }: UserProfileProps) => {

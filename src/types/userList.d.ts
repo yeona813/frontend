@@ -14,16 +14,15 @@ export type smallUser = {
 };
 
 export type user = {
-  id: number;
-  nickname: string;
-  like_quotes: number[];
   email: string;
+  follower_count: number;
+  followers: number[];
+  following_count: number;
+  followings: followings[];
+  like_quotes: number[];
+  nickname: string;
   profile_image: string;
   registered_quotes: quote[];
-  followings: string[];
-  followers: string[];
-  following_count: number;
-  follower_count: number;
 };
 
 export type realQuote = {
@@ -35,4 +34,22 @@ export type realQuote = {
   created_at: string;
   like_count: 0;
   user_author: null;
+};
+
+export type listUser = {
+  nickname: string;
+  like_quotes: string[];
+  email: string;
+  profile_image: string;
+  registered_quotes: quote[];
+  followings: followings[];
+  followers: number[];
+  following_count: number;
+  follower_count: number;
+};
+
+export type followings = {
+  id: number;
+  nickname: string;
+  registered_quotes: quote[];
 };
