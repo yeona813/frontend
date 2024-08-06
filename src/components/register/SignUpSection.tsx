@@ -1,6 +1,6 @@
-import axios from 'axios';
+import { instance } from 'api/instance';
 import React, { useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { info, err, infoRef } from 'types/register';
 
 interface SignUpSectionProps {
@@ -23,6 +23,8 @@ const SignUpSection = ({
   setSuccess,
 }: SignUpSectionProps) => {
   const mountRef = useRef(false);
+  const navigate = useNavigate();
+
   const applyStyle = (errorType: boolean) => {
     return errorType ? '1px solid rgb(50,180,50)' : '1px solid red';
   };
@@ -32,15 +34,22 @@ const SignUpSection = ({
       mountRef.current = !mountRef.current;
       return;
     }
-    console.log(error);
     if (submitted) {
-      refObj.emailRef.current?.style.setProperty(
-        'border',
-        applyStyle(error.emailErr),
-        // 여기는 중복확인까지 해서 스타일 적용
-        // 중복확인에 사용하는 props drilling 해야함
-        // 형식은 맞지만 중복확인 안하면 border orange
-      );
+      if (!emailCheck && error.emailErr) {
+        refObj.emailRef.current?.style.setProperty(
+          'border',
+          '1px solid #FF7F00',
+        );
+      } else {
+        refObj.emailRef.current?.style.setProperty(
+          'border',
+          applyStyle(error.emailErr),
+          // 여기는 중복확인까지 해서 스타일 적용
+          // 중복확인에 사용하는 props drilling 해야함
+          // 형식은 맞지만 중복확인 안하면 border orange
+        );
+      }
+
       refObj.passwordRef.current?.style.setProperty(
         'border',
         applyStyle(error.passwordErr),
@@ -54,7 +63,7 @@ const SignUpSection = ({
         applyStyle(error.nicknameErr),
       );
     }
-  }, [submitted, error]);
+  }, [submitted, error, emailCheck]);
 
   const onSubmit = async () => {
     setSubmitted(true);
@@ -63,24 +72,25 @@ const SignUpSection = ({
     );
 
     if (!isErrorFree || !emailCheck) {
-      console.log(`ERRRRRR, ${!isErrorFree}, ${!emailCheck}`);
       return;
     }
 
+    const body = {
+      email: register.email,
+      nickname: register.nickname,
+      password: register.password,
+    };
+
     try {
-      const response = await axios.post('서버URL', {
-        email: register.email,
-        nickname: register.nickname,
-        password: register.password,
-      });
+      const response = await instance.post('accounts/register/', body);
 
       if (response.status === 201) {
         setSuccess(true);
+        navigate('/');
       }
     } catch (err) {
-      console.log('ERROR OCCURED');
+      console.log(err);
     }
-    console.log(register.email, register.password);
   };
   return (
     <section>
