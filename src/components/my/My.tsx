@@ -134,9 +134,12 @@ const My = () => {
             ))}
           </div>
           {activeTab === 'Liked' ? (
-            <ul>
+            <ul className="flex flex-col pt-5 h-[200px] gap-5 overflow-scroll scrollbar-hide">
               {likedQuotes?.map((element) => (
-                <li key={element.id}>{element.content}</li>
+                <li key={element.id} className="relative flex flex-col gap-3">
+                  <span>{element.content}</span>
+                  <span className="absolute bottom-0 right-0">{`-${element.author}-`}</span>
+                </li>
               ))}
             </ul>
           ) : null}
