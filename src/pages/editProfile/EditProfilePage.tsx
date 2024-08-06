@@ -2,6 +2,7 @@ import { instance } from 'api/instance';
 import ChangeNickname from 'components/editProfile/ChangeNickname';
 import ChangePassword from 'components/editProfile/ChangePassword';
 import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 interface UserDataProps {
   nickname: string;
@@ -25,8 +26,13 @@ const EditProfilePage = () => {
   });
   const [newProfileImage, setNewProfileImage] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
+    if (!localStorage.getItem('accessToken')) {
+      navigate('/login');
+    }
+
     const fetchData = async () => {
       const headers = {
         Authorization: `Bearer ${localStorage.getItem(`accessToken`)}`,
